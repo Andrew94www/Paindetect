@@ -14,5 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
+});
+Route::get('/chronicpain', function () {
+    return view('chronicpain');
+});
+Route::get('/paindetect', function () {
+    return view('paindetect');
 });

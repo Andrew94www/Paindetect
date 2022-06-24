@@ -1,0 +1,88 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  .date1{
+    display: inline-block;
+    background: #6600ff;
+    color:white;
+    font-size: 20px;
+  }
+
+  .date2{
+    background: #6600ff;
+    width: 100%;
+    border :4px solid #6600ff;
+
+  }
+
+  .logo {
+    background: #000;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .graficlogo {
+    padding: 1px;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .mainontent {
+    display: flex;
+  }
+  .lis {
+    list-style-type: none;
+    /* Убираем маркеры */
+  }
+  .conteiner {
+    display: flex;
+  }
+  li {
+    list-style-type: none;
+    display: inline-block;
+  }
+  .conteinertw,
+  .conteinerfiv,
+  .maincontriner2 {
+    display: flex;
+  }
+  .notioncicep {
+    border: 1px solid black;
+    background: linear-gradient(to right, #adff2f, #ffffff);
+  }
+  .ishemia {
+    border: 1px solid black;
+    width: 35%;
+    background: linear-gradient(to right, #ff00ff, #ffffff);
+  }
+  .neyropatic {
+    border: 1px solid black;
+    background: linear-gradient(to right, #ffff00, #ffffff);
+  }
+  .sensetisetion {
+    border: 1px solid black;
+    border-right: 2px solid black;
+    background: linear-gradient(to right, #7fffd4, #ffffff);
+  }
+  .desingibition {
+    border: 1px solid black;
+    width: 50%;
+    background: linear-gradient(to right, #f08080, #ffffff);
+  }
+  .disfunction {
+    width: 50%;
+    border: 1px solid black;
+    border-right: 2px solid black;
+    background: linear-gradient(to right, #db7093, #ffffff);
+  }
+  p {
+    padding: 4px ;
+  }
+  h4 {
+    padding: 5px;
+    background: #DCDCDC;
+  }
