@@ -10,7 +10,7 @@ services:
     ports:
       - 8000:80
     healthcheck:
-      test: bash -c "</dev/tcp/nginx/8070 && exit 0 || exit 1"
+      test: bash -c "</dev/tcp/nginx/80&& exit 0 || exit 1"
       interval: 3s
       timeout: 30s
       retries: 10
@@ -37,7 +37,7 @@ services:
     ports:
       - 8101:3306
     healthcheck:
-      test: bash -c "</dev/tcp/db/8101 && exit 0 || exit 1"
+      test: bash -c "</dev/tcp/db/3306 && exit 0 || exit 1"
       interval: 3s
       timeout: 90s
       retries: 30
