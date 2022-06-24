@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChronicPainController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,4 @@ Route::get('/chronicpain', function () {
 Route::get('/paindetect', function () {
     return view('paindetect');
 });
+Route::post('/paind', [ChronicPainController::class, 'index'])->name('paindetect');;
