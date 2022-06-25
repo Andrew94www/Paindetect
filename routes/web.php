@@ -23,4 +23,5 @@ Route::get('/chronicpain', function () {
 Route::get('/paindetect', function () {
     return view('paindetect');
 });
-Route::post('/paind', [ChronicPainController::class, 'index'])->name('paindetect');;
+Route::post('/paind', [ChronicPainController::class, 'cretatePatient'])->name('paindetect');
+Route::post('/index/patient', [ChronicPainController::class, 'cretatePatientIndex'])->name('index');

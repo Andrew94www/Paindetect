@@ -45,7 +45,7 @@
 						<p>2<input type="radio" name="questions1" id="" value="2"></p>
 					</li>
 					<li>
-						<p>3<input type="radio" name="questions1" id="" value="3"></p>
+						<p>3<input type="radio" name="questions1" id="" value="false"></p>
 					</li>
 					<li>
 						<p>4<input type="radio" name="questions1" id="" value="4"></p>
@@ -83,7 +83,7 @@
 						<p>2<input type="radio" name="questions2" id="" value="2"></p>
 					</li>
 					<li>
-						<p>3<input type="radio" name="questions2" id="" value="3"></p>
+						<p>3<input type="radio" name="questions2" id="" value="false"></p>
 					</li>
 					<li>
 						<p>4<input type="radio" name="questions2" id="" value="4"></p>
@@ -118,7 +118,7 @@
 						<p class="2">2<input type="radio" name="questions3" id="" value="2"></p>
 					</li>
 					<li>
-						<p class="3">3<input type="radio" name="questions3" id="" value="3"></p>
+						<p class="3">3<input type="radio" name="questions3" id="" value="false"></p>
 					</li>
 					<li>
 						<p class="4">4<input type="radio" name="questions3" id="" value="4"></p>

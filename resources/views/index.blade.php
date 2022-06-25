@@ -17,17 +17,19 @@
 					height="120"></a>
 		</div>
 	</header>
-	<form action="" method="POST">
+
 
 
 		<main>
+            <form action="{{route('index')}}" method="POST">
+            @csrf
 			<div class="date2">
 			<div class="date1">Дата</div>
 			<input type="date" name="date" id="userdate">
 			<div class="date1">Пацыент</div>
 			<input type="text" name="name" id="user" value=""
 				placeholder="Ф.И.О._ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _">
-			<input type="text" name="name1" id="username" value=""
+			<input type="text" name="id_patient" id="username" value=""
 				placeholder="ID-пациента_ _ _ _ _ _ _ _ _">
 			<input type="text" name="name1" id="username" value=""
 				placeholder="Как с вами связаться_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _">
@@ -39,9 +41,9 @@
 					<p>Повреждение</p>
 
 					<ul class="lis">
-						<li>да<input type="radio" name="questions1" id="" value="2"></li>
+						<li>да<input type="radio" name="questions1" id="" value="true"></li>
 						<li>
-							<p>нет<input type="radio" name="questions1" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions1" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -50,10 +52,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions2" id="" value="2"></p>
+							<p>да<input type="radio" name="questions2" id="" value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions2" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions2" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -62,10 +64,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions3" id="" value="2"></p>
+							<p>да<input type="radio" name="questions3" id=""  value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions3" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions3" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -74,10 +76,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions4" id="" value="2"></p>
+							<p>да<input type="radio" name="questions4" id=""  value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions4" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions4" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -86,10 +88,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions5" id="" value="2"></p>
+							<p>да<input type="radio" name="questions5" id=""  value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions5" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions5" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -97,10 +99,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions6" id="" value="2"></p>
+							<p>да<input type="radio" name="questions6" id=""  value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions6" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions6" id=""value="false"></p>
 						</li>
 
 					</ul>
@@ -109,10 +111,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions7" id="" value="2"></p>
+							<p>да<input type="radio" name="questions7" id=""  value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions7" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions7" id=""value="false"></p>
 						</li>
 
 					</ul>
@@ -129,10 +131,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions8" id="" value="2"></p>
+							<p>да<input type="radio" name="questions8" id=""  value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions8" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions8" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -144,10 +146,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions9" id="" value="2"></p>
+							<p>да<input type="radio" name="questions9" id=""  value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions9" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions9" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -156,10 +158,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions10" id="" value="2"></p>
+							<p>да<input type="radio" name="questions10" id=""  value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions10" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions10" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -168,10 +170,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions11" id="" value="2"></p>
+							<p>да<input type="radio" name="questions11" id="" value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions11" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions11" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -182,10 +184,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions12" id="" value="2"></p>
+							<p>да<input type="radio" name="questions12" id=""  value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions12" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions12" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -193,10 +195,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions13" id="" value="2"></p>
+							<p>да<input type="radio" name="questions13" id=""  value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions13" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions13" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -205,10 +207,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions14" id="" value="2"></p>
+							<p>да<input type="radio" name="questions14" id="" value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions14" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions14" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -223,10 +225,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions15" id="" value="2"></p>
+							<p>да<input type="radio" name="questions15" id=""  value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions15" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions15" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -235,10 +237,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions16" id="" value="2"></p>
+							<p>да<input type="radio" name="questions16" id=""  value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions16" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions16" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -247,10 +249,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions17" id="" value="2"></p>
+							<p>да<input type="radio" name="questions17" id=""  value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions17" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions17" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -259,10 +261,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions18" id="" value="2"></p>
+							<p>да<input type="radio" name="questions18" id=""  value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions18" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions18" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -271,10 +273,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions19" id="" value="2"></p>
+							<p>да<input type="radio" name="questions19" id=""  value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions19" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions19" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -282,10 +284,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions20" id="" value="2"></p>
+							<p>да<input type="radio" name="questions20" id=""  value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions20" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions20" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -294,10 +296,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions21" id="" value="2"></p>
+							<p>да<input type="radio" name="questions21" id=""  value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions21" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions21" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -312,10 +314,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions22" id="" value="2"></p>
+							<p>да<input type="radio" name="questions22" id="" value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions22" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions22" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -324,10 +326,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions23" id="" value="2"></p>
+							<p>да<input type="radio" name="questions23" id="" value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions23" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions23" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -336,10 +338,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions24" id="" value="2"></p>
+							<p>да<input type="radio" name="questions24" id=""  value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions24" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions24" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -348,10 +350,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions25" id="" value="2"></p>
+							<p>да<input type="radio" name="questions25" id=""  value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions25" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions25" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -360,10 +362,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions26" id="" value="2"></p>
+							<p>да<input type="radio" name="questions26" id=""  value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions26" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions26" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -371,10 +373,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions27" id="" value="2"></p>
+							<p>да<input type="radio" name="questions27" id=""  value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions27" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions27" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -396,10 +398,10 @@
 
 						<ul class="lis">
 							<li>
-								<p>да<input type="radio" name="questions28" id="" value="2"></p>
+								<p>да<input type="radio" name="questions28" id="" value="true"></p>
 							</li>
 							<li>
-								<p>нет<input type="radio" name="questions28" id="" value="3"></p>
+								<p>нет<input type="radio" name="questions28" id="" value="false"></p>
 							</li>
 
 						</ul>
@@ -411,10 +413,10 @@
 
 						<ul class="lis">
 							<li>
-								<p>да<input type="radio" name="questions29" id="" value="2"></p>
+								<p>да<input type="radio" name="questions29" id=""  value="true"></p>
 							</li>
 							<li>
-								<p>нет<input type="radio" name="questions29" id="" value="3"></p>
+								<p>нет<input type="radio" name="questions29" id="" value="false"></p>
 							</li>
 
 						</ul>
@@ -430,16 +432,16 @@
 						<div class="bigcriteriycon">
 							<ul>
 								<li>
-									<p>Плохое настроение(«я никто…я ничто»)<input type="checkbox" name="questions1"
-											id="" value="2"></p>
+									<p>Плохое настроение(«я никто…я ничто»)<input type="checkbox" name="questions30"
+											id=""value="true"></p>
 								</li>
 								<li>
 									<p>Потеря интересов/удовлетворения(«все плохо…»)і<input type="checkbox"
-											name="questions1" id="" value="3"></p>
+											name="questions31" id="" value="true"></p>
 								</li>
 								<li>
 									<p>Снижение енергичности (астения, слабость) умственное и физическое истощение<input
-											type="checkbox" name="questions1" id="" value="2"></p>
+											type="checkbox" name="questions30" id="" value="true"></p>
 								</li>
 							</ul>
 
@@ -456,26 +458,26 @@
 							<ul>
 								<li>
 									<p>Хронические боли при отсутствии объективных признаков поражения органов <input
-											type="checkbox" name="questions1" id="" value="2"></p>
+											type="checkbox" name="questions32" id="" value="true"></p>
 								</li>
 								<li>
-									<p>Росстройства апетита, набор/снижение масы<input type="checkbox" name="questions1"
-											id="" value="3"></p>
+									<p>Росстройства апетита, набор/снижение масы<input type="checkbox" name="questions33"
+											id="" value="true"></p>
 								</li>
 								<li>
 									<p>Суточная ритмичность з улучшением на вечер/ сезонность <input type="checkbox"
-											name="questions1" id="" value="2"></p>
+											name="questions34" id="" value="true"></p>
 								</li>
 								<li>
-									<p>Росстройство половой ф-ции(либидо)<input type="checkbox" name="questions1" id=""
-											value="2"></p>
+									<p>Росстройство половой ф-ции(либидо)<input type="checkbox" name="questions35" id=""
+                                        value="true"></p>
 								</li>
 								<li>
-									<p>Росстройство сна<input type="checkbox" name="questions1" id="" value="3"></p>
+									<p>Росстройство сна<input type="checkbox" name="questions36" id="" value="true"></p>
 								</li>
 								<li>
-									<p>Снижение концентрации внимания, астения.<input type="checkbox" name="questions1"
-											id="" value="2"></p>
+									<p>Снижение концентрации внимания, астения.<input type="checkbox" name="questions37"
+											id=""value="true"></p>
 								</li>
 							</ul>
 
@@ -491,24 +493,24 @@
 						<div class="bigcriteriycon2">
 							<ul>
 								<li>
-									<p>Удушье<input type="checkbox" name="questions1" id="" value="2"></p>
+									<p>Удушье<input type="checkbox" name="questions38" id="" value="true"></p>
 								</li>
 								<li>
-									<p>«Ком» в горле<input type="checkbox" name="questions1" id="" value="3"></p>
+									<p>«Ком» в горле<input type="checkbox" name="questions39" id="" value="true"></p>
 								</li>
 								<li>
-									<p>Тремор ,мышечное напряжение<input type="checkbox" name="questions1" id=""
-											value="2"></p>
+									<p>Тремор ,мышечное напряжение<input type="checkbox" name="questions40" id=""
+                                        value="true"></p>
 								</li>
 								<li>
-									<p>Бессонница<input type="checkbox" name="questions1" id="" value="2"></p>
+									<p>Бессонница<input type="checkbox" name="questions41" id="" value="true"></p>
 								</li>
 								<li>
-									<p>Потливость, приливы жару <input type="checkbox" name="questions1" id=""
-											value="3"></p>
+									<p>Потливость, приливы жару <input type="checkbox" name="questions42" id=""
+                                        value="true"></p>
 								</li>
 								<li>
-									<p>Серцебиение<input type="checkbox" name="questions1" id="" value="2"></p>
+									<p>Серцебиение<input type="checkbox" name="questions43" id="" value="true"></p>
 								</li>
 							</ul>
 
@@ -520,10 +522,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions30" id="" value="2"></p>
+							<p>да<input type="radio" name="questions44" id="" value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions30" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions44" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -540,10 +542,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions31" id="" value="2"></p>
+							<p>да<input type="radio" name="questions46" id=""value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions31" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions46" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -553,10 +555,10 @@
 
 					<ul class="lis">
 						<li>
-							<p>да<input type="radio" name="questions32" id="" value="2"></p>
+							<p>да<input type="radio" name="questions47" id="" value="true"></p>
 						</li>
 						<li>
-							<p>нет<input type="radio" name="questions32" id="" value="3"></p>
+							<p>нет<input type="radio" name="questions47" id="" value="false"></p>
 						</li>
 
 					</ul>
@@ -564,38 +566,38 @@
 					<p>Коморбидность з дисфункциональными заболеваниями :</p>
 					<ul>
 						<li>
-							<p>- Хроническая головная боль напряжения <input type="checkbox" name="questions1" id=""
-									value="2"></p>
+							<p>- Хроническая головная боль напряжения <input type="checkbox" name="questions48" id=""
+                                value="true"></p>
 						</li>
 						<li>
 							<p>- Соматоформное болеовое расстройство ( психогенная боль) <input type="checkbox"
-									name="questions1" id="" value="3"></p>
+									name="questions1" id="" value="true"></p>
 						</li>
 						<li>
-							<p>- Синдром роздраженного кишечника<input type="checkbox" name="questions1" id=""
-									value="2"></p>
+							<p>- Синдром роздраженного кишечника<input type="checkbox" name="questions49" id=""
+                                value="true"></p>
 						</li>
 						<li>
-							<p>- Фибромиалгия <input type="checkbox" name="questions1" id="" value="2"></p>
+							<p>- Фибромиалгия <input type="checkbox" name="questions50" id="" value="true"></p>
 						</li>
 						<li>
-							<p>- Інтерстициальный цыстит <input type="checkbox" name="questions1" id="" value="3"></p>
+							<p>- Інтерстициальный цыстит <input type="checkbox" name="questions51" id="" value="true"></p>
 						</li>
 						<li>
-							<p>- Хроническая тазовая боль<input type="checkbox" name="questions1" id="" value="2"></p>
+							<p>- Хроническая тазовая боль<input type="checkbox" name="questions52" id="" value="true"></p>
 						</li>
 						<li>
-							<p>- Синдром неспокойных ног <input type="checkbox" name="questions1" id="" value="3"></p>
+							<p>- Синдром неспокойных ног <input type="checkbox" name="questions53" id="" value="true"></p>
 						</li>
 						<li>
-							<p>- Синдром хронической усталости<input type="checkbox" name="questions1" id="" value="2">
+							<p>- Синдром хронической усталости<input type="checkbox" name="questions54" id="" value="true">
 							</p>
 						</li>
 					</ul>
 					<br>
 					<br>
                      <strong><p>Проведенное лечение</p></strong>
-                      <textarea name="" id="" cols="92" rows="10"> </textarea>
+                      <textarea name="treatment" id="" cols="92" rows="10"> </textarea>
                       <input type="submit" >
 				</div>
 
@@ -603,9 +605,9 @@
 			</div>
 
 
-
+        </form>
 		</main>
-	</form>
+
 
 	<footer>
 
