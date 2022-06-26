@@ -20,18 +20,8 @@
 			</div>
 		</div>
 	</header>
-	<form action="#">
-		<div class="date2">
-			<div class="date1">Дата</div>
-			<input type="date" name="date" id="userdate">
-			<div class="date1">Пацыент</div>
-			<input type="text" name="name" id="user" value=""
-				placeholder="Фамилия_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _">
-			<input type="text" name="name" id="username" value=""
-				placeholder="Имя_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _">
-		</div>
-	</form>
-	<form action="" method="POST">
+	<form action="{{route('createpatient')}}" method="POST">
+        @csrf
 		<div class="content">
 
 			<div class="severity">
@@ -45,7 +35,7 @@
 						<p>2<input type="radio" name="questions1" id="" value="2"></p>
 					</li>
 					<li>
-						<p>3<input type="radio" name="questions1" id="" value="3"></p>
+						<p>3<input type="radio" name="questions1" id="" value="false"></p>
 					</li>
 					<li>
 						<p>4<input type="radio" name="questions1" id="" value="4"></p>
@@ -83,7 +73,7 @@
 						<p>2<input type="radio" name="questions2" id="" value="2"></p>
 					</li>
 					<li>
-						<p>3<input type="radio" name="questions2" id="" value="3"></p>
+						<p>3<input type="radio" name="questions2" id="" value="false"></p>
 					</li>
 					<li>
 						<p>4<input type="radio" name="questions2" id="" value="4"></p>
@@ -118,7 +108,7 @@
 						<p class="2">2<input type="radio" name="questions3" id="" value="2"></p>
 					</li>
 					<li>
-						<p class="3">3<input type="radio" name="questions3" id="" value="3"></p>
+						<p class="3">3<input type="radio" name="questions3" id="" value="false"></p>
 					</li>
 					<li>
 						<p class="4">4<input type="radio" name="questions3" id="" value="4"></p>
@@ -499,7 +489,7 @@
 				</div>
 			</div>
 	</form>
-	<script type="text/javascript" src="js    /script.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
 </body>
 
 </html>
