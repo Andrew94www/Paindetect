@@ -31,7 +31,7 @@
 				placeholder="Ф.И.О._ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _">
 			<input type="text" name="id_patient" id="username" value=""
 				placeholder="ID-пациента_ _ _ _ _ _ _ _ _">
-			<input type="text" name="name1" id="username" value=""
+			<input type="text" name="contact_id" id="username" value=""
 				placeholder="Как с вами связаться_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _">
 		</div>
 

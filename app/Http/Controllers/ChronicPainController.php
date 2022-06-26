@@ -9,12 +9,19 @@ class ChronicPainController extends Controller
 {
  public function cretatePatient(Request $request){
     $request->except(['_token']);
-   $result = DB::table('patient')->insert($request->except(['_token']));
-  dd($result);
+    $result = DB::table('patient')->insert($request->except(['_token']));
+    return redirect('paindetect');
  }
+
+
  public function cretatePatientIndex(Request $request){
     $request->except(['_token']);
-//    $result = DB::table('patient')->insert($request->except(['_token']));
-  dd($request->except(['_token']));
+    $result = DB::table('patient_index')->insert($request->except(['_token']));
+    return redirect('chronicpain');
+
+ }
+
+ public function cretatePatientPainDetect(Request $request){
+    dd($request->all());
  }
 }

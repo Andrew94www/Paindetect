@@ -20,18 +20,8 @@
 			</div>
 		</div>
 	</header>
-	<form action="#">
-		<div class="date2">
-			<div class="date1">Дата</div>
-			<input type="date" name="date" id="userdate">
-			<div class="date1">Пацыент</div>
-			<input type="text" name="name" id="user" value=""
-				placeholder="Фамилия_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _">
-			<input type="text" name="name" id="username" value=""
-				placeholder="Имя_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _">
-		</div>
-	</form>
-	<form action="" method="POST">
+	<form action="{{route('createpatient')}}" method="POST">
+        @csrf
 		<div class="content">
 
 			<div class="severity">
@@ -499,7 +489,7 @@
 				</div>
 			</div>
 	</form>
-	<script type="text/javascript" src="js    /script.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
 </body>
 
 </html>
