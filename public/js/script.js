@@ -241,57 +241,57 @@ function resalt(sum) {
 
 
     if (sum >= 0 && sum <= 12) {
-        document.getElementById('myText').innerHTML = 'Наличие нейропатического компонента боли маловероятно (< 15%)'
+        document.getElementById('myText').innerHTML = '15'
     }
     else if (sum >= 13 && sum <= 16) {
-        document.getElementById('myText').innerHTML = 'Результат неопределенный, однако, возможно наличие нейропатического  компонента боли (≈ 45%)'
+        document.getElementById('myText').innerHTML = '45'
 
     }
     else if (sum >= 17 && sum <= 18) {
-        document.getElementById('myText').innerHTML = 'Результат неопределенный, однако, возможно наличие нейропатического  компонента боли (≈50%)'
+        document.getElementById('myText').innerHTML = '50'
     }
     else if (sum >= 19 && sum <= 38) {
-        document.getElementById('myText').innerHTML = 'Высока вероятность наличия нейропатического компонента боли(> 90%)'
+        document.getElementById('myText').innerHTML = '90'
     }
 }
 
 
 
-function resalt1(sum) {
+// function resalt1(sum) {
 
 
-    if (sum >= 0 && sum <= 12) {
-        document.getElementById('myText1').innerHTML = 'Лечение не требуеться'
-    }
-    else if (sum >= 13 && sum <= 16) {
-        document.getElementById('myText1').innerHTML = 'Rp.:Nimesulidi 0,1\nD. t. d. № 10 in tab. (pulv.)\nS.По 1 табл. (порошку) 2 раза в день;\n  содержимое порошка растворив в 1/2 стакана теплой воды\nПринимать на протяжении 5 дней.'
+//     if (sum >= 0 && sum <= 12) {
+//         document.getElementById('myText1').innerHTML = 'Лечение не требуеться'
+//     }
+//     else if (sum >= 13 && sum <= 16) {
+//         document.getElementById('myText1').innerHTML = 'Rp.:Nimesulidi 0,1\nD. t. d. № 10 in tab. (pulv.)\nS.По 1 табл. (порошку) 2 раза в день;\n  содержимое порошка растворив в 1/2 стакана теплой воды\nПринимать на протяжении 5 дней.'
 
-    }
-    else if (sum >= 17 && sum <= 18) {
-        document.getElementById('myText1').innerHTML = 'Rp.: Caps. Pregabalini 0.075\nD.t.d.N 84\nS. по 1 капсуле * 1 раза в день'
-    }
-    else if (sum >= 19 && sum <= 24) {
-        document.getElementById('myText1').innerHTML = `Rp:Tab. Diclofenaci 0,025\nD.t.d.N. 30\nS. Принимать перорально по 1 таблетке 3 раза в сутки.
-        \nRp.: Caps. Pregabalini 0.075\nD.t.d.N 84\nS. по 1 капсуле * 1 раза в день
-        \nRp. Pyridoxini 0,01\nD. t. d. N. 10 in tab.\nS. По 1 таблетка 1 раз в день.\nЛекарственные препараты принимать на протяжении 14 дней.
+//     }
+//     else if (sum >= 17 && sum <= 18) {
+//         document.getElementById('myText1').innerHTML = 'Rp.: Caps. Pregabalini 0.075\nD.t.d.N 84\nS. по 1 капсуле * 1 раза в день'
+//     }
+//     else if (sum >= 19 && sum <= 24) {
+//         document.getElementById('myText1').innerHTML = `Rp:Tab. Diclofenaci 0,025\nD.t.d.N. 30\nS. Принимать перорально по 1 таблетке 3 раза в сутки.
+//         \nRp.: Caps. Pregabalini 0.075\nD.t.d.N 84\nS. по 1 капсуле * 1 раза в день
+//         \nRp. Pyridoxini 0,01\nD. t. d. N. 10 in tab.\nS. По 1 таблетка 1 раз в день.\nЛекарственные препараты принимать на протяжении 14 дней.
 
-       `
-    }
-    else if (sum >= 25 && sum <= 29) {
-        document.getElementById('myText1').innerHTML = `Rp:Tab. Diclofenaci 0,025\nD.t.d.N. 30\nS. Принимать перорально по 1 таблетке 3 раза в сутки.
-        \nRp.: Caps. Pregabalini 0.075\nD.t.d.N 84\nS. по 1 капсуле * 1 раза в день на протяжение первых 3 дней с 4 по 14 день 2 капс. 150 мг 2 раза в день
-        \nRp. Pyridoxini 0,01\nD. t. d. N. 10 in tab.\nS. По 1 таблетка 1 раз в день.\nЛекарственные препараты принимать на протяжении 14 дней.`
-    }
-    else if (sum >= 30 && sum <= 33) {
-        document.getElementById('myText1').innerHTML = `Rp: Sol. Diclofenaci 2,5 % - 3 ml\nS: Внутримышечно по 3 мл. в день..
-        \nRp.: Caps. Pregabalini 0.075\nD.t.d.N 84\nS. по 1 капсуле * 1 раза в день на протяжение первых 3 дней с 4 по 14 день 2 капс. 150 мг 2 раза в день
-        \nRp. Pyridoxini 0,01\nD. t. d. N. 10 in tab.\nS. По 1 таблетка 1 раз в день.\nЛекарственные препараты принимать на протяжении 14 дней.`
-    }
-    else if (sum >= 34 && sum <= 38) {
-        document.getElementById('myText1').innerHTML = `Rp: Sol. Diclofenaci 2,5 % - 3 ml\nS: Внутримышечно по 3 мл. в день..
-        \nRp.: Caps. Pregabalini 0.075\nD.t.d.N 84\nS. по 1 капсуле * 1 раза в день на протяжение первых 3 дней с 4 по 14 день 2 капс. 150 мг 2 раза в день
-        \nRp. Pyridoxini 0,01\nD. t. d. N. 10 in tab.\nS. По 1 таблетка 1 раз в день.
-        \nRp: Tramadoli 0,05\nD.t.d № 20 in tab.\nS. По 1 табл. 2 раза в день на протяжении 7 дней.
-        \nЛекарственные препараты принимать на протяжении 14 дней.`
-    }
-}
+//        `
+//     }
+//     else if (sum >= 25 && sum <= 29) {
+//         document.getElementById('myText1').innerHTML = `Rp:Tab. Diclofenaci 0,025\nD.t.d.N. 30\nS. Принимать перорально по 1 таблетке 3 раза в сутки.
+//         \nRp.: Caps. Pregabalini 0.075\nD.t.d.N 84\nS. по 1 капсуле * 1 раза в день на протяжение первых 3 дней с 4 по 14 день 2 капс. 150 мг 2 раза в день
+//         \nRp. Pyridoxini 0,01\nD. t. d. N. 10 in tab.\nS. По 1 таблетка 1 раз в день.\nЛекарственные препараты принимать на протяжении 14 дней.`
+//     }
+//     else if (sum >= 30 && sum <= 33) {
+//         document.getElementById('myText1').innerHTML = `Rp: Sol. Diclofenaci 2,5 % - 3 ml\nS: Внутримышечно по 3 мл. в день..
+//         \nRp.: Caps. Pregabalini 0.075\nD.t.d.N 84\nS. по 1 капсуле * 1 раза в день на протяжение первых 3 дней с 4 по 14 день 2 капс. 150 мг 2 раза в день
+//         \nRp. Pyridoxini 0,01\nD. t. d. N. 10 in tab.\nS. По 1 таблетка 1 раз в день.\nЛекарственные препараты принимать на протяжении 14 дней.`
+//     }
+//     else if (sum >= 34 && sum <= 38) {
+//         document.getElementById('myText1').innerHTML = `Rp: Sol. Diclofenaci 2,5 % - 3 ml\nS: Внутримышечно по 3 мл. в день..
+//         \nRp.: Caps. Pregabalini 0.075\nD.t.d.N 84\nS. по 1 капсуле * 1 раза в день на протяжение первых 3 дней с 4 по 14 день 2 капс. 150 мг 2 раза в день
+//         \nRp. Pyridoxini 0,01\nD. t. d. N. 10 in tab.\nS. По 1 таблетка 1 раз в день.
+//         \nRp: Tramadoli 0,05\nD.t.d № 20 in tab.\nS. По 1 табл. 2 раза в день на протяжении 7 дней.
+//         \nЛекарственные препараты принимать на протяжении 14 дней.`
+//     }
+// }
