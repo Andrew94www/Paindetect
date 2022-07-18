@@ -18,6 +18,19 @@ class ChronicPainController extends Controller
  }
 
  public function cretatePatientPainDetect(Request $request){
+  $request->validate([
+        'questions1' => 'required',
+        "questions2" => 'required',
+        "questions3" => 'required',
+        "questions4" => 'required',
+        "questions5" => 'required',
+        "questions6" => 'required',
+        "questions7" => 'required',
+        "questions9" => 'required',
+        "questions10" => 'required',
+        "questions11" => 'required',
+        "imaga" => 'required'
+    ]);
     $result = DB::table('pain_detect')->insert($request->except(['_token']));
     return redirect('chronicpain');
  }

@@ -21,7 +21,7 @@
 			</div>
 		</div>
 	</header>
-	<form action="{{route('createpatient')}}" method="POST">
+	<form action="{{route('createpatient')}}" id="form" method="POST">
         @csrf
 		<div class="content">
 
@@ -171,8 +171,8 @@
 				</p>
 				<img src="img/painDETECT.png.png" width="450" height="400" id="replacement">
 				<p>Отдает ли боль в другие области тела?</p>
-				<button class="button1" onclick="qustionmans()">Да</button>
-				<button class="button2" onclick="qustionmans()">Нет</button>
+				<button class="button1" type="button" onclick="qustionmans()">Да</button>
+				<button class="button2" type="button" onclick="qustionmans()">Нет</button>
 
 				<p>Если отдает, укажите пожалуйста область.</p>
 
