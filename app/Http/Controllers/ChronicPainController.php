@@ -33,6 +33,6 @@ class ChronicPainController extends Controller
         "imaga" => 'required'
     ]);
     $result = DB::table('pain_detect')->insert($request->except(['_token']));
-    return redirect('Index');
+    return redirect('/');
  }
 }
