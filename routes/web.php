@@ -16,7 +16,7 @@ use App\Http\Controllers\ChronicPainController;
 
 Route::get('/', function () {
     return view('index');
-});
+})->name('Index');
 Route::get('/chronicpain', function () {
     return view('chronicpain');
 })->name('chronicpain');

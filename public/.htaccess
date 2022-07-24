@@ -1,6 +1,8 @@
+DirectoryIndex public/index.php
+
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
-        Options -MultiViews -Indexes
+        Options  -Indexes
     </IfModule>
 
     RewriteEngine On

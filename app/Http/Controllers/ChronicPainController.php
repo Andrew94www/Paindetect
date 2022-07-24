@@ -15,6 +15,7 @@ class ChronicPainController extends Controller
 
  public function cretatePatientIndex(Request $request){
     $result = DB::table('patient_index')->insert($request->except(['_token']));
+    return redirect('chronicpain');
  }
 
  public function cretatePatientPainDetect(Request $request){
@@ -32,6 +33,6 @@ class ChronicPainController extends Controller
         "imaga" => 'required'
     ]);
     $result = DB::table('pain_detect')->insert($request->except(['_token']));
-    return redirect('chronicpain');
+    return redirect('Index');
  }
 }
