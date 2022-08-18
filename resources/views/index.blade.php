@@ -13,7 +13,7 @@
 <body>
 	<header>
 		<div class="logo">
-			<a href="index.html"><img class="graficlogo" src="img/logotip.png" alt="logotip" width="120px"
+			<a href="index.html"><img class="graficlogo" src="img/logotip1.png" alt="logotip" width="120px"
 					height="120"></a>
 		</div>
 	</header>
