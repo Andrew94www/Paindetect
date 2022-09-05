@@ -21,3 +21,8 @@ DirectoryIndex public/index.php
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ public/index.php [L]
 </IfModule>
+# <IfModule mod_rewrite.c>
+# RewriteEngine on
+# RewriteRule ^$ public/ [L]
+# RewriteRule ((?s).*) public/$1 [L]
+# </IfModule>
