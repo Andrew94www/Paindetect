@@ -1,3 +1,74 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:400,700italic);
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+header {
+  text-align: justify;
+  min-height: 2em;
+  padding: 2em 5%;
+  background: #4f86c5;
+  color: #fff;
+}
+
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header > div {
+  height: 100%;
+}
+nav {
+  margin-top: 20px;
+}
+header > div h1 {
+  font-size: 3em;
+  font-style: italic;
+}
+header nav a {
+  padding: 0 0.6em;
+  white-space: nowrap;
+}
+header nav a:last-child {
+  padding-right: 0;
+}
+@media screen and (max-width: 720px) {
+  header {
+    height: auto;
+  }
+  header > div,
+  header > div h1,
+  header nav {
+    height: auto;
+    width: auto;
+    display: block;
+    text-align: center;
+  }
+
+  .headerContent {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  a {
+    display: inline-block;
+  }
+  a:not(:last-child) {
+    margin-bottom: 10px;
+  }
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
 * {
     margin: 0;
     padding: 0;
@@ -20,12 +91,12 @@
 
   }
 
-  .logo {
-    background: #000;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
+  /* .logo {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+  } */
   .graficlogo {
     padding: 1px;
     max-width: 100%;
