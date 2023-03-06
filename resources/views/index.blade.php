@@ -500,18 +500,18 @@
 									<p>@lang('main.com')<input type="checkbox" name="questions39" id=""   onchange="queStions1('questions39')" value="1"></p>
 								</li>
 								<li>
-									<p>Тремор ,мышечное напряжение<input type="checkbox" name="questions40" id=""
+									<p>@lang('main.tremor_m')<input type="checkbox" name="questions40" id=""
                                         onchange="queStions1('questions40')" value="1"></p>
 								</li>
 								<li>
-									<p>Бессонница<input type="checkbox" name="questions41" id=""  onchange="queStions1('questions41')" value="1"></p>
+									<p>@lang('main.Insomnia_a')<input type="checkbox" name="questions41" id=""  onchange="queStions1('questions41')" value="1"></p>
 								</li>
 								<li>
-									<p>Потливость, приливы жару <input type="checkbox" name="questions42" id=""
+									<p>@lang('main.sweating')<input type="checkbox" name="questions42" id=""
                                         onchange="queStions1('questions42')"  value="1"></p>
 								</li>
 								<li>
-									<p>Серцебиение<input type="checkbox" name="questions43" id=""  onchange="queStions1('questions43')" value="1"></p>
+									<p>@lang('main.heartbeat')<input type="checkbox" name="questions43" id=""  onchange="queStions1('questions43')" value="1"></p>
 								</li>
 							</ul>
 
@@ -519,7 +519,7 @@
 
 					</div>
 
-					<p>Неефективность НПВС</p>
+					<p>@lang('main.effectiveness')</p>
 
 					<ul class="lis">
 						<li>
@@ -537,9 +537,8 @@
 				</div>
 
 				<div class="disfunction">
-					<h4>Дисфункциональные боли</h4>
-					<p>Отсутствие четко локализованого болю Непонятное и не четкое описание болевого синдрома
-						Генерализованые боли (постоянное звозростание количества болевых зон).</p>
+					<h4>@lang('main.dysfunctional_pain')</h4>
+					<p>@lang('main.Absence')</p>
 
 					<ul class="lis">
 						<li>
@@ -551,8 +550,7 @@
 
 					</ul>
 
-					<p>Больной жалуеться на численные разнообразные соматические нарушения , которые не могут быть
-						подтверждены реальними соматическими заболеваниями.</p>
+					<p>@lang('main.patient_complains')</p>
 
 					<ul class="lis">
 						<li>
@@ -564,34 +562,34 @@
 
 					</ul>
 
-					<p>Коморбидность з дисфункциональными заболеваниями :</p>
+					<p>@lang('main.comorbidity')</p>
 					<ul>
 						<li>
-							<p>- Хроническая головная боль напряжения <input type="checkbox" name="questions48" id=""
+							<p>@lang('main.tension_headache') <input type="checkbox" name="questions48" id=""
                                 onchange="queStions1('questions48')" value="8"></p>
 						</li>
 						<li>
-							<p>- Соматоформное болеовое расстройство ( психогенная боль) <input type="checkbox"
+							<p>@lang('main.psychogenic_pain') <input type="checkbox"
 									name="questions49" id=""  onchange="queStions1('questions49')" value="6"></p>
 						</li>
 						<li>
-							<p>- Синдром роздраженного кишечника<input type="checkbox" name="questions50" id=""
+							<p> @lang('main.irritable_bowel')<input type="checkbox" name="questions50" id=""
                                 onchange="queStions1('questions50')" value="6"></p>
 						</li>
 						<li>
-							<p>- Фибромиалгия <input type="checkbox" name="questions51" id=""  onchange="queStions1('questions51')" value="6"></p>
+							<p>@lang('main.fibromyalgia') <input type="checkbox" name="questions51" id=""  onchange="queStions1('questions51')" value="6"></p>
 						</li>
 						<li>
-							<p>- Інтерстициальный цыстит <input type="checkbox" name="questions52" id="" onchange="queStions1('questions52')" value="6"></p>
+							<p>@lang('main.interstitial_cystitis')  <input type="checkbox" name="questions52" id="" onchange="queStions1('questions52')" value="6"></p>
 						</li>
 						<li>
-							<p>- Хроническая тазовая боль<input type="checkbox" name="questions53" id="" onchange="queStions1('questions53')" value="6"></p>
+							<p>@lang('main.pelvic_pain') <input type="checkbox" name="questions53" id="" onchange="queStions1('questions53')" value="6"></p>
 						</li>
 						<li>
-							<p>- Синдром неспокойных ног <input type="checkbox" name="questions54" id="" onchange="queStions1('questions54')" value="6"></p>
+							<p>@lang('main.leg_syndrome') <input type="checkbox" name="questions54" id="" onchange="queStions1('questions54')" value="6"></p>
 						</li>
 						<li>
-							<p>- Синдром хронической усталости<input type="checkbox" name="questions55" id="" onchange="queStions1('questions55')"  value="6">
+							<p>@lang('main.chronic_fatigue_syndrome') <input type="checkbox" name="questions55" id="" onchange="queStions1('questions55')"  value="6">
 							</p>
 						</li>
                         <input type="hidden" name="nociceptionPain" value="" id="nociceptionPain">
@@ -603,7 +601,7 @@
 					</ul>
 					<br>
 					<br>
-                     <strong><p>Проведенное лечение</p></strong>
+                     <strong><p>@lang('main.treatmen_t')</p></strong>
                       <textarea name="treatment" id="" cols="92" rows="10"> </textarea>
                       <input type="submit" onclick="result()" >
 				</div>

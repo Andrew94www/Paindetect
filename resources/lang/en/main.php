@@ -54,6 +54,21 @@ return [
     'disquiet'=>'Disquiet',
     'suffocation'=>'Suffocation',
     'com' =>'"Com" in the throat',
-    'Tremor, muscle tension'
-
+    'tremor_m'=>'Tremor, muscle tension',
+    'Insomnia_a'=> 'Insomnia',
+    'sweating'=>'Sweating, hot flashes',
+    'heartbeat'=>'Heartbeat',
+    'dysfunctional_pain'=>'Dysfunctional pain',
+    'Absence'=>'Absence of clearly localized pain Incomprehensible and unclear description of the pain syndrome Generalized pain (constant increase in the number of pain zones)',
+    'patient_complains'=>'The patient complains of a variety of numerical somatic disorders that cannot be confirmed by real somatic diseases.',
+    'comorbidity'=>'Comorbidity with dysfunctional diseases:',
+    'tension_headache'=>'- Chronic tension headache',
+    'psychogenic_pain'=>'- Somatoform pain disorder (psychogenic pain).',
+    'irritable_bowel'=>'- Irritable bowel syndrome.',
+    'fibromyalgia'=>'- Fibromyalgia',
+    'interstitial_cystitis'=>'- Interstitial cystitis',
+    'pelvic_pain'=>'- Chronic pelvic pain',
+    'leg_syndrome'=>'- Restless Leg Syndrome',
+    'chronic_fatigue_syndrome'=>'- Chronic fatigue syndrome',
+    'treatmen_t'=>'Treatment'
 ];

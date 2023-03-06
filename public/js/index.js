@@ -1,4 +1,5 @@
 let pain =new Map();
+let pain_h =new Map();
   let queStions1 = function (questions) {
 
     let qstion = document.getElementsByName(questions);//Функция обрабатывающая первый вопрос.
@@ -17,6 +18,7 @@ let neuropaticPain =0;
 let sensitPain =0;
 let dezingibitionPain=0;
 let disfunPain =0;
+let chronicPain=0;
 function result(){
 
     pain.forEach(function(value,key){
@@ -49,5 +51,26 @@ function result(){
 }
 
 
+let queStions2 = function (questions) {
+    let qstions = document.getElementsByName(questions);//Функция обрабатывающая первый вопрос.
+    for (let radio of  qstions) {
+        if (radio.checked) {
+            pain_h.set(questions, Number(radio.value));
+
+        }
+
+    }
 
 
+}
+function resultChronicPain(){
+
+    pain_h.forEach(function(value,key){
+        chronicPain =  chronicPain + value;
+    })
+    console.log(chronicPain);
+    d  = document.getElementById("chronicPain").value =chronicPain;
+    console.log(d)
+
+
+}

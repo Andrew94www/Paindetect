@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\App;
 class ChronicPainController extends Controller
 {
  public function cretatePatient(Request $request){
+     dd($request->all());
     $request->validate([
         'question' => 'required',
         "question_1" => 'required',
