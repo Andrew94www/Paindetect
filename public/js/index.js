@@ -68,9 +68,9 @@ function resultChronicPain(){
     pain_h.forEach(function(value,key){
         chronicPain =  chronicPain + value;
     })
-    console.log(chronicPain);
-    d  = document.getElementById("chronicPain").value =chronicPain;
-    console.log(d)
+
+     document.getElementById("chronicPain").value =chronicPain*10;
+
 
 
 }

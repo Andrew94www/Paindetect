@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        /* добавляем стили для мобильных устройств */
+        @media only screen and (max-width: 600px) {
+            h2 { font-size: 1.5rem; }
+            h4 { font-size: 1rem; }
+            p { font-size: 0.8rem; }
+            label { font-size: 0.8rem; }
+        }
+    </style>
 </head>
 <body>
     <form action="{{route('paindetect')}}" method="post">

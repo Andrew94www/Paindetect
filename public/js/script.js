@@ -255,6 +255,59 @@ function resalt(sum) {
     }
 }
 
+window.onload = function() {
+    // получаем элемент canvas по id
+    var canvas = document.getElementById('replacement');
+    // получаем контекст отрисовки на элементе
+    const ctx = canvas.getContext('2d');
+    // создаем объект изображения
+    const image = new Image();
+    image.src = 'img/pain_detect.png';
+    // ждем, пока изображение загрузится
+    image.onload = function() {
+        // рисуем изображение на canvas в координатах (0, 0)
+        ctx.drawImage(image, 0, 0, 450, 400);
+    }
+
+    // задаем начальные параметры для рисования
+    ctx.lineWidth = 15;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = 'red';
+
+    // флаг, указывающий, нужно ли рисовать
+    let isDrawing = false;
+    // координаты предыдущей точки
+    let lastX = 0;
+    let lastY = 0;
+
+    // обработчик события нажатия кнопки мыши
+    canvas.addEventListener('mousedown', (e) => {
+        isDrawing = true;
+        // задаем начальные координаты
+        [lastX, lastY] = [e.offsetX, e.offsetY];
+    });
+
+    // обработчик события отпускания кнопки мыши
+    canvas.addEventListener('mouseup', () => {
+        isDrawing = false;
+    });
+
+    // обработчик события движения мыши
+    canvas.addEventListener('mousemove', (e) => {
+        // проверяем, нужно ли рисовать
+        if (!isDrawing) return;
+
+        // рисуем линию между текущей и предыдущей точкой
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
+
+        // обновляем координаты предыдущей точки
+        [lastX, lastY] = [e.offsetX, e.offsetY];
+    });
+}
+
 
 
 // function resalt1(sum) {

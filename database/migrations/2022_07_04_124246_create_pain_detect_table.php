@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreatePainDetectTable extends Migration
@@ -15,20 +16,12 @@ class CreatePainDetectTable extends Migration
     {
         Schema::create('pain_detect', function (Blueprint $table) {
             $table->id();
+            $table->string('data_create')->default(time());
+            $table->string('contact_id')->default('-');
+            $table->string('neu_now')->default('0');
+            $table->string('neu_after_15_day')->default('0');
+            $table->string('neu_after_30_day')->default('0');
             $table->timestamps();
-            $table->string('questions1')->default('1');
-            $table->string('questions2')->default('1');
-            $table->string('questions3')->default('1');
-            $table->string('imaga')->default('0');
-            $table->string('questions11')->default('1');
-            $table->string('questions4')->default('0');
-            $table->string('questions5')->default('0');
-            $table->string('questions6')->default('0');
-            $table->string('questions7')->default('0');
-            $table->string('questions8')->default('0');
-            $table->string('questions9')->default('0');
-            $table->string('questions10')->default('0');
-            $table->string('result')->default('0');
         });
     }
 

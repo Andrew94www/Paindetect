@@ -41,3 +41,6 @@ Route::middleware(['set_locale'])->group(function(){
 );
 Route::get('locale/{locale}',[ChronicPainController::class ,'changeLocale'])->name('locale');
 
+Route::get('/test', function () {
+    return view('test');
+})->name('test');

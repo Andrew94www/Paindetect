@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
    {{App::setLocale(session('locale'))}}
-
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,19 +9,15 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 </head>
-
 <body link ="red" vlink="white">
     <header>
         <div class="container">
           <div class="headerContent">
             <h1>Pain Mechanism</h1>
             <nav><a href="{{ route('locale', 'ua') }}" >UA</a><a href="{{ route('locale', 'ru') }}">RU</a><a href="{{ route('locale', 'en') }}">EN</a></nav>
-
         </div>
         </div>
       </header>
-
-
 		<main>
             <form action="{{route('index')}}" method="POST">
             @csrf
@@ -37,7 +32,6 @@
 			<input type="text" name="contact_id" id="username" value=""
 				placeholder="Как с вами связаться_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _">
 		</div>
-
 			<div class="mainontent">
 				<div class="notioncicep">
 					<h4>@lang('main.nociception')</h4>
@@ -386,10 +380,6 @@
 
 
 			</div>
-
-
-
-
 			<div class="maincontriner2">
 				<div class="desingibition">
 					<h4>@lang('main.disinhibition')</h4>
@@ -608,20 +598,10 @@
 
 
 			</div>
-
-
         </form>
 		</main>
-
-
 	<footer>
-
 	</footer>
-
-
-
-
     <script type="text/javascript" src="js/index.js"></script>
 </body>
-
 </html>

@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
 
 class ChronicPainController extends Controller
 {
  public function cretatePatient(Request $request){
-     dd($request->all());
     $request->validate([
         'question' => 'required',
         "question_1" => 'required',
@@ -22,7 +22,8 @@ class ChronicPainController extends Controller
         "question_8" => 'required',
         "question_9" => 'required',
        ]);
-    $result = DB::table('patient')->insert($request->except(['_token']));
+    $result = DB::table('patient')->insert(["neu_now" => $request->input('chronicPain'),
+        'contact_id'=> Session::get('contact_id')]);
     return redirect('paindetect');
  }
 
@@ -35,6 +36,35 @@ class ChronicPainController extends Controller
     "contact_id" => 'required',
     "treatment" => 'required'
    ]);
+    Session::put('contact_id', $request->input('contact_id'));
+     $contact_id = $request->input('contact_id');
+     $patient = DB::table('patient_index')->where('contact_id', $contact_id)->first();
+     if ($patient ) {
+         $days_since_creation = floor((time() - (int)$patient->createPatient) / (60 * 60 * 24));
+         if ( $days_since_creation >= 15 && $days_since_creation < 30){
+             Session::put('contact_id', $patient->contact_id);
+             DB::table('patient_index')
+                 ->where('contact_id', $contact_id)
+                 ->update(['noc_after_15_day'=> $request->input('nociceptionPain'),
+                           'neu_after_15_day' => $request->input('neuropaticPain'),
+                           'ish_after_15_day'=>$request->input('ishemiaPain'),
+                           'cen_after_15_day'=>$request->input('sensitPain'),
+                           'dez_after_15_day'=> $request->input('dezingibitionPain'),
+                           'dis_after_15_day'=> $request->input('disfunPain')]);
+         }
+         if ( $days_since_creation >= 30){
+             Session::put('contact_id', $patient->contact_id);
+             DB::table('patient_index')
+                 ->where('contact_id', $contact_id)
+                 ->update(['noc_after_30_day'=> $request->input('nociceptionPain'),
+                     'neu_after_30_day' => $request->input('neuropaticPain'),
+                     'ish_after_30_day'=>$request->input('ishemiaPain'),
+                     'cen_after_30_day'=>$request->input('sensitPain'),
+                     'dez_after_30_day'=> $request->input('dezingibitionPain'),
+                     'dis_after_30_day'=> $request->input('disfunPain')]);
+         }
+         return redirect('chronicpain');
+     }
     $result = DB::table('patient_index')->insert([ "name" => $request->input('name'),
     'date' => $request->input('date'),
     "id_patient" =>  $request->input('id_patient'),
@@ -65,7 +95,9 @@ class ChronicPainController extends Controller
         "questions11" => 'required',
         "imaga" => 'required'
     ]);
-    $result = DB::table('pain_detect')->insert($request->except(['_token']));
+    $result = DB::table('pain_detect')->insert([
+        "neu_now" => $request->input('result'),
+        'contact_id'=> Session::get('contact_id')]);
     return redirect('/');
  }
  public function changeLocale($locale)

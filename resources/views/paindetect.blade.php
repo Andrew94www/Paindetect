@@ -169,135 +169,16 @@
 			<div class="mans">
 				<p>Пожалуйста, укажите на рисунке <b>одну область</b>, где вы испытываете <b>наиболее сильную боль.</b>
 				</p>
-				<img src="img/painDETECT.png.png" width="450" height="400" id="replacement">
-				<p>Отдает ли боль в другие области тела?</p>
+
+                <canvas
+                    id="replacement"
+                    width="450"
+                    height="400"
+                ></canvas>
+
+                <p>Отдает ли боль в другие области тела?</p>
 				<button class="button1" type="button" onclick="qustionmans()">Да</button>
 				<button class="button2" type="button" onclick="qustionmans()">Нет</button>
-
-				<p>Если отдает, укажите пожалуйста область.</p>
-
-				<ul class="region">
-					<br>
-					<li>
-						<p class="1">Область №1<input type="radio" name="questions11" id="" value="1"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="">Область №11<input type="radio" name="questions11" id="" value="11"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="">Область №21<input type="radio" name="questions11" id="" value="21"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="">Область №2<input type="radio" name="questions11" id="" value="2"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="">Область №12<input type="radio" name="questions11" id="" value="12"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="6">Область №22<input type="radio" name="questions11" id="" value="22"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="7">Область №3<input type="radio" name="questions11" id="" value="3"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="8">Область №13<input type="radio" name="questions11" id="" value="13"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="10">Область №23<input type="radio" name="questions11" id="" value="23"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="4">Область №4<input type="radio" name="questions11" id="" value="4"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="5">Область №14<input type="radio" name="questions11" id="" value="14"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="6">Область №24<input type="radio" name="questions11" id="" value="24"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="7">Область №5<input type="radio" name="questions11" id="" value="5"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="7">Область №15<input type="radio" name="questions11" id="" value="15"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="7">Область №25<input type="radio" name="questions11" id="" value="25"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="7">Область №6<input type="radio" name="questions11" id="" value="6"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="7">Область №16<input type="radio" name="questions11" id="" value="16"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="7">Область №26<input type="radio" name="questions11" id="" value="26"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="7">Область №7<input type="radio" name="questions11" id="" value="7"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="7">Область №17<input type="radio" name="questions11" id="" value="17"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="7">Область №27<input type="radio" name="questions11" id="" value="27"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="7">Область №8<input type="radio" name="questions11" id="" value="8"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="7">Область №18<input type="radio" name="questions11" id="" value="18"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="7">Область №28<input type="radio" name="questions11" id="" value="28"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="7">Область №9<input type="radio" name="questions11" id="" value="9"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="7">Область №19<input type="radio" name="questions11" id="" value="19"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="7">Область №29<input type="radio" name="questions11" id="" value="29"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="7">Область №10<input type="radio" name="questions11" id="" value="10"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-					<li>
-						<p class="7">Область №20<input type="radio" name="questions11" id="" value="20"
-								onchange="changePictche(changeCount())"></p>
-					</li>
-
-
-				</ul>
-
 			</div>
 
 		</div>
