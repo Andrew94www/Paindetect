@@ -13,6 +13,25 @@
             p { font-size: 0.8rem; }
             label { font-size: 0.8rem; }
         }
+        input[type="submit"] {
+            border: none;
+            border-radius: 4px;
+            background-color: #5479a2;
+            color: white;
+            padding: 12px 24px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            transition-duration: 0.4s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #fd082d;
+        }
+
     </style>
 </head>
 <body>
