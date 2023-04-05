@@ -139,29 +139,24 @@
 					<b>Отметьте картинку, которая наиболее точно отражает характер протекания боли в Вашем случае:</b>
 
 					<div class="imagespain">
-						<p><img src="img/paingrafic.png" alt="" class="leftimg">Непрерывная боль, немного меняющаяся по
-							интенсивности <input type="radio" name="imaga" id="" value="1" onchange="quesimg()"></p>
+						<img src="img/paingrafic.png" alt="" class="leftimg"><p>Непрерывная боль, меняющаяся по интенсивности <input type="radio" name="imaga" id="" value="1" onchange="quesimg()"></p>
 					</div> <br><br><br>
 					<div class="imagespain1">
-						<p><img src="img/paingrafic1.png" alt="" class="leftimg">Непрерывная боль спериодическими
-							приступами <input type="radio" name="imaga" id="" value="2" onchange="quesimg()"></p></span>
+						<img src="img/paingrafic1.png" alt="" class="leftimg"><p>Непрерывная боль, периодические
+							приступы <input type="radio" name="imaga" id="" value="2" onchange="quesimg()"></p>
 					</div><br><br><br>
 					<div class="imagespain2">
-						<p><img src="img/paingrafic2.png" alt="" class="leftimg">Приступы боли без болевых ощущений в
+						<img src="img/paingrafic2.png" alt="" class="leftimg"><p>Приступы боли без болевых ощущений в
 							промежутках между ними <input type="radio" name="imaga" id="" value="3"
 								onchange="quesimg()"></p>
 					</div><br><br>
 					<div class="imagespain2">
-						<p><img src="img/paingrafic3.png" alt="" class="leftimg">Приступы боли, сопровождающиеся
+						<img src="img/paingrafic3.png" alt="" class="leftimg"><p>Приступы боли, сопровождающиеся
 							болевыми ощущениями в промежутках между ними <input type="radio" name="imaga" id=""
 								value="4" onchange="quesimg()"></p>
 					</div><br><br>
 
 				</div>
-
-
-
-
 
 			</div>
 
@@ -369,6 +364,7 @@
 					<button class="button1" onclick="resalt(summa ())">Результат обследования</button>
 				</div>
 			</div>
+            </div>
 	</form>
 	<script type="text/javascript" src="js/script.js"></script>
 </body>
