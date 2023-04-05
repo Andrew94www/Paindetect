@@ -15,7 +15,7 @@ class CreatePatientIndexTable extends Migration
     {
         Schema::create('patient_index', function (Blueprint $table) {
             $table->id();
-            $table->string('createPatient')->default(time());
+            $table->integer('date_create');
             $table->string('date')->default('-');
             $table->string('name')->default('-');
             $table->string('id_patient')->default('-');

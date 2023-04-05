@@ -20,7 +20,7 @@ class CreatePatientTable extends Migration
             $table->string('neu_now')->default('0');
             $table->string('neu_after_15_day')->default('0');
             $table->string('neu_after_30_day')->default('0');
-            $table->string('date_create')->default(time());
+            $table->integer('date_create');
 
         });
     }

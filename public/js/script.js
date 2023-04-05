@@ -131,99 +131,99 @@ function changeCount() {
     }
 }
 /*Функция замены картинки*/
-function changePictche(count) {
-    switch (count) {
-        case 1:
-            document.getElementById('replacement').src = "img/painDETECT1.png";
-            break;
-        case 2:
-            document.getElementById('replacement').src = "img/painDETECT20.png";
-            break;
-        case 3:
-            document.getElementById('replacement').src = "img/painDETECT26.png";
-            break;
-        case 4:
-            document.getElementById('replacement').src = "img/painDETECT2.png"
-            break;
-        case 5:
-            document.getElementById('replacement').src = "img/painDETECT19.png"
-            break;
-        case 6:
-            document.getElementById('replacement').src = "img/painDETECT27.png"
-            break;
-        case 7:
-            document.getElementById('replacement').src = "img/painDETECT15.png"
-            break;
-        case 8:
-            document.getElementById('replacement').src = "img/painDETECT21.png"
-            break;
-        case 9:
-            document.getElementById('replacement').src = "img/painDETECT25.png"
-            break;
-        case 10:
-            document.getElementById('replacement').src = "img/painDETECT16.png"
-            break;
-        case 11:
-            document.getElementById('replacement').src = "img/painDETECT22.png"
-            break;
-        case 12:
-            document.getElementById('replacement').src = "img/painDETECT13.png"
-            break;
-        case 13:
-            document.getElementById('replacement').src = "img/painDETECT17.png"
-            break;
-        case 14:
-            document.getElementById('replacement').src = "img/painDETECT23.png"
-            break;
-        case 15:
-            document.getElementById('replacement').src = "img/painDETECT14.png"
-            break;
-        case 16:
-            document.getElementById('replacement').src = "img/painDETECT18.png"
-            break;
-        case 17:
-            document.getElementById('replacement').src = "img/painDETECT24.png"
-            break;
-        case 18:
-            document.getElementById('replacement').src = "img/painDETECT31.png"
-            break;
-        case 19:
-            document.getElementById('replacement').src = "img/painDETECT4.png"
-            break;
-        case 20:
-            document.getElementById('replacement').src = "img/painDETECT8.png"
-            break;
-        case 21:
-            document.getElementById('replacement').src = "img/painDETECT29.png"
-            break;
-        case 22:
-            document.getElementById('replacement').src = "img/painDETECT5.png"
-            break;
-        case 23:
-            document.getElementById('replacement').src = "img/painDETECT9.png"
-            break;
-        case 24:
-            document.getElementById('replacement').src = "img/painDETECT28.png"
-            break;
-        case 25:
-            document.getElementById('replacement').src = "img/painDETECT6.png"
-            break;
-        case 26:
-            document.getElementById('replacement').src = "img/painDETECT11.png"
-            break;
-        case 27:
-            document.getElementById('replacement').src = "img/painDETECT30.png"
-            break;
-        case 28:
-            document.getElementById('replacement').src = "img/painDETECT7.png"
-            break;
-        case 29:
-            document.getElementById('replacement').src = "img/painDETECT12.png"
-            break;
-
-
-    }
-}
+// function changePictche(count) {
+//     switch (count) {
+//         case 1:
+//             document.getElementById('replacement').src = "img/painDETECT1.png";
+//             break;
+//         case 2:
+//             document.getElementById('replacement').src = "img/painDETECT20.png";
+//             break;
+//         case 3:
+//             document.getElementById('replacement').src = "img/painDETECT26.png";
+//             break;
+//         case 4:
+//             document.getElementById('replacement').src = "img/painDETECT2.png"
+//             break;
+//         case 5:
+//             document.getElementById('replacement').src = "img/painDETECT19.png"
+//             break;
+//         case 6:
+//             document.getElementById('replacement').src = "img/painDETECT27.png"
+//             break;
+//         case 7:
+//             document.getElementById('replacement').src = "img/painDETECT15.png"
+//             break;
+//         case 8:
+//             document.getElementById('replacement').src = "img/painDETECT21.png"
+//             break;
+//         case 9:
+//             document.getElementById('replacement').src = "img/painDETECT25.png"
+//             break;
+//         case 10:
+//             document.getElementById('replacement').src = "img/painDETECT16.png"
+//             break;
+//         case 11:
+//             document.getElementById('replacement').src = "img/painDETECT22.png"
+//             break;
+//         case 12:
+//             document.getElementById('replacement').src = "img/painDETECT13.png"
+//             break;
+//         case 13:
+//             document.getElementById('replacement').src = "img/painDETECT17.png"
+//             break;
+//         case 14:
+//             document.getElementById('replacement').src = "img/painDETECT23.png"
+//             break;
+//         case 15:
+//             document.getElementById('replacement').src = "img/painDETECT14.png"
+//             break;
+//         case 16:
+//             document.getElementById('replacement').src = "img/painDETECT18.png"
+//             break;
+//         case 17:
+//             document.getElementById('replacement').src = "img/painDETECT24.png"
+//             break;
+//         case 18:
+//             document.getElementById('replacement').src = "img/painDETECT31.png"
+//             break;
+//         case 19:
+//             document.getElementById('replacement').src = "img/painDETECT4.png"
+//             break;
+//         case 20:
+//             document.getElementById('replacement').src = "img/painDETECT8.png"
+//             break;
+//         case 21:
+//             document.getElementById('replacement').src = "img/painDETECT29.png"
+//             break;
+//         case 22:
+//             document.getElementById('replacement').src = "img/painDETECT5.png"
+//             break;
+//         case 23:
+//             document.getElementById('replacement').src = "img/painDETECT9.png"
+//             break;
+//         case 24:
+//             document.getElementById('replacement').src = "img/painDETECT28.png"
+//             break;
+//         case 25:
+//             document.getElementById('replacement').src = "img/painDETECT6.png"
+//             break;
+//         case 26:
+//             document.getElementById('replacement').src = "img/painDETECT11.png"
+//             break;
+//         case 27:
+//             document.getElementById('replacement').src = "img/painDETECT30.png"
+//             break;
+//         case 28:
+//             document.getElementById('replacement').src = "img/painDETECT7.png"
+//             break;
+//         case 29:
+//             document.getElementById('replacement').src = "img/painDETECT12.png"
+//             break;
+//
+//
+//     }
+// }
 
 function summa() {
 

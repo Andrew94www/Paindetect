@@ -16,7 +16,7 @@ class CreatePainDetectTable extends Migration
     {
         Schema::create('pain_detect', function (Blueprint $table) {
             $table->id();
-            $table->string('data_create')->default(time());
+            $table->integer('data_create');
             $table->string('contact_id')->default('-');
             $table->string('neu_now')->default('0');
             $table->string('neu_after_15_day')->default('0');

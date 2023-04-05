@@ -1,159 +1,517 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:400,700italic);
+
 * {
-  padding: 0;
-  margin: 0;
+    padding: 0;
+    margin: 0;
 }
 
 .container {
-  max-width: 1400px;
-  margin: 0 auto;
+    max-width: 1400px;
+    margin: 0 auto;
 }
+
 header {
-  text-align: justify;
-  min-height: 2em;
-  padding: 2em 5%;
-  background: #4f86c5;
-  color: #fff;
+    text-align: justify;
+    min-height: 2em;
+    padding: 2em 5%;
+    background: #064ea0;
+    color: #fff;
 }
 
 .headerContent {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 header > div {
-  height: 100%;
+    height: 100%;
 }
-nav {
-  margin-top: 20px;
-}
-header > div h1 {
-  font-size: 3em;
-  font-style: italic;
-}
-header nav a {
-  padding: 0 0.6em;
-  white-space: nowrap;
-}
-header nav a:last-child {
-  padding-right: 0;
-}
-@media screen and (max-width: 720px) {
-  header {
-    height: auto;
-  }
-  header > div,
-  header > div h1,
-  header nav {
-    height: auto;
-    width: auto;
-    display: block;
-    text-align: center;
-  }
 
-  .headerContent {
-    flex-direction: column;
-  }
+nav {
+    margin-top: 20px;
+}
+
+header > div h1 {
+    font-size: 3em;
+    font-style: italic;
+}
+
+header nav a {
+    padding: 0 0.6em;
+    white-space: nowrap;
+}
+
+header nav a:last-child {
+    padding-right: 0;
+}
+
+@media screen and (max-width: 720px) {
+    header {
+        height: auto;
+    }
+
+    header > div,
+    header > div h1,
+    header nav {
+        height: auto;
+        width: auto;
+        display: block;
+        text-align: center;
+    }
+
+    .headerContent {
+        flex-direction: column;
+    }
 }
 
 @media screen and (max-width: 420px) {
-  a {
-    display: inline-block;
-  }
-  a:not(:last-child) {
-    margin-bottom: 10px;
-  }
-  nav {
-    display: flex;
-    flex-wrap: wrap;
-  }
+    a {
+        display: inline-block;
+    }
+
+    a:not(:last-child) {
+        margin-bottom: 10px;
+    }
+
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+    }
 }
+
 * {
     margin: 0;
     padding: 0;
-  }
-  body {
+}
+
+body {
     font-family: 'Open Sans', sans-serif;
-  }
+}
 
-  .date1{
+.date1 {
     display: inline-block;
     background: #6600ff;
-    color:white;
+    color: white;
     font-size: 20px;
-  }
+}
 
-  .date2{
+.date2 {
     background: #6600ff;
-    width: 100%;
-    border :4px solid #6600ff;
+    /*width: 100%;*/
+    border: 4px solid #6600ff;
 
-  }
+}
 
-  /* .logo {
-    content: '';
-    display: inline-block;
-    vertical-align: middle;
-    height: 100%;
-  } */
-  .graficlogo {
+/* .logo {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+} */
+.graficlogo {
     padding: 1px;
     max-width: 100%;
     box-sizing: border-box;
-  }
-  .mainontent {
+}
+
+.mainontent {
     display: flex;
-  }
-  .lis {
+}
+
+.lis {
     list-style-type: none;
     /* Убираем маркеры */
-  }
-  .conteiner {
+}
+
+.conteiner {
     display: flex;
-  }
-  li {
+}
+
+li {
     list-style-type: none;
     display: inline-block;
-  }
-  .conteinertw,
-  .conteinerfiv,
-  .maincontriner2 {
+}
+
+.conteinertw,
+.conteinerfiv,
+.maincontriner2 {
     display: flex;
-  }
-  .notioncicep {
+}
+
+.notioncicep {
     border: 1px solid black;
-    background: linear-gradient(to right, #adff2f, #ffffff);
-  }
-  .ishemia {
+    background: #baa0a0;
+}
+
+.ishemia {
     border: 1px solid black;
-    width: 35%;
-    background: linear-gradient(to right, #ff00ff, #ffffff);
-  }
-  .neyropatic {
+    background: #a49696;
+}
+
+.neyropatic {
     border: 1px solid black;
-    background: linear-gradient(to right, #ffff00, #ffffff);
-  }
-  .sensetisetion {
-    border: 1px solid black;
-    border-right: 2px solid black;
-    background: linear-gradient(to right, #7fffd4, #ffffff);
-  }
-  .desingibition {
-    border: 1px solid black;
-    width: 50%;
-    background: linear-gradient(to right, #f08080, #ffffff);
-  }
-  .disfunction {
-    width: 50%;
+    background: #a49696;
+}
+
+.sensetisetion {
     border: 1px solid black;
     border-right: 2px solid black;
-    background: linear-gradient(to right, #db7093, #ffffff);
-  }
-  p {
-    padding: 4px ;
-  }
-  h4 {
+    background: #baa0a0;
+}
+
+.desingibition {
+    border: 1px solid black;
+    /*width: 50%;*/
+    background: #aba8a8;
+}
+
+.disfunction {
+    /*width: 50%;*/
+    border: 1px solid black;
+    border-right: 2px solid black;
+    background: #aba8a8;
+}
+
+.mainontent > div {
+    margin-right: 0;
+    flex: 1; /* растянуть блок на всю доступную ширину */
+}
+
+.maincontriner2 > div {
+    margin-right: 0;
+    flex: 1; /* растянуть блок на всю доступную ширину */
+}
+
+p {
+    padding: 4px;
+}
+
+h4 {
     padding: 5px;
     background: #DCDCDC;
-  }
+}
+
+input[type="submit"] {
+    background-color: #0ebc0e;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 21px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+input[type="submit"]:active,
+input[type="submit"]:focus {
+    box-shadow: none;
+    transform: translateY(2px);
+}
+
+
+
+textarea {
+    width: 100%; /* относительная ширина */
+    height: 150px; /* относительная высота */
+}
+
+/* Стили для экранов шириной до 600px */
+@media screen and (max-width: 600px) {
+    .headerContent {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    nav {
+        margin-top: 10px;
+    }
+}
+
+/* Стили для экранов шириной от 600px до 960px */
+@media screen and (min-width: 600px) and (max-width: 960px) {
+    .headerContent {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        text-align: left;
+    }
+
+    nav {
+        margin-top: 0;
+    }
+}
+
+/* Стили для экранов шириной более 960px */
+@media screen and (min-width: 960px) {
+    .headerContent {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        text-align: left;
+    }
+
+    nav {
+        margin-top: 0;
+    }
+}
+
+/* Медиа-запрос для экранов меньше 768px */
+@media (max-width: 768px) {
+    textarea {
+        width: 100%; /* 100% ширина на маленьких экранах */
+        height: 100px; /* уменьшаем высоту для маленьких экранов */
+    }
+}
+
+/* Медиа-запрос для экранов меньше 480px */
+@media (max-width: 480px) {
+    textarea {
+        width: 100%; /* 100% ширина на самых маленьких экранах */
+        height: 80px; /* уменьшаем высоту для самых маленьких экранов */
+    }
+}
+
+/* Для мобильных устройств */
+@media screen and (max-width: 767px) {
+    .date2 {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .date1 {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    input[type="date"],
+    input[type="text"] {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    #user {
+        order: 2;
+    }
+
+    #username {
+        order: 3;
+    }
+}
+
+/* Для планшетов и десктопов */
+@media screen and (min-width: 768px) {
+    .date2 {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .date1 {
+        width: 30%;
+        margin-top: 0;
+    }
+
+    input[type="date"],
+    input[type="text"] {
+        width: 60%;
+        margin-bottom: 0;
+    }
+
+    #user {
+        margin-right: 20px;
+    }
+}
+
+
+@media (min-width: 768px) {
+    .mainontent {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .notioncicep, .ishemia, .neyropatic, .sensetisetion {
+        flex-basis: calc(25% - 20px);
+        margin-right: 20px;
+    }
+
+    .sensetisetion {
+        margin-right: 0;
+    }
+}
+
+/* Common styles */
+.lis {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+h4 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+@media (max-width: 767px) {
+    .mainontent {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+
+/* для мобильных устройств */
+@media only screen and (max-width: 767px) {
+
+    /* изменяем ширину контейнера */
+    .maincontriner2 {
+        width: 100%;
+    }
+
+    /* изменяем стили для заголовка */
+    .desingibition h4 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    /* изменяем стили для параграфов */
+    .desingibition p {
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    /* изменяем стили для списка */
+    .lis {
+        margin-bottom: 10px;
+    }
+
+    /* изменяем стили для кнопок */
+    input[type="radio"],
+    input[type="checkbox"] {
+        margin-right: 5px;
+    }
+
+}
+
+
+/* Styles for screens smaller than 768px */
+@media only screen and (max-width: 767px) {
+    .maincontriner2 {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .disfunction {
+        margin-top: 20px;
+    }
+
+    textarea {
+        width: 100%;
+    }
+}
+
+/* Styles for screens between 768px and 1024px */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .maincontriner2 {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .desingibition {
+        width: 48%;
+    }
+
+    .disfunction {
+        width: 48%;
+        margin-top: 0;
+    }
+
+    textarea {
+        width: 100%;
+    }
+}
+
+/* Styles for screens larger than 1024px */
+@media only screen and (min-width: 1025px) {
+    .maincontriner2 {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .desingibition {
+        width: 48%;
+    }
+
+    .disfunction {
+        width: 48%;
+        margin-top: 0;
+    }
+
+    textarea {
+        width: 100%;
+    }
+}
+
+.maincontriner2 > div {
+    margin-top: 0;
+}
+
+
+/* Styles for screens smaller than 768px */
+@media only screen and (max-width: 767px) {
+    input[type="submit"] {
+        margin: 10px auto;
+        display: block;
+    }
+}
+
+/* Styles for screens between 768px and 1024px */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .maincontriner2 {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    input[type="submit"] {
+        margin: 10px auto;
+        display: block;
+    }
+}
+
+/* Styles for screens larger than 1024px */
+@media only screen and (min-width: 1025px) {
+    .maincontriner2 {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    input[type="submit"] {
+        margin: 10px auto;
+        display: block;
+    }
+}
+
+
