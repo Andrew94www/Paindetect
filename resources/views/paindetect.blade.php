@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>PAINDETECT</title>
 	<link rel="stylesheet" href="/css/pain.css">
     <script src="/js/script.js"></script>
 </head>
@@ -17,7 +17,7 @@
 			</div>
 
 			<div class="interview">
-				<span>ОПРОСНИК ПО БОЛИ</span>
+				<span>@lang('main.pain_questioner')</span>
 			</div>
 		</div>
 	</header>
@@ -26,7 +26,7 @@
 		<div class="content">
 
 			<div class="severity">
-				<p>Как бы Вы оценили интенсивность боли, которую испытываете <b>сейчас</b>, в настоящий момент?</p>
+				<p>@lang('main.would_you_assess')</p>
 
 				<ul class="lis">
 					<li>
@@ -63,7 +63,7 @@
 				</ul>
 				<br>
 
-				<p>Как бы Вы оценили интенсивность <b>наиболее сильного приступа </b> боли за последние 4 недели?</p>
+				<p>@lang('main.was_the_strongest')</p>
 
 
 				<ul class="lis">
@@ -99,7 +99,7 @@
 					</li>
 				</ul>
 				<br>
-				<p> <b>В среднем</b>, насколько сильной была боль в течение последних 4 недель?</p>
+				<p> @lang('main.weeks_on_average')</p>
 
 				<ul class="lis">
 					<li>
@@ -136,23 +136,20 @@
 
 				<div class="imagespainss">
 
-					<b>Отметьте картинку, которая наиболее точно отражает характер протекания боли в Вашем случае:</b>
+					<b>@lang('main.best_describes')</b>
 
 					<div class="imagespain">
-						<img src="img/paingrafic.png" alt="" class="leftimg"><p>Непрерывная боль, меняющаяся по интенсивности <input type="radio" name="imaga" id="" value="1" onchange="quesimg()"></p>
+						<img src="img/paingrafic.png" alt="" class="leftimg"><p>@lang('main.pain_with_slight')<input type="radio" name="imaga" id="" value="1" onchange="quesimg()"></p>
 					</div> <br><br><br>
 					<div class="imagespain1">
-						<img src="img/paingrafic1.png" alt="" class="leftimg"><p>Непрерывная боль, периодические
-							приступы <input type="radio" name="imaga" id="" value="2" onchange="quesimg()"></p>
+						<img src="img/paingrafic1.png" alt="" class="leftimg"><p>@lang('main.pain_with_pain')<input type="radio" name="imaga" id="" value="2" onchange="quesimg()"></p>
 					</div><br><br><br>
 					<div class="imagespain2">
-						<img src="img/paingrafic2.png" alt="" class="leftimg"><p>Приступы боли без болевых ощущений в
-							промежутках между ними <input type="radio" name="imaga" id="" value="3"
+						<img src="img/paingrafic2.png" alt="" class="leftimg"><p>@lang('main.pain_between_them') <input type="radio" name="imaga" id="" value="3"
 								onchange="quesimg()"></p>
 					</div><br><br>
 					<div class="imagespain2">
-						<img src="img/paingrafic3.png" alt="" class="leftimg"><p>Приступы боли, сопровождающиеся
-							болевыми ощущениями в промежутках между ними <input type="radio" name="imaga" id=""
+						<img src="img/paingrafic3.png" alt="" class="leftimg"><p>@lang('main.attacks_with_pain') <input type="radio" name="imaga" id=""
 								value="4" onchange="quesimg()"></p>
 					</div><br><br>
 
@@ -162,7 +159,7 @@
 
 
 			<div class="mans">
-				<p>Пожалуйста, укажите на рисунке <b>одну область</b>, где вы испытываете <b>наиболее сильную боль.</b>
+				<p>@lang('main.area_of_pain')
 				</p>
 
                 <canvas
@@ -171,197 +168,193 @@
                     height="400"
                 ></canvas>
 
-                <p>Отдает ли боль в другие области тела?</p>
-				<button class="button1" type="button" onclick="qustionmans()">Да</button>
-				<button class="button2" type="button" onclick="qustionmans()">Нет</button>
+                <p>@lang('main.radiate_to_other')</p>
+				<button class="button1" type="button" onclick="qustionmans()">@lang('main.yes')</button>
+				<button class="button2" type="button" onclick="qustionmans()">@lang('main.no')</button>
 			</div>
 
 		</div>
 		<div class="resalt">
 			<div class="severityend">
-				<b>Испытываете ли Вы ощущение жжения (например, как при ожоге крапивой) в области, которую отметили на
-					рисунке?</b>
+				<b>@lang('main.suffer_from')</b>
 				<br>
 
 				<ul class="lis">
 					<li>
-						<p>совсем нет<input type="radio" name="questions4" id="" onchange="questions4()" value="0"></p>
+						<p>@lang('main.never')<input type="radio" name="questions4" id="" onchange="questions4()" value="0"></p>
 					</li>
 					<li>
-						<p>едва заметное<input type="radio" name="questions4" id="" onchange="questions4()" value="1"></p>
+						<p>@lang('main.hardly_noticed')<input type="radio" name="questions4" id="" onchange="questions4()" value="1"></p>
 					</li>
 					<li>
-						<p>незначительноe<input type="radio" name="questions4" id="" onchange="questions4()" value="2"></p>
+						<p>@lang('main.slightly')<input type="radio" name="questions4" id="" onchange="questions4()" value="2"></p>
 					</li>
 					<li>
-						<p>умеренное<input type="radio" name="questions4" id="" onchange="questions4()" value="3"></p>
+						<p>@lang('main.moderately')<input type="radio" name="questions4" id="" onchange="questions4()" value="3"></p>
 					</li>
 					<li>
-						<p>сильное<input type="radio" name="questions4" id="" onchange="questions4()" value="4"></p>
+						<p>@lang('main.strongly')<input type="radio" name="questions4" id="" onchange="questions4()" value="4"></p>
 					</li>
 					<li>
-						<p>очень сильное<input type="radio" name="questions4" id="" onchange="questions4()" value="5"></p>
+						<p>@lang('main.very_strongly')<input type="radio" name="questions4" id="" onchange="questions4()" value="5"></p>
 					</li>
 
 
 				</ul>
 				<br>
 
-				<b>Ощущаете ли Вы покалывание или пощипывание в области боли (как покалывание от онемения или слабого
-					электрического тока)?</b>
+				<b>@lang('main.tingling_or_prickling')</b>
 				<br>
 
 
 				<ul class="lis">
 					<li>
-						<p>совсем нет<input type="radio" name="questions5" id="" onchange="questions5()" value="0"></p>
+						<p>@lang('main.never')<input type="radio" name="questions5" id="" onchange="questions5()" value="0"></p>
 					</li>
 					<li>
-						<p>едва заметное<input type="radio" name="questions5" id="" onchange="questions5()" value="1"></p>
+						<p>@lang('main.hardly_noticed')<input type="radio" name="questions5" id="" onchange="questions5()" value="1"></p>
 					</li>
 					<li>
-						<p>незначительноe<input type="radio" name="questions5" id="" onchange="questions5()" value="2"></p>
+						<p>@lang('main.slightly')<input type="radio" name="questions5" id="" onchange="questions5()" value="2"></p>
 					</li>
 					<li>
-						<p>умеренное<input type="radio" name="questions5" id="" onchange="questions5()" value="3"></p>
+						<p>@lang('main.moderately')<input type="radio" name="questions5" id="" onchange="questions5()" value="3"></p>
 					</li>
 					<li>
-						<p>сильное<input type="radio" name="questions5" id="" onchange="questions5()" value="4"></p>
+						<p>@lang('main.strongly')<input type="radio" name="questions5" id="" onchange="questions5()" value="4"></p>
 					</li>
 					<li>
-						<p>очень сильное<input type="radio" name="questions5" id="" onchange="questions5()" value="5"></p>
+						<p>@lang('main.very_strongly')<input type="radio" name="questions5" id="" onchange="questions5()" value="5"></p>
 					</li>
 				</ul>
 				<br>
-				<b> Возникают ли у Вас болезненные ощущения в указанной области при легком соприкосновении (содеждой,
-					одеялом)?</b>
+				<b>@lang('main.clothing_a_blanket')</b>
 				<br>
 
 				<ul class="lis">
 					<li>
-						<p>совсем нет<input type="radio" name="questions6" id="" onchange="questions6()" value="0"></p>
+						<p>@lang('main.never')<input type="radio" name="questions6" id="" onchange="questions6()" value="0"></p>
 					</li>
 					<li>
-						<p>едва заметное<input type="radio" name="questions6" id="" onchange="questions6()" value="1"></p>
+						<p>@lang('main.hardly_noticed')<input type="radio" name="questions6" id="" onchange="questions6()" value="1"></p>
 					</li>
 					<li>
-						<p>незначительноe<input type="radio" name="questions6" id="" onchange="questions6()" value="2"></p>
+						<p>@lang('main.slightly')<input type="radio" name="questions6" id="" onchange="questions6()" value="2"></p>
 					</li>
 					<li>
-						<p>умеренное<input type="radio" name="questions6" id="" onchange="questions6()" value="3"></p>
+						<p>@lang('main.moderately')<input type="radio" name="questions6" id="" onchange="questions6()" value="3"></p>
 					</li>
 					<li>
-						<p>сильное<input type="radio" name="questions6" id="" onchange="questions6()" value="4"></p>
+						<p>@lang('main.strongly')<input type="radio" name="questions6" id="" onchange="questions6()" value="4"></p>
 					</li>
 					<li>
-						<p>очень сильное<input type="radio" name="questions6" id="" onchange="questions6()" value="5"></p>
+						<p>@lang('main.very_strongly')<input type="radio" name="questions6" id="" onchange="questions6()" value="5"></p>
 					</li>
 				</ul>
 				<br>
-				<b>Возникают ли у Вас резкие приступы боли в указанной области, как удар током?</b>
+				<b>@lang('main.sudden_pain_attacks')</b>
 				<br>
 
 				<ul class="lis">
 					<li>
-						<p>совсем нет<input type="radio" name="questions7" id="" onchange="questions7()" value="0"></p>
+						<p>@lang('main.never')<input type="radio" name="questions7" id="" onchange="questions7()" value="0"></p>
 					</li>
 					<li>
-						<p>едва заметное<input type="radio" name="questions7" id="" onchange="questions7()" value="1"></p>
+						<p>@lang('main.hardly_noticed')<input type="radio" name="questions7" id="" onchange="questions7()" value="1"></p>
 					</li>
 					<li>
-						<p>незначительноe<input type="radio" name="questions7" id="" onchange="questions7()" value="2"></p>
+						<p>@lang('main.slightly')<input type="radio" name="questions7" id="" onchange="questions7()" value="2"></p>
 					</li>
 					<li>
-						<p>умеренное<input type="radio" name="questions7" id="" onchange="questions7()" value="3"></p>
+						<p>@lang('main.moderately')<input type="radio" name="questions7" id="" onchange="questions7()" value="3"></p>
 					</li>
 					<li>
-						<p>сильное<input type="radio" name="questions7" id="" onchange="questions7()" value="4"></p>
+						<p>@lang('main.strongly')<input type="radio" name="questions7" id="" onchange="questions7()" value="4"></p>
 					</li>
 					<li>
-						<p>очень сильное<input type="radio" name="questions7" id="" onchange="questions7()" value="5"></p>
+						<p>@lang('main.very_strongly')<input type="radio" name="questions7" id="" onchange="questions7()" value="5"></p>
 					</li>
 
 				</ul>
 				<br>
 
-				<b>Возникают ли у Вас иногда болезненные ощущения в указанной области при воздействии холодного или
-					горячего (например, воды, когда Вы моетесь)?</b>
+				<b>@lang('main.bath_water')</b>
 				<br>
 
 
 				<ul class="lis">
 					<li>
-						<p>совсем нет<input type="radio" name="questions8" id="" onchange="questions8()" value="0"></p>
+						<p>@lang('main.never')<input type="radio" name="questions8" id="" onchange="questions8()" value="0"></p>
 					</li>
 					<li>
-						<p>едва заметное<input type="radio" name="questions8" id="" onchange="questions8()" value="1"></p>
+						<p>@lang('main.hardly_noticed')<input type="radio" name="questions8" id="" onchange="questions8()" value="1"></p>
 					</li>
 					<li>
-						<p>незначительноe<input type="radio" name="questions8" id="" onchange="questions8()" value="2"></p>
+						<p>@lang('main.slightly')<input type="radio" name="questions8" id="" onchange="questions8()" value="2"></p>
 					</li>
 					<li>
-						<p>умеренное<input type="radio" name="questions8" id="" onchange="questions8()" value="3"></p>
+						<p>@lang('main.moderately')<input type="radio" name="questions8" id="" onchange="questions8()" value="3"></p>
 					</li>
 					<li>
-						<p>сильное<input type="radio" name="questions8" id="" onchange="questions8()" value="4"></p>
+						<p>@lang('main.strongly')<input type="radio" name="questions8" id="" onchange="questions8()" value="4"></p>
 					</li>
 					<li>
-						<p>очень сильное<input type="radio" name="questions8" id="" onchange="questions8()" value="5"></p>
+						<p>@lang('main.very_strongly')<input type="radio" name="questions8" id="" onchange="questions8()" value="5"></p>
 					</li>
 				</ul>
 				<br>
-				<b> Ощущаете ли Вы онемение в указанной области?</b>
+				<b> @lang('main.from_a_sensation')</b>
 				<br>
 
 				<ul class="lis">
 					<li>
-						<p>совсем нет<input type="radio" name="questions9" id="" onchange="questions9()" value="0"></p>
+						<p>@lang('main.never')<input type="radio" name="questions9" id="" onchange="questions9()" value="0"></p>
 					</li>
 					<li>
-						<p>едва заметное<input type="radio" name="questions9" id="" onchange="questions9()" value="1"></p>
+						<p>@lang('main.hardly_noticed')<input type="radio" name="questions9" id="" onchange="questions9()" value="1"></p>
 					</li>
 					<li>
-						<p>незначительноe<input type="radio" name="questions9" id="" onchange="questions9()" value="2"></p>
+						<p>@lang('main.slightly')<input type="radio" name="questions9" id="" onchange="questions9()" value="2"></p>
 					</li>
 					<li>
-						<p>умеренное<input type="radio" name="questions9" id="" onchange="questions9()" value="3"></p>
+						<p>@lang('main.moderately')<input type="radio" name="questions9" id="" onchange="questions9()" value="3"></p>
 					</li>
 					<li>
-						<p>сильное<input type="radio" name="questions9" id="" onchange="questions9()" value="4"></p>
+						<p>@lang('main.strongly')<input type="radio" name="questions9" id="" onchange="questions9()" value="4"></p>
 					</li>
 					<li>
-						<p>очень сильное<input type="radio" name="questions9" id="" onchange="questions9()" value="5"></p>
+						<p>@lang('main.very_strongly')<input type="radio" name="questions9" id="" onchange="questions9()" value="5"></p>
 					</li>
 				</ul>
 				<br>
 
-				<b> Вызывает ли боль легкое нажатие на указанную область, например, нажатие пальцем?</b>
+				<b> @lang('main.with_a-finger')</b>
 				<br>
 				<ul class="lis">
 					<li>
-						<p>совсем нет<input type="radio" name="questions10" id="" onchange="questions10()" value="0"></p>
+						<p>@lang('main.never')<input type="radio" name="questions10" id="" onchange="questions10()" value="0"></p>
 					</li>
 					<li>
-						<p>едва заметное<input type="radio" name="questions10" id="" onchange="questions10()" value="1"></p>
+						<p>@lang('main.hardly_noticed')<input type="radio" name="questions10" id="" onchange="questions10()" value="1"></p>
 					</li>
 					<li>
-						<p>незначительноe<input type="radio" name="questions10" id="" onchange="questions10()" value="2"></p>
+						<p>@lang('main.slightly')<input type="radio" name="questions10" id="" onchange="questions10()" value="2"></p>
 					</li>
 					<li>
-						<p>умеренное<input type="radio" name="questions10" id="" onchange="questions10()" value="3"></p>
+						<p>@lang('main.moderately')<input type="radio" name="questions10" id="" onchange="questions10()" value="3"></p>
 					</li>
 					<li>
-						<p>сильное<input type="radio" name="questions10" id="" onchange="questions10()" value="4"></p>
+						<p>@lang('main.strongly')<input type="radio" name="questions10" id="" onchange="questions10()" value="4"></p>
 					</li>
 					<li>
-						<p>очень сильное<input type="radio" name="questions10" id="" onchange="questions10()" value="5"></p>
+						<p>@lang('main.very_strongly')<input type="radio" name="questions10" id="" onchange="questions10()" value="5"></p>
 					</li>
 				</ul>
 				<br>
 				<br>
 				<div class="culculate">
 					<span><textarea name="result" cols="80" rows="5" id="myText" >0</textarea></span>
-					<button class="button1" onclick="resalt(summa ())">Результат обследования</button>
+					<button class="button1" onclick="resalt(summa ())">@lang('main.send_the_result')</button>
 				</div>
 			</div>
             </div>
