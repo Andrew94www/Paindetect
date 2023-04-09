@@ -23,22 +23,27 @@ class ChronicPainController extends Controller
             "question_8" => 'required',
             "question_9" => 'required',
         ]);
-        $patient = DB::table('patient')->where('contact_id', Session::get('date_create'))->first();
+        $patient = DB::table('patient')->where('contact_id', Session::get('contact_id'))->first();
         if ($patient) {
             $days_since_creation = floor((time() - (int)$patient->date_create) / (60 * 60 * 24));
+            if ($days_since_creation >= 0 && $days_since_creation < 15){
+                return redirect()->route('callback');
+
+            }
+            if ($days_since_creation >= 0 && $days_since_creation < 15){
+                redirect('callback');
+            }
             if ($days_since_creation >= 15 && $days_since_creation < 30){
                 DB::table('patient')
                     ->where('contact_id', Session::get('contact_id'))
                     ->update(['neu_after_15_day' => $request->input('chronicPain')]);
-                return redirect('paindetect');
             }
-            if ($days_since_creation >= 0){
+            if ($days_since_creation >= 30){
                 DB::table('patient')
                     ->where('contact_id', Session::get('contact_id'))
-                    ->update(['neu_after_15_day' => $request->input('chronicPain')]);
-                return redirect('paindetect');
+                    ->update(['neu_after_30_day' => $request->input('chronicPain')]);
             }
-
+            return redirect('paindetect');
         }
         $result = DB::table('patient')->insert(["neu_now" => $request->input('chronicPain'),
             'contact_id' => Session::get('contact_id'),
@@ -62,6 +67,10 @@ class ChronicPainController extends Controller
         $patient = DB::table('patient_index')->where('contact_id', $contact_id)->first();
         if ($patient) {
             $days_since_creation = floor((time() - (int)$patient->date_create) / (60 * 60 * 24));
+            if ($days_since_creation >= 0 && $days_since_creation < 15){
+                return redirect()->route('callback');
+
+            }
             if ($days_since_creation >= 15 && $days_since_creation < 30) {
                 Session::put('contact_id', $patient->contact_id);
                 Session::put('date_create', $patient->date_create);
@@ -74,7 +83,7 @@ class ChronicPainController extends Controller
                         'dez_after_15_day' => $request->input('dezingibitionPain'),
                         'dis_after_15_day' => $request->input('disfunPain')]);
             }
-            if ($days_since_creation >= 0) {
+            if ($days_since_creation >= 30) {
                 Session::put('contact_id', $patient->contact_id);
                 Session::put('date_create', $patient->date_create);
                 DB::table('patient_index')
@@ -119,6 +128,28 @@ class ChronicPainController extends Controller
             "questions10" => 'required',
             "imaga" => 'required'
         ]);
+        $patient = DB::table('patient')->where('contact_id', Session::get('contact_id'))->first();
+        if ($patient) {
+            $days_since_creation = floor((time() - (int)$patient->date_create) / (60 * 60 * 24));
+            if ($days_since_creation >= 0 && $days_since_creation < 15){
+                return redirect()->route('callback');
+
+            }
+            if ($days_since_creation >= 0 && $days_since_creation < 15){
+                redirect('callback');
+            }
+            if ($days_since_creation >= 15 && $days_since_creation < 30){
+                DB::table('pain_detect')
+                    ->where('contact_id', Session::get('contact_id'))
+                    ->update(['neu_after_15_day' => $request->input('chronicPain')]);
+            }
+            if ($days_since_creation >= 30){
+                DB::table('pain_detect')
+                    ->where('contact_id', Session::get('contact_id'))
+                    ->update(['neu_after_30_day' => $request->input('chronicPain')]);
+            }
+            return redirect('/');
+        }
         $result = DB::table('pain_detect')->insert([
             "neu_now" => $request->input('result'),
             'contact_id' => Session::get('contact_id'),
