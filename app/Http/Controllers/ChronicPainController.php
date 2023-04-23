@@ -128,7 +128,7 @@ class ChronicPainController extends Controller
             "questions10" => 'required',
             "imaga" => 'required'
         ]);
-        $patient = DB::table('patient')->where('contact_id', Session::get('contact_id'))->first();
+        $patient = DB::table('pain_detect')->where('contact_id', Session::get('contact_id'))->first();
         if ($patient) {
             $days_since_creation = floor((time() - (int)$patient->date_create) / (60 * 60 * 24));
             if ($days_since_creation >= 0 && $days_since_creation < 15){
