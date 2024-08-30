@@ -74,3 +74,6 @@ function resultChronicPain(){
 
 
 }
+$(document).ready(function(){
+    $("p").tooltip();
+});

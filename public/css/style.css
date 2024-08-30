@@ -12,11 +12,29 @@
 
 header {
     text-align: justify;
-    min-height: 2em;
+    max-height: 75px; /* устанавливаем максимальную высоту */
+    font-size: 0.7em;
+    min-height: 1em;
     padding: 2em 5%;
     background: #064ea0;
     color: #fff;
 }
+.header-image {
+    float: right;
+    margin: 0 0 1em 1em;
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 767px) {
+    .header-image {
+        width: 8%;
+        float: none;
+        margin: 0 auto;
+        display: block;
+    }
+}
+
 
 .headerContent {
     display: flex;
@@ -514,4 +532,11 @@ h4 {
     }
 }
 
+.tooltip {
+    background-color: #333;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+}
 

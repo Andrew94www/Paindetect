@@ -5,8 +5,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>PainMehanism</title>
-	<link rel="stylesheet" type="text/css" href="/css/style.css">
-	<link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 </head>
 <body link ="red" vlink="white">
@@ -14,6 +14,7 @@
         <div class="container">
           <div class="headerContent">
             <h1>Pain Mechanism</h1>
+              <img src="img/detect.png" alt="Описание изображения" width="100" height="100" class="header-image">
             <nav><a href="{{ route('locale', 'ua') }}" >UA</a><a href="{{ route('locale', 'ru') }}">RU</a><a href="{{ route('locale', 'en') }}">EN</a></nav>
         </div>
         </div>
@@ -26,11 +27,11 @@
 			<input type="date" name="date" id="userdate">
 			<div class="date1">@lang('main.patient_a')</div>
 			<input type="text" name="name" id="user" value=""
-				placeholder="Ф.И.О._ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _">
+				placeholder="@lang('main.full_name')._ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _">
 			<input type="text" name="id_patient" id="username" value=""
-				placeholder="ID-пациента_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _">
+				placeholder="@lang('main.id_patient')_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _">
 			<input type="text" name="contact_id" id="username" value=""
-				placeholder="Как с вами связаться_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _">
+				placeholder="@lang('main.contact_you')_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _">
 		</div>
 			<div class="mainontent">
 				<div class="notioncicep">
@@ -124,7 +125,7 @@
 				<div class="ishemia">
 					<h4>@lang('main.ischemic_pain')</h4>
 
-					<p>@lang('main.ntermittent_claudication')</p>
+					<p data-toggle="tooltip" data-placement="top"  title="@lang('main.per_chram')">@lang('main.ntermittent_claudication')</p>
 
 					<ul class="lis">
 						<li>
@@ -240,7 +241,7 @@
 
 					</ul>
 
-					<p>@lang('main.allodynia')</p>
+					<p data-toggle="tooltip" data-placement="top"  title="@lang('main.allodenia_desc')">@lang('main.allodynia')</p>
 
 					<ul class="lis">
 						<li>
@@ -252,7 +253,7 @@
 
 					</ul>
 
-					<p>@lang('main.hyperalgesia')</p>
+					<p  data-toggle="tooltip" data-placement="top"  title="@lang('main.hyperalgesia_one')">@lang('main.hyperalgesia')</p>
 
 					<ul class="lis">
 						<li>
@@ -275,7 +276,7 @@
 						</li>
 
 					</ul>
-                    <p>@lang('main.dysesthesia')</p>
+                    <p data-toggle="tooltip" data-placement="top"  title="@lang('main.dyastesia_desc')">@lang('main.dysesthesia')</p>
 
 					<ul class="lis">
 						<li>
@@ -329,7 +330,7 @@
 
 					</ul>
 
-					<p>@lang('main.secondary_hyperalgesia')</p>
+					<p data-toggle="tooltip" data-placement="top"  title="@lang('main.hyperalgesia_two')">@lang('main.secondary_hyperalgesia')</p>
 
 					<ul class="lis">
 						<li>
@@ -341,7 +342,7 @@
 
 					</ul>
 
-					<p>@lang('main.phenomenon')</p>
+					<p data-toggle="tooltip" data-placement="top"  title="@lang('main.wind-up')">@lang('main.phenomenon')</p>
 
 					<ul class="lis">
 						<li>
@@ -563,20 +564,20 @@
 									name="questions49" id=""  onchange="queStions1('questions49')" value="6"></p>
 						</li>
 						<li>
-							<p> @lang('main.irritable_bowel')<input type="checkbox" name="questions50" id=""
+							<p data-toggle="tooltip" data-placement="top"  title="@lang('main.srk')"> @lang('main.irritable_bowel')<input type="checkbox" name="questions50" id=""
                                 onchange="queStions1('questions50')" value="6"></p>
 						</li>
 						<li>
-							<p>@lang('main.fibromyalgia') <input type="checkbox" name="questions51" id=""  onchange="queStions1('questions51')" value="6"></p>
+							<p data-toggle="tooltip" data-placement="top"  title="@lang('main.fibromialgia_desc')">@lang('main.fibromyalgia') <input type="checkbox" name="questions51" id=""  onchange="queStions1('questions51')" value="6"></p>
 						</li>
 						<li>
-							<p>@lang('main.interstitial_cystitis')  <input type="checkbox" name="questions52" id="" onchange="queStions1('questions52')" value="6"></p>
+							<p data-toggle="tooltip" data-placement="top"  title="@lang('main.intercis')">@lang('main.interstitial_cystitis')  <input type="checkbox" name="questions52" id="" onchange="queStions1('questions52')" value="6"></p>
 						</li>
 						<li>
 							<p>@lang('main.pelvic_pain') <input type="checkbox" name="questions53" id="" onchange="queStions1('questions53')" value="6"></p>
 						</li>
 						<li>
-							<p>@lang('main.leg_syndrome') <input type="checkbox" name="questions54" id="" onchange="queStions1('questions54')" value="6"></p>
+							<p data-toggle="tooltip" data-placement="top"  title="@lang('main.sbn')">@lang('main.leg_syndrome') <input type="checkbox" name="questions54" id="" onchange="queStions1('questions54')" value="6"></p>
 						</li>
 						<li>
 							<p>@lang('main.chronic_fatigue_syndrome') <input type="checkbox" name="questions55" id="" onchange="queStions1('questions55')"  value="6">
@@ -593,7 +594,7 @@
 					<br>
                      <strong><p>@lang('main.treatmen_t')</p></strong>
                       <textarea name="treatment" id="" cols="92" rows="10"> </textarea>
-                      <input type="submit" onclick="result()" >
+                      <input type="submit" onclick="result()" value="{{ trans('main.send_the_result') }}" >
 				</div>
 
 
@@ -603,5 +604,14 @@
 	<footer>
 	</footer>
     <script type="text/javascript" src="js/index.js"></script>
+    <!-- подключаем jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- подключаем плагин tooltip -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js" integrity="sha512-NHlD2xctgXoU6kYLvSBJpSzwVNRuoSQInuZWDVJhLbAzp7xUUJfg8j+HyAIlgmO1iqTJQr/jd8g+hYFeOwAPLQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- подключаем CSS стили для tooltip -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tooltip.js/1.3.2/tooltip.min.css" integrity="sha512-FEl/XtMAkx+oeSSWJ9b31d2yJNEA37Ia+JaWpJ8MqecZuhN0Jxx5NlW5PhX3qPO5JhFtzWy/7GZfR8jsvQZX4Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 </body>
 </html>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ManController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChronicPainController;
 
@@ -21,7 +22,7 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 Route::post('/index/patient', [ChronicPainController::class, 'cretatePatientIndex'])->name('index');
-Route::middleware(['set_locale'])->group(function(){
+Route::middleware(['set_locale'])->group(function () {
 
     Route::get('/chronicpain', function () {
         return view('chronicpain');
@@ -34,13 +35,16 @@ Route::middleware(['set_locale'])->group(function(){
     Route::post('/paind', [ChronicPainController::class, 'cretatePatient'])->name('paindetect');
 
 
-
     Route::post('/index/pain', [ChronicPainController::class, 'cretatePatientPainDetect'])->name('createpatient');
 
 }
 );
-Route::get('locale/{locale}',[ChronicPainController::class ,'changeLocale'])->name('locale');
+Route::get('locale/{locale}', [ChronicPainController::class, 'changeLocale'])->name('locale');
 
 Route::get('/callback', function () {
     return view('callback');
 })->name('callback');
+Route::get('/detect', [ManController::class, 'getMan'])->name('detect');
+Route::get('/vision', [ManController::class, 'getManVision'])->name('vision');
+Route::post('/save-image', [ManController::class, 'saveImage']);
+
