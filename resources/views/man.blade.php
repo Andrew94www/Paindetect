@@ -128,7 +128,7 @@
             <div class="color-option" id="colorBlue" style="background-color: blue;"></div>
             <div class="color-option" id="colorYellow" style="background-color: yellow;"></div>
         </div>
-        <button id="calculateArea">Calculate Filled Areas</button>
+        <button id="calculateArea">Calculate  Pain</button>
         <div id="results"></div>
     </div>
 </div>
@@ -230,7 +230,8 @@
     document.getElementById('calculateArea').addEventListener('click', () => {
         const results = drawAreas.map((_, i) => calculateFilledArea(i).toFixed(2));
 
-        document.getElementById('results').innerText = `Filled areas: ${results[0]}%, ${results[1]}%, ${results[2]}%`;
+        // document.getElementById('results').innerText = `Filled areas: ${results[0]}%, ${results[1]}%, ${results[2]}%`;
+        document.getElementById('results').innerText = `Заключення:Помірний больовий синдром !`;
 
         const imageDataURL = canvas.toDataURL('image/png'); // Получение изображения в base64 формате
 

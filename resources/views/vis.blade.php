@@ -143,7 +143,7 @@
         ry = e.clientY - rect.top;
 
         const radiusPx = Math.sqrt((ix - rx) ** 2 + (iy - ry) ** 2);
-        const radiusMM = radiusPx * 25.4 / DPI;
+        const radiusMM = (radiusPx * 25.4) / DPI;
 
         ctx.beginPath();
         ctx.arc(ix, iy, radiusPx, 0, 2 * Math.PI);
@@ -151,6 +151,11 @@
         ctx.lineWidth = mmToPx(0.5);
         ctx.stroke();
         ctx.closePath();
+
+        // Добавляем текст с радиусом зрачка на холст
+        ctx.font = `${mmToPx(5)}px Arial`;
+        ctx.fillStyle = 'white';
+        ctx.fillText(`Radius: ${radiusMM.toFixed(2)} mm`, ix + radiusPx + mmToPx(3), iy);
 
         console.log(`Center of pupil: (${ix}, ${iy}), Pupil radius: ${radiusMM} mm`);
     });
@@ -164,4 +169,3 @@
 
 </body>
 </html>
-
