@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\ManController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChronicPainController;
@@ -46,5 +47,7 @@ Route::get('/callback', function () {
 })->name('callback');
 Route::get('/detect', [ManController::class, 'getMan'])->name('detect');
 Route::get('/vision', [ManController::class, 'getManVision'])->name('vision');
+Route::get('/get-vision', [ManController::class, 'getForm'])->name('get-vision');
 Route::post('/save-image', [ManController::class, 'saveImage']);
+Route::post('/upload-image', [ImageUploadController::class, 'store']);
 

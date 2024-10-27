@@ -49,6 +49,18 @@
         button:active {
             background-color: #ced7e1;
         }
+        .button_link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
 
         @media (max-width: 768px) {
             button {
@@ -69,6 +81,7 @@
 
 <div class="button-container">
     <button id="resetButton">Reset</button>
+    <a href="{{route('get-vision')}}" class="button_link">Нажми на меня</a>
 </div>
 
 <script>
@@ -81,14 +94,14 @@
         return (mm / 25.4) * DPI;
     }
 
-    const canvasWidthMM = 210;
-    const canvasHeightMM = 297;
+    const canvasWidthMM = 100;
+    const canvasHeightMM = 100;
 
     canvas.width = mmToPx(canvasWidthMM);
     canvas.height = mmToPx(canvasHeightMM);
 
     let image = new Image();
-    image.src = 'img/visi.jpg';
+    image.src = '{{ asset('storage/' . $imagePath) }}';
 
     let drawing = false;
     let ix = -1, iy = -1;

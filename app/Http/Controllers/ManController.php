@@ -22,8 +22,13 @@ class ManController extends Controller
     }
 
     public function getManVision(){
-        return view('vis');
+        $imagePath = session('imagePath');
+        return view('vis',['imagePath'=>$imagePath]);
     }
+    public function getForm(){
+        return view('form');
+    }
+
 
     public function saveImage(Request $request)
     {
