@@ -80,8 +80,9 @@
 <canvas id="canvas"></canvas>
 
 <div class="button-container">
-    <button id="resetButton">Reset</button>
-    <a href="{{route('get-vision')}}" class="button_link">Нажми на меня</a>
+    <button id="resetButton">Скинути замір</button>
+    <a href="{{route('get-vision')}}" class="button_link">Завантажити зображення</a>
+    <a id="submitResult" class="button_link">Відправити результат</a>
 </div>
 
 <script>
@@ -106,6 +107,7 @@
     let drawing = false;
     let ix = -1, iy = -1;
     let rx = -1, ry = -1;
+    let radiusMM = 0; // Хранение радиуса для отправки
 
     image.onload = function() {
         const imgAspectRatio = image.width / image.height;
@@ -156,7 +158,7 @@
         ry = e.clientY - rect.top;
 
         const radiusPx = Math.sqrt((ix - rx) ** 2 + (iy - ry) ** 2);
-        const radiusMM = (radiusPx * 25.4) / DPI;
+        radiusMM = (radiusPx * 25.4) / DPI;
 
         ctx.beginPath();
         ctx.arc(ix, iy, radiusPx, 0, 2 * Math.PI);
@@ -178,7 +180,33 @@
         image.onload();
     });
 
+    // Метод для отправки данных
+    document.getElementById('submitResult').addEventListener('click', function() {
+        if (radiusMM > 0) {
+            fetch('{{ route('submit-measurement') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // Для защиты CSRF
+                },
+                body: JSON.stringify({
+                    radiusMM: radiusMM
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Response:', data);
+                })
+                .catch(error => {
+                    alert('Помилка при відправці даних.');
+                    console.error('Error:', error);
+                });
+        } else {
+            alert('Спочатку виконайте вимір!');
+        }
+    });
 </script>
+
 
 </body>
 </html>

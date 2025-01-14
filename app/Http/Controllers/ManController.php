@@ -29,6 +29,24 @@ class ManController extends Controller
         return view('form');
     }
 
+    public function saveVision(Request $request){
+        dd($request->all());
+        $validated = $request->validate([
+            'centerX' => 'required|numeric',
+            'centerY' => 'required|numeric',
+            'radiusMM' => 'required|numeric',
+        ]);
+
+        // Сохранение результата в БД или обработка данных
+        // Например:
+        // Measurement::create($validated);
+
+        return response()->json([
+            'message' => 'Результаты успешно сохранены!',
+            'data' => $validated
+        ]);
+    }
+
 
     public function saveImage(Request $request)
     {
