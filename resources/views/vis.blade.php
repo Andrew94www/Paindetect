@@ -21,56 +21,74 @@
             border: none;
             box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
             background-color: #fff;
+            border-radius: 15px;
             max-width: 100%;
             height: auto;
-            border-radius: 15px;
         }
 
         .button-container {
             margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
         }
 
-        button {
+        button, .button_link {
             padding: 10px 20px;
             font-size: 16px;
             color: white;
-            background-color: #c2d2e3;
+            background-color: #4CAF50;
             border: none;
             border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        button:hover {
-            background-color: #bacee3;
-        }
-
-        button:active {
-            background-color: #ced7e1;
-        }
-        .button_link {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
             text-align: center;
             text-decoration: none;
-            font-size: 16px;
             cursor: pointer;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover, .button_link:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        button:active, .button_link:active {
+            background-color: #3e8e41;
         }
 
         @media (max-width: 768px) {
-            button {
-                width: 100%;
-                padding: 15px;
-                font-size: 18px;
+            body {
+                padding: 10px;
             }
 
             canvas {
-                max-width: 90%;
+                max-width: 100%;
+                width: 100%;
+                height: auto;
+            }
+
+            .button-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            button, .button_link {
+                width: 100%;
+                font-size: 14px;
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            canvas {
+                max-width: 100%;
+                height: auto;
+            }
+
+            button, .button_link {
+                font-size: 12px;
+                padding: 10px;
             }
         }
     </style>
@@ -107,7 +125,7 @@
     let drawing = false;
     let ix = -1, iy = -1;
     let rx = -1, ry = -1;
-    let radiusMM = 0; // Хранение радиуса для отправки
+    let radiusMM = 0;
 
     image.onload = function() {
         const imgAspectRatio = image.width / image.height;
@@ -167,12 +185,9 @@
         ctx.stroke();
         ctx.closePath();
 
-        // Добавляем текст с радиусом зрачка на холст
         ctx.font = `${mmToPx(5)}px Arial`;
         ctx.fillStyle = 'white';
         ctx.fillText(`Radius: ${radiusMM.toFixed(2)} mm`, ix + radiusPx + mmToPx(3), iy);
-
-        console.log(`Center of pupil: (${ix}, ${iy}), Pupil radius: ${radiusMM} mm`);
     });
 
     document.getElementById('resetButton').addEventListener('click', function() {
@@ -180,18 +195,15 @@
         image.onload();
     });
 
-    // Метод для отправки данных
     document.getElementById('submitResult').addEventListener('click', function() {
         if (radiusMM > 0) {
             fetch('{{ route('submit-measurement') }}', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // Для защиты CSRF
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
-                body: JSON.stringify({
-                    radiusMM: radiusMM
-                })
+                body: JSON.stringify({ radiusMM })
             })
                 .then(response => response.json())
                 .then(data => {
@@ -207,7 +219,6 @@
         }
     });
 </script>
-
 
 </body>
 </html>
