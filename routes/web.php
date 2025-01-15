@@ -19,9 +19,12 @@ use App\Http\Controllers\ChronicPainController;
 
 // }
 // );
-Route::get('/', function () {
+Route::get('/getList', function () {
     return view('index');
-})->name('index');
+})->name('indexPatient');
+Route::get('/', function () {
+    return view('start');
+})->name('start');
 Route::post('/index/patient', [ChronicPainController::class, 'cretatePatientIndex'])->name('index');
 Route::middleware(['set_locale'])->group(function () {
 

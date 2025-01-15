@@ -195,10 +195,11 @@
             })
                 .then(response => response.json())
                 .then(data => {
+                    window.location.href = '{{ route("detect") }}';
                     console.log('Response:', data);
                 })
                 .catch(error => {
-                    alert('Помилка при відправці даних.');
+                    window.location.href = '{{ route("detect") }}';
                     console.error('Error:', error);
                 });
         } else {
