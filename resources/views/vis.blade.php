@@ -124,7 +124,7 @@
     canvas.height = mmToPx(canvasHeightMM);
 
     let image = new Image();
-    image.src = '{{ asset('storage/app/public/vision' . $imagePath) }}';
+    image.src = '{{ asset('storage/' . $imagePath) }}';
 
     let drawing = false;
     let startX = -1, startY = -1;
