@@ -11,10 +11,10 @@
             font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #72edf2 10%, #d2d2e6 100%);
             display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
         }
 
         canvas {
@@ -22,13 +22,17 @@
             box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
             background-color: #fff;
             max-width: 100%;
+            width: 90%; /* Адаптация для мобильных */
             height: auto;
             border-radius: 15px;
-            touch-action: none; /* Предотвращает жесты браузера */
+            touch-action: none; /* Отключение стандартных жестов браузера */
         }
 
         .button-container {
             margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         button, .button_link {
@@ -41,9 +45,9 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
             text-decoration: none;
+            margin: 5px;
             display: inline-block;
             text-align: center;
-            margin: 5px;
         }
 
         button:hover, .button_link:hover {
@@ -62,7 +66,7 @@
             }
 
             canvas {
-                max-width: 90%;
+                width: 100%;
             }
         }
     </style>
