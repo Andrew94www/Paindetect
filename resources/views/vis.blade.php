@@ -23,7 +23,19 @@
             background-color: #fff;
             border-radius: 15px;
             max-width: 100%;
-            height: auto;
+            position: relative;
+        }
+
+        #radiusDisplay {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
         }
 
         .button-container {
@@ -63,8 +75,8 @@
             }
 
             canvas {
-                max-width: 100%;
                 width: 100%;
+                max-width: 100%;
                 height: auto;
             }
 
@@ -79,23 +91,14 @@
                 padding: 12px;
             }
         }
-
-        @media (max-width: 480px) {
-            canvas {
-                max-width: 100%;
-                height: auto;
-            }
-
-            button, .button_link {
-                font-size: 12px;
-                padding: 10px;
-            }
-        }
     </style>
 </head>
 <body>
 
-<canvas id="canvas"></canvas>
+<div style="position: relative;">
+    <canvas id="canvas"></canvas>
+    <div id="radiusDisplay">Розмір: 0 мм</div>
+</div>
 
 <div class="button-container">
     <button id="resetButton">Скинути замір</button>
@@ -106,6 +109,7 @@
 <script>
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
+    const radiusDisplay = document.getElementById('radiusDisplay');
 
     const DPI = 96;
 
@@ -123,11 +127,10 @@
     image.src = '{{ asset('storage/' . $imagePath) }}';
 
     let drawing = false;
-    let ix = -1, iy = -1;
-    let rx = -1, ry = -1;
+    let startX = -1, startY = -1;
     let radiusMM = 0;
 
-    image.onload = function() {
+    function drawImageToFitCanvas() {
         const imgAspectRatio = image.width / image.height;
         const canvasAspectRatio = canvas.width / canvas.height;
 
@@ -146,16 +149,36 @@
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(image, offsetX, offsetY, renderWidth, renderHeight);
-    };
+    }
+
+    image.onload = drawImageToFitCanvas;
+
+    function getMousePosition(e) {
+        const rect = canvas.getBoundingClientRect();
+        let x, y;
+
+        if (e.touches && e.touches.length > 0) {
+            x = e.touches[0].clientX;
+            y = e.touches[0].clientY;
+        } else if (e.clientX !== undefined && e.clientY !== undefined) {
+            x = e.clientX;
+            y = e.clientY;
+        }
+
+        return {
+            x: x - rect.left,
+            y: y - rect.top
+        };
+    }
 
     canvas.addEventListener('mousedown', function(e) {
         drawing = true;
-        const rect = canvas.getBoundingClientRect();
-        ix = e.clientX - rect.left;
-        iy = e.clientY - rect.top;
+        const pos = getMousePosition(e);
+        startX = pos.x;
+        startY = pos.y;
 
         ctx.beginPath();
-        ctx.arc(ix, iy, mmToPx(1), 0, 2 * Math.PI);
+        ctx.arc(startX, startY, mmToPx(1), 0, 2 * Math.PI);
         ctx.fillStyle = 'red';
         ctx.fill();
         ctx.closePath();
@@ -163,36 +186,50 @@
 
     canvas.addEventListener('mousemove', function(e) {
         if (drawing) {
-            const rect = canvas.getBoundingClientRect();
-            rx = e.clientX - rect.left;
-            ry = e.clientY - rect.top;
+            const pos = getMousePosition(e);
+            const currentX = pos.x;
+            const currentY = pos.y;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawImageToFitCanvas();
+
+            const radiusPx = Math.sqrt((startX - currentX) ** 2 + (startY - currentY) ** 2);
+            radiusMM = (radiusPx * 25.4) / DPI;
+
+            ctx.beginPath();
+            ctx.arc(startX, startY, radiusPx, 0, 2 * Math.PI);
+            ctx.strokeStyle = 'green';
+            ctx.lineWidth = mmToPx(0.5);
+            ctx.stroke();
+            ctx.closePath();
+
+            radiusDisplay.textContent = `Розмір: ${radiusMM.toFixed(2)} мм`;
         }
     });
 
     canvas.addEventListener('mouseup', function(e) {
         drawing = false;
-        const rect = canvas.getBoundingClientRect();
-        rx = e.clientX - rect.left;
-        ry = e.clientY - rect.top;
+    });
 
-        const radiusPx = Math.sqrt((ix - rx) ** 2 + (iy - ry) ** 2);
-        radiusMM = (radiusPx * 25.4) / DPI;
+    canvas.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        canvas.dispatchEvent(new MouseEvent('mousedown', e));
+    });
 
-        ctx.beginPath();
-        ctx.arc(ix, iy, radiusPx, 0, 2 * Math.PI);
-        ctx.strokeStyle = 'green';
-        ctx.lineWidth = mmToPx(0.5);
-        ctx.stroke();
-        ctx.closePath();
+    canvas.addEventListener('touchmove', function(e) {
+        e.preventDefault();
+        canvas.dispatchEvent(new MouseEvent('mousemove', e));
+    });
 
-        ctx.font = `${mmToPx(5)}px Arial`;
-        ctx.fillStyle = 'white';
-        ctx.fillText(`Radius: ${radiusMM.toFixed(2)} mm`, ix + radiusPx + mmToPx(3), iy);
+    canvas.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        canvas.dispatchEvent(new MouseEvent('mouseup', e));
     });
 
     document.getElementById('resetButton').addEventListener('click', function() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        image.onload();
+        radiusMM = 0;
+        radiusDisplay.textContent = 'Розмір: 0 мм';
+        drawImageToFitCanvas();
     });
 
     document.getElementById('submitResult').addEventListener('click', function() {
@@ -208,10 +245,8 @@
                 .then(response => response.json())
                 .then(data => {
                     window.location.href = '{{ route("detect") }}';
-                    console.log('Response:', data);
                 })
                 .catch(error => {
-                    window.location.href = '{{ route("detect") }}';
                     console.error('Error:', error);
                 });
         } else {
