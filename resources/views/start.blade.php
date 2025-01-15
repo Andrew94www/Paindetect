@@ -40,7 +40,7 @@
     </style>
 </head>
 <body>
-<a href="{{route('get-vision')}}" class="button-link">Rapid Pain</a>
+<a href="{{route('detect')}}" class="button-link">Rapid Pain</a>
 <a href="{{route('indexPatient')}}" class="button-link">Pain Mechanism</a>
 </body>
 </html>
