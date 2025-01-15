@@ -17,7 +17,7 @@ class ImageUploadController extends Controller
         $image = $request->file('image');
 
         // Определяем путь для сохранения
-        $imagePath = $image->store('vision');
+        $imagePath = $image->store('vision','public');
         session()->put('imagePath', $imagePath);
 
         // Возвращаем ответ с путём сохраненного изображения

@@ -21,29 +21,14 @@
             border: none;
             box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
             background-color: #fff;
-            border-radius: 15px;
             max-width: 100%;
-            position: relative;
-        }
-
-        #radiusDisplay {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 5px 10px;
-            border-radius: 5px;
+            height: auto;
+            border-radius: 15px;
+            touch-action: none; /* Предотвращает жесты браузера */
         }
 
         .button-container {
             margin-top: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
         }
 
         button, .button_link {
@@ -53,16 +38,16 @@
             background-color: #4CAF50;
             border: none;
             border-radius: 5px;
-            text-align: center;
-            text-decoration: none;
             cursor: pointer;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            margin: 5px;
         }
 
         button:hover, .button_link:hover {
             background-color: #45a049;
-            transform: scale(1.05);
         }
 
         button:active, .button_link:active {
@@ -70,35 +55,21 @@
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
+            button, .button_link {
+                width: 90%;
+                font-size: 18px;
+                margin-bottom: 10px;
             }
 
             canvas {
-                width: 100%;
-                max-width: 100%;
-                height: auto;
-            }
-
-            .button-container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            button, .button_link {
-                width: 100%;
-                font-size: 14px;
-                padding: 12px;
+                max-width: 90%;
             }
         }
     </style>
 </head>
 <body>
 
-<div style="position: relative;">
-    <canvas id="canvas"></canvas>
-    <div id="radiusDisplay">Розмір: 0 мм</div>
-</div>
+<canvas id="canvas"></canvas>
 
 <div class="button-container">
     <button id="resetButton">Скинути замір</button>
@@ -109,7 +80,6 @@
 <script>
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
-    const radiusDisplay = document.getElementById('radiusDisplay');
 
     const DPI = 96;
 
@@ -127,10 +97,11 @@
     image.src = '{{ asset('storage/' . $imagePath) }}';
 
     let drawing = false;
-    let startX = -1, startY = -1;
+    let ix = -1, iy = -1;
+    let rx = -1, ry = -1;
     let radiusMM = 0;
 
-    function drawImageToFitCanvas() {
+    image.onload = function() {
         const imgAspectRatio = image.width / image.height;
         const canvasAspectRatio = canvas.width / canvas.height;
 
@@ -149,87 +120,85 @@
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(image, offsetX, offsetY, renderWidth, renderHeight);
-    }
+    };
 
-    image.onload = drawImageToFitCanvas;
-
-    function getMousePosition(e) {
+    function getTouchPosition(touchEvent) {
         const rect = canvas.getBoundingClientRect();
-        let x, y;
-
-        if (e.touches && e.touches.length > 0) {
-            x = e.touches[0].clientX;
-            y = e.touches[0].clientY;
-        } else if (e.clientX !== undefined && e.clientY !== undefined) {
-            x = e.clientX;
-            y = e.clientY;
-        }
-
+        const touch = touchEvent.touches[0] || touchEvent.changedTouches[0];
         return {
-            x: x - rect.left,
-            y: y - rect.top
+            x: touch.clientX - rect.left,
+            y: touch.clientY - rect.top
         };
     }
 
-    canvas.addEventListener('mousedown', function(e) {
-        drawing = true;
-        const pos = getMousePosition(e);
-        startX = pos.x;
-        startY = pos.y;
-
-        ctx.beginPath();
-        ctx.arc(startX, startY, mmToPx(1), 0, 2 * Math.PI);
-        ctx.fillStyle = 'red';
-        ctx.fill();
-        ctx.closePath();
-    });
-
-    canvas.addEventListener('mousemove', function(e) {
-        if (drawing) {
-            const pos = getMousePosition(e);
-            const currentX = pos.x;
-            const currentY = pos.y;
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawImageToFitCanvas();
-
-            const radiusPx = Math.sqrt((startX - currentX) ** 2 + (startY - currentY) ** 2);
-            radiusMM = (radiusPx * 25.4) / DPI;
-
-            ctx.beginPath();
-            ctx.arc(startX, startY, radiusPx, 0, 2 * Math.PI);
-            ctx.strokeStyle = 'green';
-            ctx.lineWidth = mmToPx(0.5);
-            ctx.stroke();
-            ctx.closePath();
-
-            radiusDisplay.textContent = `Розмір: ${radiusMM.toFixed(2)} мм`;
-        }
-    });
-
-    canvas.addEventListener('mouseup', function(e) {
-        drawing = false;
-    });
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
 
     canvas.addEventListener('touchstart', function(e) {
+        const pos = getTouchPosition(e);
+        startDrawing({ clientX: pos.x, clientY: pos.y });
         e.preventDefault();
-        canvas.dispatchEvent(new MouseEvent('mousedown', e));
     });
 
     canvas.addEventListener('touchmove', function(e) {
+        const pos = getTouchPosition(e);
+        draw({ clientX: pos.x, clientY: pos.y });
         e.preventDefault();
-        canvas.dispatchEvent(new MouseEvent('mousemove', e));
     });
 
     canvas.addEventListener('touchend', function(e) {
+        stopDrawing(e);
         e.preventDefault();
-        canvas.dispatchEvent(new MouseEvent('mouseup', e));
     });
 
+    function startDrawing(e) {
+        drawing = true;
+        const rect = canvas.getBoundingClientRect();
+        ix = e.clientX - rect.left;
+        iy = e.clientY - rect.top;
+
+        ctx.beginPath();
+        ctx.arc(ix, iy, mmToPx(1), 0, 2 * Math.PI);
+        ctx.fillStyle = 'red';
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    function draw(e) {
+        if (drawing) {
+            const rect = canvas.getBoundingClientRect();
+            rx = e.clientX - rect.left;
+            ry = e.clientY - rect.top;
+        }
+    }
+
+    function stopDrawing(e) {
+        drawing = false;
+        const rect = canvas.getBoundingClientRect();
+        rx = e.clientX - rect.left;
+        ry = e.clientY - rect.top;
+
+        const radiusPx = Math.sqrt((ix - rx) ** 2 + (iy - ry) ** 2);
+        radiusMM = (radiusPx * 25.4) / DPI;
+
+        ctx.beginPath();
+        ctx.arc(ix, iy, radiusPx, 0, 2 * Math.PI);
+        ctx.strokeStyle = 'green';
+        ctx.lineWidth = mmToPx(0.5);
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.font = `${mmToPx(5)}px Arial`;
+        ctx.fillStyle = 'white';
+        ctx.fillText(`Radius: ${radiusMM.toFixed(2)} mm`, ix + radiusPx + mmToPx(3), iy);
+
+        console.log(`Center: (${ix}, ${iy}), Radius: ${radiusMM} mm`);
+    }
+
     document.getElementById('resetButton').addEventListener('click', function() {
-        radiusMM = 0;
-        radiusDisplay.textContent = 'Розмір: 0 мм';
-        drawImageToFitCanvas();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        image.onload();
     });
 
     document.getElementById('submitResult').addEventListener('click', function() {
@@ -240,14 +209,16 @@
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
-                body: JSON.stringify({ radiusMM })
+                body: JSON.stringify({ radiusMM: radiusMM })
             })
                 .then(response => response.json())
                 .then(data => {
                     window.location.href = '{{ route("detect") }}';
+                    console.log('Response:', data);
                 })
                 .catch(error => {
                     console.error('Error:', error);
+                    alert('Помилка відправки даних.');
                 });
         } else {
             alert('Спочатку виконайте вимір!');
