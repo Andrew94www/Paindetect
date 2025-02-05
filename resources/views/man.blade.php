@@ -40,22 +40,25 @@
             justify-content: space-between;
             padding: 20px;
             margin-left: 20px;
+            align-items: center;
         }
-        .color-picker {
+        .face-picker {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
         }
-        .color-option {
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
-            margin: 10px 0;
+        .face-option {
+            width: 80px;
+            height: 80px;
+            margin: 10px;
             cursor: pointer;
+            border-radius: 50%;
             border: 3px solid transparent;
             transition: transform 0.3s ease, border-color 0.3s ease;
         }
-        .color-option:hover, .color-option.active {
-            transform: scale(1.1);
+        .face-option:hover, .face-option.active {
+            transform: scale(1.2);
             border-color: #333;
         }
         button {
@@ -69,6 +72,7 @@
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.3s ease;
             box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+            margin-top: 20px;
         }
         button:hover {
             background-color: #218838;
@@ -99,13 +103,14 @@
                 width: 100%;
                 align-items: center;
             }
-            .color-picker {
-                flex-direction: row;
-                justify-content: space-around;
-                width: 100%;
+            .face-picker {
+                flex-wrap: wrap;
+                justify-content: center;
             }
-            .color-option {
-                margin: 0 10px;
+            .face-option {
+                width: 70px;
+                height: 70px;
+                margin: 5px;
             }
             button {
                 width: 90%;
@@ -120,15 +125,17 @@
 </head>
 <body>
 <div class="container">
-    <canvas id="canvas" width="600" height="600"></canvas>
+    <canvas id="canvas" width="600" height="400"></canvas>
     <div class="controls">
-        <div class="color-picker">
-            <div class="color-option" id="colorRed" style="background-color: red;"></div>
-            <div class="color-option" id="colorGreen" style="background-color: green;"></div>
-            <div class="color-option" id="colorBlue" style="background-color: blue;"></div>
-            <div class="color-option" id="colorYellow" style="background-color: yellow;"></div>
+        <div class="face-picker">
+            <img class="face-option" id="dark_green" src="img/face_0.jpg" alt="No Pain">
+            <img class="face-option" id="green" src="img/face_1.jpg" alt="Mild Pain">
+            <img class="face-option" id="yellow" src="img/face_2.jpg" alt="Moderate Pain">
+            <img class="face-option" id="brown" src="img/face_3.jpg" alt="Severe Pain">
+            <img class="face-option" id="orange" src="img/face_4.jpg" alt="Very Severe Pain">
+            <img class="face-option" id="red" src="img/face_5.jpg" alt="Worst Pain">
         </div>
-        <button id="calculateArea">Calculate  Pain</button>
+        <button id="calculateArea">Calculate Pain</button>
         <div id="results"></div>
     </div>
 </div>
@@ -150,7 +157,7 @@
 
     // Load image
     const img = new Image();
-    img.src = 'img/man_3.jpg'; // Path to your image
+    img.src = 'img/uvmanpanoramic.jpg'; // Path to your image
     img.onload = () => {
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         drawRedSquares();
@@ -159,11 +166,11 @@
         });
     };
 
-    const drawAreas = [
-        { x: 40, y: 50, width: 155, height: 530 },
-        { x: 230, y: 50, width: 155, height: 530 },
-        { x: 430, y: 50, width: 70, height: 530 }
-    ];
+    // const drawAreas = [
+    //     { x: 40, y: 50, width: 155, height: 530 },
+    //     { x: 230, y: 50, width: 155, height: 530 },
+    //     { x: 430, y: 50, width: 70, height: 530 }
+    // ];
 
     function drawRedSquares() {
         ctx.strokeStyle = 'red';
