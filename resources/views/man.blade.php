@@ -13,45 +13,63 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #f0f4ff, #dfe7fd);
+            background: linear-gradient(135deg, #eef2ff, #c3dafe);
         }
         .container {
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
+            align-items: center;
             background: white;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
             border-radius: 20px;
             overflow: hidden;
             padding: 20px;
+            max-width: 90%;
         }
         canvas {
-            border: 5px solid #333;
+            border: 3px solid #444;
             border-radius: 15px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        canvas:hover {
-            transform: scale(1.02);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background: url('img/uvmanpanoramic.jpg') no-repeat center center;
+            background-size: cover;
         }
         .controls {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            padding: 20px;
-            margin-left: 20px;
             align-items: center;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .text-area {
+            width: 80%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            text-align: center;
+            resize: none;
+            margin-top: 10px;
+        }
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.75);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            display: none;
+            white-space: nowrap;
         }
         .face-picker {
             display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
             justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         .face-option {
-            width: 80px;
-            height: 80px;
-            margin: 10px;
+            width: 60px;
+            height: 60px;
             cursor: pointer;
             border-radius: 50%;
             border: 3px solid transparent;
@@ -59,67 +77,38 @@
         }
         .face-option:hover, .face-option.active {
             transform: scale(1.2);
-            border-color: #333;
+            border-color: #444;
         }
-        button {
-            padding: 15px 30px;
-            font-size: 18px;
-            font-weight: bold;
+        .clear-button, .send-button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
             border: none;
-            background-color: #28a745;
-            color: white;
-            border-radius: 30px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
-            margin-top: 20px;
-        }
-        button:hover {
-            background-color: #218838;
-            transform: scale(1.05);
-        }
-        #results {
-            margin-top: 20px;
-            font-size: 22px;
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 15px;
+            transition: background 0.3s;
+            width: 80%;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
-        @media (max-width: 900px) {
-            .container {
-                flex-direction: column;
-                align-items: center;
-                padding: 15px;
-            }
-            canvas {
-                margin-bottom: 20px;
-                width: 90%;
-                height: auto;
-            }
-            .controls {
-                margin-left: 0;
-                width: 100%;
-                align-items: center;
-            }
-            .face-picker {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            .face-option {
-                width: 70px;
-                height: 70px;
-                margin: 5px;
-            }
-            button {
-                width: 90%;
-            }
+        .clear-button {
+            background-color: #ff4d4d;
+            color: white;
         }
-        @media (max-width: 600px) {
-            button {
-                width: 100%;
-            }
+        .clear-button:hover {
+            background-color: #cc0000;
+        }
+        .send-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .send-button:hover {
+            background-color: #388E3C;
+        }
+        #used-colors {
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
         }
     </style>
 </head>
@@ -128,139 +117,96 @@
     <canvas id="canvas" width="600" height="400"></canvas>
     <div class="controls">
         <div class="face-picker">
-            <img class="face-option" id="dark_green" src="img/face_0.jpg" alt="No Pain">
-            <img class="face-option" id="green" src="img/face_1.jpg" alt="Mild Pain">
-            <img class="face-option" id="yellow" src="img/face_2.jpg" alt="Moderate Pain">
-            <img class="face-option" id="brown" src="img/face_3.jpg" alt="Severe Pain">
-            <img class="face-option" id="orange" src="img/face_4.jpg" alt="Very Severe Pain">
-            <img class="face-option" id="red" src="img/face_5.jpg" alt="Worst Pain">
+            <img class="face-option" src="img/face_0.jpg" alt="No Pain" data-color="#006400">
+            <img class="face-option" src="img/face_1.jpg" alt="Mild Pain" data-color="#008000">
+            <img class="face-option" src="img/face_2.jpg" alt="Moderate Pain" data-color="#FFFF00">
+            <img class="face-option" src="img/face_3.jpg" alt="Severe Pain" data-color="#8B4513">
+            <img class="face-option" src="img/face_4.jpg" alt="Very Severe Pain" data-color="#FFA500">
+            <img class="face-option" src="img/face_5.jpg" alt="Worst Pain" data-color="#FF0000">
         </div>
-        <button id="calculateArea">Calculate Pain</button>
-        <div id="results"></div>
+        <textarea id="pain-input" class="text-area">No Pain</textarea>
+        <textarea id="medications" class="text-area" placeholder="Enter medications for treatment..."></textarea>
+        <button class="clear-button" id="clearCanvas">Clear</button>
+        <button class="send-button" id="sendData">Send Data</button>
+        <div id="used-colors">Used Colors: None</div>
     </div>
 </div>
-
 <script>
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
-    const originalImageData = [];
-    let selectedColor = 'blue'; // Default color
-
-    // Handle color selection
-    document.querySelectorAll('.color-option').forEach(option => {
+    let usedColors = new Set();
+    ctx.strokeStyle = '#006400'; // Зеленый цвет по умолчанию
+    document.querySelectorAll('.face-option').forEach(option => {
         option.addEventListener('click', () => {
-            document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('active'));
+            document.querySelectorAll('.face-option').forEach(opt => opt.classList.remove('active'));
             option.classList.add('active');
-            selectedColor = option.style.backgroundColor;
+            ctx.strokeStyle = option.getAttribute('data-color');
         });
     });
-
-    // Load image
-    const img = new Image();
-    img.src = 'img/uvmanpanoramic.jpg'; // Path to your image
-    img.onload = () => {
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        drawRedSquares();
-        drawAreas.forEach(area => {
-            originalImageData.push(ctx.getImageData(area.x, area.y, area.width, area.height));
-        });
-    };
-
-    // const drawAreas = [
-    //     { x: 40, y: 50, width: 155, height: 530 },
-    //     { x: 230, y: 50, width: 155, height: 530 },
-    //     { x: 430, y: 50, width: 70, height: 530 }
-    // ];
-
-    function drawRedSquares() {
-        ctx.strokeStyle = 'red';
-        drawAreas.forEach(area => {
-            ctx.strokeRect(area.x, area.y, area.width, area.height);
-        });
-    }
-
     let isDrawing = false;
-
     canvas.addEventListener('mousedown', (e) => {
-        const { offsetX, offsetY } = e;
-        if (isInsideAnyDrawArea(offsetX, offsetY)) {
-            isDrawing = true;
-            ctx.lineWidth = 5;
-            ctx.strokeStyle = selectedColor;
-            ctx.beginPath();
-            ctx.moveTo(offsetX, offsetY);
-        }
+        isDrawing = true;
+        ctx.beginPath();
+        ctx.moveTo(e.offsetX, e.offsetY);
+        usedColors.add(ctx.strokeStyle);
+        updateUsedColors();
     });
-
     canvas.addEventListener('mousemove', (e) => {
         if (isDrawing) {
-            const { offsetX, offsetY } = e;
-            if (isInsideAnyDrawArea(offsetX, offsetY)) {
-                ctx.lineTo(offsetX, offsetY);
-                ctx.stroke();
-            }
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
         }
     });
-
     canvas.addEventListener('mouseup', () => {
         isDrawing = false;
         ctx.closePath();
     });
-
-    function isInsideAnyDrawArea(x, y) {
-        return drawAreas.some(area =>
-            x >= area.x && x <= area.x + area.width &&
-            y >= area.y && y <= area.y + area.height
-        );
+    function updateUsedColors() {
+        document.getElementById('used-colors').innerText = 'Used Colors: ' + Array.from(usedColors).join(', ');
     }
-
-    function calculateFilledArea(index) {
-        const area = drawAreas[index];
-        const imageData = ctx.getImageData(area.x, area.y, area.width, area.height);
-        const originalData = originalImageData[index].data;
-        const data = imageData.data;
-        let filledPixels = 0;
-
-        for (let i = 0; i < data.length; i += 4) {
-            if (data[i] !== originalData[i] ||
-                data[i + 1] !== originalData[i + 1] ||
-                data[i + 2] !== originalData[i + 2] ||
-                data[i + 3] !== originalData[i + 3]) {
-                filledPixels++;
-            }
-        }
-
-        const totalPixels = area.width * area.height;
-        return (filledPixels / totalPixels) * 100;
-    }
-
-    document.getElementById('calculateArea').addEventListener('click', () => {
-        const results = drawAreas.map((_, i) => calculateFilledArea(i).toFixed(2));
-
-        // document.getElementById('results').innerText = `Filled areas: ${results[0]}%, ${results[1]}%, ${results[2]}%`;
-        document.getElementById('results').innerText = `Заключення:Помірний больовий синдром !`;
-
-        const imageDataURL = canvas.toDataURL('image/png'); // Получение изображения в base64 формате
-
-        // Отправка данных на сервер через AJAX-запрос
-        fetch('/save-image', {
+    document.getElementById('clearCanvas').addEventListener('click', () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        usedColors.clear();
+        updateUsedColors();
+    });
+    document.getElementById('sendData').addEventListener('click', () => {
+        const canvasData = canvas.toDataURL();
+        const painLevel = document.getElementById('pain-input').value;
+        const medications = document.getElementById('medications').value;
+        fetch('/save-drawing', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             },
             body: JSON.stringify({
-                image: imageDataURL,
-                filledAreas: results // Результаты, которые вы получили
+                image: canvasData,
+                pain_level: painLevel,
+                medications: medications
             })
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Image and data saved:', data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        }).then(response => response.json()).then(data => {
+            alert('Data saved successfully!');
+        }).catch(error => console.error('Error:', error));
+    });
+    document.querySelectorAll('.face-option, .text-area, .clear-button, .send-button').forEach(element => {
+        element.removeAttribute('title'); // Убираем стандартные title
+        element.addEventListener('mouseover', function() {
+            const tooltip = document.createElement('div');
+            tooltip.classList.add('tooltip');
+            tooltip.innerText = this.getAttribute('alt') || this.placeholder || this.innerText;
+            document.body.appendChild(tooltip);
+            const rect = this.getBoundingClientRect();
+            tooltip.style.left = `${rect.left + window.scrollX + rect.width / 2 - tooltip.offsetWidth / 2}px`;
+            tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight - 5}px`;
+            tooltip.style.display = 'block';
+            this.tooltip = tooltip;
+        });
+        element.addEventListener('mouseout', function() {
+            if (this.tooltip) {
+                document.body.removeChild(this.tooltip);
+                this.tooltip = null;
+            }
+        });
     });
 </script>
 </body>
