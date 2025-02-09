@@ -27,12 +27,13 @@
             max-width: 90%;
         }
         canvas {
-            border: 3px solid #444;
+            border: 1px solid #444;
             border-radius: 15px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             background: url('img/uvmanpanoramic.jpg') no-repeat center center;
             background-size: cover;
+            touch-action: none; /* Отключаем жесты браузера на сенсорных экранах */
         }
         .controls {
             display: flex;
@@ -51,21 +52,11 @@
             resize: none;
             margin-top: 10px;
         }
-        .tooltip {
-            position: absolute;
-            background: rgba(0, 0, 0, 0.75);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 14px;
-            display: none;
-            white-space: nowrap;
-        }
         .face-picker {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 7px;
         }
         .face-option {
             width: 60px;
@@ -104,11 +95,9 @@
         .send-button:hover {
             background-color: #388E3C;
         }
-        #used-colors {
+        #line-width {
             margin-top: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            text-align: center;
+            width: 80%;
         }
     </style>
 </head>
@@ -128,14 +117,17 @@
         <textarea id="medications" class="text-area" placeholder="Enter medications for treatment..."></textarea>
         <button class="clear-button" id="clearCanvas">Clear</button>
         <button class="send-button" id="sendData">Send Data</button>
-        <div id="used-colors">Used Colors: None</div>
     </div>
 </div>
 <script>
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     let usedColors = new Set();
+    let lineWidth = 8; // Толщина линии по умолчанию
+    ctx.lineWidth = lineWidth;
     ctx.strokeStyle = '#006400'; // Зеленый цвет по умолчанию
+
+
     document.querySelectorAll('.face-option').forEach(option => {
         option.addEventListener('click', () => {
             document.querySelectorAll('.face-option').forEach(opt => opt.classList.remove('active'));
@@ -143,36 +135,64 @@
             ctx.strokeStyle = option.getAttribute('data-color');
         });
     });
+
     let isDrawing = false;
-    canvas.addEventListener('mousedown', (e) => {
+
+    function startDrawing(x, y) {
         isDrawing = true;
         ctx.beginPath();
-        ctx.moveTo(e.offsetX, e.offsetY);
+        ctx.moveTo(x, y);
         usedColors.add(ctx.strokeStyle);
-        updateUsedColors();
-    });
-    canvas.addEventListener('mousemove', (e) => {
+        updatePainInput();
+    }
+    function updatePainInput() {
+        document.getElementById('pain-input').value = Array.from(usedColors).join(', ');
+    }
+
+    function draw(x, y) {
         if (isDrawing) {
-            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.lineTo(x, y);
             ctx.stroke();
         }
-    });
-    canvas.addEventListener('mouseup', () => {
+    }
+
+    function stopDrawing() {
         isDrawing = false;
         ctx.closePath();
-    });
-    function updateUsedColors() {
-        document.getElementById('used-colors').innerText = 'Used Colors: ' + Array.from(usedColors).join(', ');
     }
+
+    canvas.addEventListener('mousedown', (e) => startDrawing(e.offsetX, e.offsetY));
+    canvas.addEventListener('mousemove', (e) => draw(e.offsetX, e.offsetY));
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseleave', stopDrawing);
+
+    // Поддержка сенсорного ввода
+    canvas.addEventListener('touchstart', (e) => {
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        startDrawing(touch.clientX - rect.left, touch.clientY - rect.top);
+    });
+
+    canvas.addEventListener('touchmove', (e) => {
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        draw(touch.clientX - rect.left, touch.clientY - rect.top);
+        e.preventDefault(); // Предотвращаем скроллинг при рисовании
+    });
+
+    canvas.addEventListener('touchend', stopDrawing);
+
     document.getElementById('clearCanvas').addEventListener('click', () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         usedColors.clear();
-        updateUsedColors();
+        document.getElementById('pain-input').value='';
     });
+
     document.getElementById('sendData').addEventListener('click', () => {
         const canvasData = canvas.toDataURL();
         const painLevel = document.getElementById('pain-input').value;
         const medications = document.getElementById('medications').value;
+
         fetch('/save-drawing', {
             method: 'POST',
             headers: {
@@ -187,26 +207,6 @@
         }).then(response => response.json()).then(data => {
             alert('Data saved successfully!');
         }).catch(error => console.error('Error:', error));
-    });
-    document.querySelectorAll('.face-option, .text-area, .clear-button, .send-button').forEach(element => {
-        element.removeAttribute('title'); // Убираем стандартные title
-        element.addEventListener('mouseover', function() {
-            const tooltip = document.createElement('div');
-            tooltip.classList.add('tooltip');
-            tooltip.innerText = this.getAttribute('alt') || this.placeholder || this.innerText;
-            document.body.appendChild(tooltip);
-            const rect = this.getBoundingClientRect();
-            tooltip.style.left = `${rect.left + window.scrollX + rect.width / 2 - tooltip.offsetWidth / 2}px`;
-            tooltip.style.top = `${rect.top + window.scrollY - tooltip.offsetHeight - 5}px`;
-            tooltip.style.display = 'block';
-            this.tooltip = tooltip;
-        });
-        element.addEventListener('mouseout', function() {
-            if (this.tooltip) {
-                document.body.removeChild(this.tooltip);
-                this.tooltip = null;
-            }
-        });
     });
 </script>
 </body>
