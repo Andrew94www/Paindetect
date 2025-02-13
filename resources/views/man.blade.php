@@ -194,20 +194,28 @@
     canvas.addEventListener('mouseup', stopDrawing);
     canvas.addEventListener('mouseleave', stopDrawing);
 
-    // Поддержка сенсорного ввода
+    function getTouchPos(canvas, touch) {
+        const rect = canvas.getBoundingClientRect();
+        return {
+            x: (touch.clientX - rect.left) * (canvas.width / rect.width),
+            y: (touch.clientY - rect.top) * (canvas.height / rect.height)
+        };
+    }
+
     canvas.addEventListener('touchstart', (e) => {
         e.preventDefault(); // Предотвращаем скроллинг
-        const touch = e.touches[0];
-        const rect = canvas.getBoundingClientRect();
-        startDrawing(touch.pageX - rect.left, touch.pageY - rect.top);
+        const touchPos = getTouchPos(canvas, e.touches[0]);
+        startDrawing(touchPos.x, touchPos.y);
     });
 
     canvas.addEventListener('touchmove', (e) => {
-        e.preventDefault(); // Предотвращаем скроллинг при рисовании
-        const touch = e.touches[0];
-        const rect = canvas.getBoundingClientRect();
-        draw(touch.pageX - rect.left, touch.pageY - rect.top);
+        e.preventDefault(); // Предотвращаем скроллинг
+        const touchPos = getTouchPos(canvas, e.touches[0]);
+        draw(touchPos.x, touchPos.y);
     });
+
+    canvas.addEventListener('touchend', stopDrawing);
+
 
     canvas.addEventListener('touchend', stopDrawing);
 
