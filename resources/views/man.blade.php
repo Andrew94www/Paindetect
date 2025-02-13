@@ -14,6 +14,7 @@
             height: 100vh;
             margin: 0;
             background: linear-gradient(135deg, #eef2ff, #c3dafe);
+            overflow: hidden; /* Убираем скроллинг на мобильных */
         }
         .container {
             display: flex;
@@ -22,89 +23,91 @@
             background: white;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
             border-radius: 20px;
-            overflow: hidden;
-            padding: 20px;
-            max-width: 90%;
+            padding: 15px;
+            width: 90%;
+            max-width: 600px; /* Ограничиваем ширину */
+            box-sizing: border-box;
         }
         canvas {
             border: 1px solid #444;
             border-radius: 15px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
             background: url('img/uvmanpanoramic.jpg') no-repeat center center;
             background-size: cover;
-            touch-action: none; /* Отключаем жесты браузера на сенсорных экранах */
+            touch-action: none;
+            width: 100%; /* Адаптивная ширина */
+            max-width: 500px;
+            height: auto;
+            aspect-ratio: 3 / 2; /* Сохраняем пропорции */
         }
         .controls {
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
-            margin-top: 20px;
+            margin-top: 10px;
         }
         .text-area {
-            width: 80%;
-            padding: 10px;
-            border-radius: 10px;
+            width: 100%;
+            padding: 8px;
+            border-radius: 8px;
             border: 1px solid #ccc;
-            font-size: 16px;
+            font-size: 14px;
             text-align: center;
             resize: none;
-            margin-top: 10px;
+            margin-top: 8px;
         }
         .face-picker {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 7px;
+            gap: 5px;
         }
         .face-option {
-            width: 60px;
-            height: 60px;
+            width: 45px;
+            height: 45px;
             cursor: pointer;
             border-radius: 50%;
-            border: 3px solid transparent;
+            border: 2px solid transparent;
             transition: transform 0.3s ease, border-color 0.3s ease;
         }
         .face-option:hover, .face-option.active {
-            transform: scale(1.2);
+            transform: scale(1.1);
             border-color: #444;
         }
-        .clear-button, .send-button,.calc-button {
-            margin-top: 15px;
-            padding: 10px 20px;
-            font-size: 16px;
+        .clear-button, .send-button, .calc-button {
+            margin-top: 10px;
+            padding: 8px 16px;
+            font-size: 14px;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background 0.3s;
-            width: 80%;
+            width: 100%;
             text-align: center;
         }
-        .clear-button {
-            background-color: #ff4d4d;
-            color: white;
-        }
-        .clear-button:hover {
-            background-color: #cc0000;
-        }
-        .calc-button {
-            background-color: #978e52;
-            color: white;
-        }
-        .calc-button:hover {
-            background-color: #897b44;
-        }
-        .send-button {
-            background-color: #4CAF50;
-            color: white;
-        }
-        .send-button:hover {
-            background-color: #388E3C;
-        }
-        #line-width {
-            margin-top: 10px;
-            width: 80%;
+        .clear-button { background-color: #ff4d4d; color: white; }
+        .clear-button:hover { background-color: #cc0000; }
+        .calc-button { background-color: #978e52; color: white; }
+        .calc-button:hover { background-color: #897b44; }
+        .send-button { background-color: #4CAF50; color: white; }
+        .send-button:hover { background-color: #388E3C; }
+
+        /* Адаптация для мобильных */
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            .face-option {
+                width: 40px;
+                height: 40px;
+            }
+            .clear-button, .send-button, .calc-button {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+            canvas {
+                max-width: 350px;
+            }
         }
     </style>
 </head>
