@@ -188,36 +188,53 @@
         isDrawing = false;
         ctx.closePath();
     }
+    function getRelativePos(canvas, event) {
+        const rect = canvas.getBoundingClientRect();
+        let x, y;
 
-    canvas.addEventListener('mousedown', (e) => startDrawing(e.offsetX, e.offsetY));
-    canvas.addEventListener('mousemove', (e) => draw(e.offsetX, e.offsetY));
+        if (event.touches) {
+            // Сенсорный ввод
+            x = (event.touches[0].clientX - rect.left) * (canvas.width / rect.width);
+            y = (event.touches[0].clientY - rect.top) * (canvas.height / rect.height);
+        } else {
+            // Мышь
+            x = (event.clientX - rect.left) * (canvas.width / rect.width);
+            y = (event.clientY - rect.top) * (canvas.height / rect.height);
+        }
+
+        return { x, y };
+    }
+
+    canvas.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        const pos = getRelativePos(canvas, e);
+        startDrawing(pos.x, pos.y);
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+        if (isDrawing) {
+            const pos = getRelativePos(canvas, e);
+            draw(pos.x, pos.y);
+        }
+    });
+
     canvas.addEventListener('mouseup', stopDrawing);
     canvas.addEventListener('mouseleave', stopDrawing);
 
-    function getTouchPos(canvas, touch) {
-        const rect = canvas.getBoundingClientRect();
-        return {
-            x: (touch.clientX - rect.left) * (canvas.width / rect.width),
-            y: (touch.clientY - rect.top) * (canvas.height / rect.height)
-        };
-    }
-
     canvas.addEventListener('touchstart', (e) => {
-        e.preventDefault(); // Предотвращаем скроллинг
-        const touchPos = getTouchPos(canvas, e.touches[0]);
-        startDrawing(touchPos.x, touchPos.y);
+        e.preventDefault();
+        const pos = getRelativePos(canvas, e);
+        startDrawing(pos.x, pos.y);
     });
 
     canvas.addEventListener('touchmove', (e) => {
-        e.preventDefault(); // Предотвращаем скроллинг
-        const touchPos = getTouchPos(canvas, e.touches[0]);
-        draw(touchPos.x, touchPos.y);
+        e.preventDefault();
+        const pos = getRelativePos(canvas, e);
+        draw(pos.x, pos.y);
     });
 
     canvas.addEventListener('touchend', stopDrawing);
 
-
-    canvas.addEventListener('touchend', stopDrawing);
 
     document.getElementById('clearCanvas').addEventListener('click', () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
