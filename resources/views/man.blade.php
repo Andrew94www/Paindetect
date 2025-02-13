@@ -70,7 +70,7 @@
             transform: scale(1.2);
             border-color: #444;
         }
-        .clear-button, .send-button {
+        .clear-button, .send-button,.calc-button {
             margin-top: 15px;
             padding: 10px 20px;
             font-size: 16px;
@@ -87,6 +87,13 @@
         }
         .clear-button:hover {
             background-color: #cc0000;
+        }
+        .calc-button {
+            background-color: #978e52;
+            color: white;
+        }
+        .calc-button:hover {
+            background-color: #897b44;
         }
         .send-button {
             background-color: #4CAF50;
@@ -107,15 +114,16 @@
     <div class="controls">
         <div class="face-picker">
             <img class="face-option" src="img/face_0.jpg" alt="No Pain" data-color="#006400">
-            <img class="face-option" src="img/face_1.jpg" alt="Mild Pain" data-color="#008000">
+            <img class="face-option" src="img/face_1.jpg" alt="Mild Pain" data-color="#ADFF2F">
             <img class="face-option" src="img/face_2.jpg" alt="Moderate Pain" data-color="#FFFF00">
-            <img class="face-option" src="img/face_3.jpg" alt="Severe Pain" data-color="#8B4513">
-            <img class="face-option" src="img/face_4.jpg" alt="Very Severe Pain" data-color="#FFA500">
+            <img class="face-option" src="img/face_3.jpg" alt="Severe Pain" data-color="#FFA500">
+            <img class="face-option" src="img/face_4.jpg" alt="Very Severe Pain" data-color="#8B4513">
             <img class="face-option" src="img/face_5.jpg" alt="Worst Pain" data-color="#FF0000">
         </div>
         <textarea id="pain-input" class="text-area">No Pain</textarea>
         <textarea id="medications" class="text-area" placeholder="Enter medications for treatment..."></textarea>
         <button class="clear-button" id="clearCanvas">Clear</button>
+        <button class="calc-button" id="calcButton">Calc Pain</button>
         <button class="send-button" id="sendData">Send Data</button>
     </div>
 </div>
@@ -143,10 +151,27 @@
         ctx.beginPath();
         ctx.moveTo(x, y);
         usedColors.add(ctx.strokeStyle);
-        updatePainInput();
     }
     function updatePainInput() {
-        document.getElementById('pain-input').value = Array.from(usedColors).join(', ');
+        let level=usedColors;
+
+
+        if (level.has("#ff0000")) { // Красный - шестой приоритет
+            level = new Set(["#ff0000"]);
+        } else if (level.has("#8b4513")) { // Коричневый - самый высокий приоритет
+            level = new Set(["#8b4513"]);
+        } else if (level.has("#ffa500")) { // Желтый - четвертый приоритет
+            level = new Set(["#ffa500"]);
+        } else if (level.has("#ffff00")) { // Желтый - четвертый приоритет
+            level = new Set(["#ffff00"]);
+        } else if (level.has("#adff2f")) { // Оранжевый - пятый приоритет
+            level = new Set(["#adff2f"]);
+        } else if (level.has("#006400")) { // Красный - шестой приоритет
+            level = new Set(["#006400"]);
+        }
+        console.log(level);
+        console.log(usedColors)
+        return level; // Возвращаем level для дальнейшего использования
     }
 
     function draw(x, y) {
@@ -187,6 +212,10 @@
         usedColors.clear();
         document.getElementById('pain-input').value='';
     });
+    document.getElementById('calcButton').addEventListener('click', () => {
+       updatePainInput()
+    });
+
 
     document.getElementById('sendData').addEventListener('click', () => {
         const canvasData = canvas.toDataURL();
