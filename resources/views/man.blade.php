@@ -172,8 +172,24 @@
         } else if (level.has("#006400")) { // Красный - шестой приоритет
             level = new Set(["#006400"]);
         }
-        console.log(level);
-        console.log(usedColors)
+        const myArray = Array.from(level);
+        levelPain = myArray[0];
+        if (levelPain  === "#ff0000") { // Красный - шестой приоритет
+            level = 'Very severe or unbearable pain';
+        } else if (levelPain==="#8b4513") { // Коричневый - самый высокий приоритет
+            level = 'Severe pain';
+        } else if (levelPain==="#ffa500") { // Желтый - четвертый приоритет
+            level = 'Moderate pain';
+        } else if (levelPain==="#ffff00") { // Желтый - четвертый приоритет
+            level = 'Mild pain';
+        } else if (levelPain==="#adff2f") { // Оранжевый - пятый приоритет
+            level = 'Very mild pain';
+        } else { // Красный - шестой приоритет
+            level = 'No pain';
+        }
+        console.log(level)
+
+
         return level; // Возвращаем level для дальнейшего использования
     }
 
