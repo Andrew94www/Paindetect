@@ -176,16 +176,22 @@
         levelPain = myArray[0];
         if (levelPain  === "#ff0000") { // Красный - шестой приоритет
             level = 'Very severe or unbearable pain';
+            document.getElementById('pain-input').value=level
         } else if (levelPain==="#8b4513") { // Коричневый - самый высокий приоритет
             level = 'Severe pain';
+            document.getElementById('pain-input').value=level
         } else if (levelPain==="#ffa500") { // Желтый - четвертый приоритет
             level = 'Moderate pain';
+            document.getElementById('pain-input').value=level
         } else if (levelPain==="#ffff00") { // Желтый - четвертый приоритет
             level = 'Mild pain';
+            document.getElementById('pain-input').value=level
         } else if (levelPain==="#adff2f") { // Оранжевый - пятый приоритет
             level = 'Very mild pain';
+            document.getElementById('pain-input').value=level
         } else { // Красный - шестой приоритет
             level = 'No pain';
+            document.getElementById('pain-input').value=level
         }
         console.log(level)
 
@@ -256,18 +262,20 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         usedColors.clear();
         document.getElementById('pain-input').value='';
+        document.getElementById('medications').value='';
     });
     document.getElementById('calcButton').addEventListener('click', () => {
-       updatePainInput()
+        updatePainInput()
     });
 
 
     document.getElementById('sendData').addEventListener('click', () => {
+        updatePainInput()
         const canvasData = canvas.toDataURL();
         const painLevel = document.getElementById('pain-input').value;
         const medications = document.getElementById('medications').value;
 
-        fetch('/save-drawing', {
+        fetch('/save-level-pain', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
