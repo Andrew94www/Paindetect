@@ -8,197 +8,153 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #72edf2 10%, #d2d2e6 100%);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #3a8dff, #a7c7e7);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-        }
-
-        canvas {
-            border: none;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-            background-color: #fff;
-            max-width: 100%;
-            width: 90%; /* Адаптация для мобильных */
-            height: auto;
-            border-radius: 15px;
-            touch-action: none; /* Отключение стандартных жестов браузера */
-        }
-
-        .button-container {
-            margin-top: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        button, .button_link {
-            padding: 10px 20px;
-            font-size: 16px;
-            color: white;
-            background-color: #4CAF50;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            text-decoration: none;
-            margin: 5px;
-            display: inline-block;
             text-align: center;
         }
 
+        .container {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 90%;
+            width: 420px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #222;
+            margin-bottom: 15px;
+        }
+
+        canvas {
+            border-radius: 12px;
+            background-color: #f0f0f0;
+            width: 100%;
+            height: auto;
+            max-height: 180px;
+            margin-bottom: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        button, .button_link {
+            flex: 1;
+            padding: 12px;
+            font-size: 14px;
+            color: white;
+            background: #007bff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+        }
+
         button:hover, .button_link:hover {
-            background-color: #45a049;
+            background: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
         }
 
-        button:active, .button_link:active {
-            background-color: #3e8e41;
-        }
-
-        @media (max-width: 768px) {
-            button, .button_link {
-                width: 90%;
-                font-size: 18px;
-                margin-bottom: 10px;
+        @media (max-width: 600px) {
+            .container {
+                width: 95%;
             }
-
-            canvas {
-                width: 100%;
+            .button-container {
+                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
 
-<canvas id="canvas"></canvas>
-
-<div class="button-container">
-    <button id="resetButton">Скинути замір</button>
-    <a href="{{route('get-vision')}}" class="button_link">Завантажити зображення</a>
-    <a id="submitResult" class="button_link">Відправити результат</a>
+<div class="container">
+    <h1>Vision Measurement</h1>
+    <canvas id="canvas"></canvas>
+    <div class="button-container">
+        <button id="resetButton">Скинути</button>
+        <a href="{{route('get-vision')}}" class="button_link">Завантажити</a>
+        <a id="submitResult" class="button_link">Відправити</a>
+    </div>
 </div>
 
 <script>
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
-
     const DPI = 96;
 
     function mmToPx(mm) {
         return (mm / 25.4) * DPI;
     }
 
-    const canvasWidthMM = 100;
-    const canvasHeightMM = 100;
-
+    const canvasWidthMM = 60;
+    const canvasHeightMM = 50;
     canvas.width = mmToPx(canvasWidthMM);
     canvas.height = mmToPx(canvasHeightMM);
 
     let image = new Image();
     image.src = '{{ asset('storage/' . $imagePath) }}';
 
-    let drawing = false;
-    let ix = -1, iy = -1;
-    let rx = -1, ry = -1;
-    let radiusMM = 0;
-
     image.onload = function() {
-        const imgAspectRatio = image.width / image.height;
-        const canvasAspectRatio = canvas.width / canvas.height;
-
-        let renderWidth, renderHeight;
-
-        if (imgAspectRatio > canvasAspectRatio) {
-            renderHeight = canvas.height;
-            renderWidth = canvas.height * imgAspectRatio;
-        } else {
-            renderWidth = canvas.width;
-            renderHeight = canvas.width / imgAspectRatio;
-        }
-
-        const offsetX = (canvas.width - renderWidth) / 2;
-        const offsetY = (canvas.height - renderHeight) / 2;
-
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(image, offsetX, offsetY, renderWidth, renderHeight);
+        let scale = Math.min(canvas.width / image.width, canvas.height / image.height);
+        let newWidth = image.width * scale;
+        let newHeight = image.height * scale;
+        let x = (canvas.width - newWidth) / 2;
+        let y = (canvas.height - newHeight) / 2;
+        ctx.drawImage(image, x, y, newWidth, newHeight);
     };
 
-    function getTouchPosition(touchEvent) {
-        const rect = canvas.getBoundingClientRect();
-        const touch = touchEvent.touches[0] || touchEvent.changedTouches[0];
-        return {
-            x: touch.clientX - rect.left,
-            y: touch.clientY - rect.top
-        };
-    }
-
-    canvas.addEventListener('mousedown', startDrawing);
-    canvas.addEventListener('mousemove', draw);
-    canvas.addEventListener('mouseup', stopDrawing);
-
-    canvas.addEventListener('touchstart', function(e) {
-        const pos = getTouchPosition(e);
-        startDrawing({ clientX: pos.x, clientY: pos.y });
-        e.preventDefault();
-    });
-
-    canvas.addEventListener('touchmove', function(e) {
-        const pos = getTouchPosition(e);
-        draw({ clientX: pos.x, clientY: pos.y });
-        e.preventDefault();
-    });
-
-    canvas.addEventListener('touchend', function(e) {
-        stopDrawing(e);
-        e.preventDefault();
-    });
+    let drawing = false, ix, iy, rx, ry, radiusMM;
 
     function startDrawing(e) {
         drawing = true;
         const rect = canvas.getBoundingClientRect();
         ix = e.clientX - rect.left;
         iy = e.clientY - rect.top;
-
-        ctx.beginPath();
-        ctx.arc(ix, iy, mmToPx(1), 0, 2 * Math.PI);
-        ctx.fillStyle = 'red';
-        ctx.fill();
-        ctx.closePath();
     }
 
     function draw(e) {
         if (drawing) {
-            const rect = canvas.getBoundingClientRect();
-            rx = e.clientX - rect.left;
-            ry = e.clientY - rect.top;
+            rx = e.clientX - canvas.getBoundingClientRect().left;
+            ry = e.clientY - canvas.getBoundingClientRect().top;
         }
     }
 
     function stopDrawing(e) {
         drawing = false;
-        const rect = canvas.getBoundingClientRect();
-        rx = e.clientX - rect.left;
-        ry = e.clientY - rect.top;
-
+        rx = e.clientX - canvas.getBoundingClientRect().left;
+        ry = e.clientY - canvas.getBoundingClientRect().top;
         const radiusPx = Math.sqrt((ix - rx) ** 2 + (iy - ry) ** 2);
         radiusMM = (radiusPx * 25.4) / DPI;
 
         ctx.beginPath();
         ctx.arc(ix, iy, radiusPx, 0, 2 * Math.PI);
         ctx.strokeStyle = 'green';
-        ctx.lineWidth = mmToPx(0.5);
+        ctx.lineWidth = 2;
         ctx.stroke();
         ctx.closePath();
-
-        ctx.font = `${mmToPx(5)}px Arial`;
-        ctx.fillStyle = 'white';
-        ctx.fillText(`Radius: ${radiusMM.toFixed(2)} mm`, ix + radiusPx + mmToPx(3), iy);
-
-        console.log(`Center: (${ix}, ${iy}), Radius: ${radiusMM} mm`);
     }
+
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
 
     document.getElementById('resetButton').addEventListener('click', function() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -216,12 +172,10 @@
                 body: JSON.stringify({ radiusMM: radiusMM })
             })
                 .then(response => response.json())
-                .then(data => {
+                .then(() => {
                     window.location.href = '{{ route("detect") }}';
-                    console.log('Response:', data);
                 })
-                .catch(error => {
-                    console.error('Error:', error);
+                .catch(() => {
                     alert('Помилка відправки даних.');
                 });
         } else {

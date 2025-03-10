@@ -14,58 +14,61 @@
             height: 100vh;
             margin: 0;
             background: linear-gradient(135deg, #eef2ff, #c3dafe);
-            overflow: hidden; /* Убираем скроллинг на мобильных */
+            overflow: auto;
         }
         .container {
+            display: grid;
+            grid-template-columns: 4fr 4fr;
+            gap: 40px;
+            background: white;
+            box-shadow: 0 25px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 1600px;
+            box-sizing: border-box;
+            margin: 20px;
+        }
+        .canvas-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            background: white;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-            border-radius: 20px;
-            padding: 15px;
-            width: 90%;
-            max-width: 600px; /* Ограничиваем ширину */
-            box-sizing: border-box;
         }
         canvas {
             border: 1px solid #444;
             border-radius: 15px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            background: url('img/uvmanpanoramic.jpg') no-repeat center center;
+            background: url('img/chelovek.jpg');
             background-size: cover;
             touch-action: none;
-            width: 100%; /* Адаптивная ширина */
-            max-width: 500px;
+            width: 100%;
             height: auto;
-            aspect-ratio: 3 / 2; /* Сохраняем пропорции */
+            aspect-ratio: 2 / 1.5;
         }
         .controls {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            width: 100%;
-            margin-top: 10px;
+            gap: 10px;
         }
         .text-area {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             border-radius: 8px;
             border: 1px solid #ccc;
             font-size: 14px;
             text-align: center;
-            resize: none;
-            margin-top: 8px;
+            resize: vertical;
         }
         .face-picker {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 5px;
+            gap: 8px;
+            margin-top: 10px;
         }
         .face-option {
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
             cursor: pointer;
             border-radius: 50%;
             border: 2px solid transparent;
@@ -75,10 +78,9 @@
             transform: scale(1.1);
             border-color: #444;
         }
-        .clear-button, .send-button, .calc-button {
-            margin-top: 10px;
-            padding: 8px 16px;
-            font-size: 14px;
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
@@ -91,30 +93,43 @@
         .calc-button:hover { background-color: #897b44; }
         .send-button { background-color: #4CAF50; color: white; }
         .send-button:hover { background-color: #388E3C; }
-
-        /* Адаптация для мобильных */
-        @media (max-width: 480px) {
+        .controls label {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .controls input[type="range"] {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 8px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+            transition: background 0.3s;
+        }
+        .controls input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .controls input[type="range"]::-webkit-slider-thumb:hover {
+            background: #388E3C;
+        }
+        @media (max-width: 768px) {
             .container {
-                padding: 10px;
-            }
-            .face-option {
-                width: 40px;
-                height: 40px;
-            }
-            .clear-button, .send-button, .calc-button {
-                font-size: 12px;
-                padding: 6px 12px;
-            }
-            canvas {
-                max-width: 350px;
+                grid-template-columns: 1fr;
+                width: 95%;
             }
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <canvas id="canvas" width="600" height="400"></canvas>
-    <div class="controls">
+    <div class="canvas-container">
+        <canvas id="canvas" width="300" height="800"></canvas>
         <div class="face-picker">
             <img class="face-option" src="img/face_0.jpg" alt="No Pain" data-color="#006400">
             <img class="face-option" src="img/face_1.jpg" alt="Mild Pain" data-color="#ADFF2F">
@@ -123,11 +138,19 @@
             <img class="face-option" src="img/face_4.jpg" alt="Very Severe Pain" data-color="#8B4513">
             <img class="face-option" src="img/face_5.jpg" alt="Worst Pain" data-color="#FF0000">
         </div>
+    </div>
+    <div class="controls">
         <textarea id="pain-input" class="text-area">No Pain</textarea>
         <textarea id="medications" class="text-area" placeholder="Enter medications for treatment..."></textarea>
-        <button class="clear-button" id="clearCanvas">Clear</button>
-        <button class="calc-button" id="calcButton">Calc Pain</button>
-        <button class="send-button" id="sendData">Send Data</button>
+        <label for="ageSlider">Age: <span id="ageValue">25</span> years</label>
+        <input type="range" id="ageSlider" min="10" max="100" value="25">
+        <label for="weightSlider">Weight: <span id="weightValue">70</span> kg</label>
+        <input type="range" id="weightSlider" min="30" max="150" value="70">
+        <label for="heightSlider">Height: <span id="heightValue">170</span> cm</label>
+        <input type="range" id="heightSlider" min="100" max="220" value="170">
+        <button class="clear-button button" id="clearCanvas">Clear</button>
+        <button class="calc-button button" id="calcButton">Calc Pain</button>
+        <button class="send-button button" id="sendData">Send Data</button>
     </div>
 </div>
 <script>
@@ -267,6 +290,18 @@
     document.getElementById('calcButton').addEventListener('click', () => {
         updatePainInput()
     });
+    document.getElementById('ageSlider').addEventListener('input', function() {
+        document.getElementById('ageValue').textContent = this.value;
+    });
+
+    document.getElementById('weightSlider').addEventListener('input', function() {
+        document.getElementById('weightValue').textContent = this.value;
+    });
+
+    document.getElementById('heightSlider').addEventListener('input', function() {
+        document.getElementById('heightValue').textContent = this.value;
+    });
+
 
 
     document.getElementById('sendData').addEventListener('click', () => {
