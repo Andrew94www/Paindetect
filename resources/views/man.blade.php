@@ -96,28 +96,33 @@
         .controls label {
             font-size: 16px;
             font-weight: bold;
+            margin-top: 10px;
         }
         .controls input[type="range"] {
             width: 100%;
             -webkit-appearance: none;
-            height: 8px;
-            border-radius: 5px;
-            background: #ddd;
+            height: 10px; /* Увеличиваем высоту слайдера */
+            border-radius: 20px; /* Делаем края более закругленными */
+            background: linear-gradient(to right, #ddd, #eee); /* Градиентный фон */
             outline: none;
             transition: background 0.3s;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Добавляем внутреннюю тень */
         }
         .controls input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
+            width: 25px; /* Увеличиваем размер ползунка */
+            height: 25px;
             border-radius: 50%;
-            background: #4CAF50;
+            background: linear-gradient(135deg, #4CAF50, #388E3C); /* Градиентный ползунок */
             cursor: pointer;
-            transition: background 0.3s;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для ползунка */
         }
         .controls input[type="range"]::-webkit-slider-thumb:hover {
-            background: #388E3C;
+            transform: scale(1.1); /* Небольшое увеличение при наведении */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Усиленная тень при наведении */
         }
+        /* Адаптация для мобильных */
         @media (max-width: 768px) {
             .container {
                 grid-template-columns: 1fr;
