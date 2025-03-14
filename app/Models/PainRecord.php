@@ -9,7 +9,7 @@ use Illuminate\Database\Schema\Blueprint;
 class PainRecord extends Model
 {
     use HasFactory;
-    protected $fillable = ['image', 'pain_level', 'medications'];
+    protected $fillable = ['image', 'pain_level', 'medications','painIndex','age','weight','height'];
 
     public function getImageUrlAttribute()
     {

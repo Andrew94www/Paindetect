@@ -222,6 +222,11 @@
     }
     function updatePainInput() {
         let level=usedColors;
+        const colorPercentages = calculateDrawnArea(canvas);
+        console.log("Процентное соотношение цветов:", colorPercentages);
+
+        let message = "Процентное соотношение цветов:\n";
+        let totalWeightedArea = 0; // Сумма произведений
 
 
         if (level.has("#ff0000")) { // Красный - шестой приоритет
@@ -259,6 +264,20 @@
             document.getElementById('pain-input').value=level
         }
         console.log(level)
+
+        for (const color in colorPercentages) {
+            const colorName = colorNames[color];
+            const percentage = colorPercentages[color];
+            const coefficient = colorCoefficients[color];
+            const weightedArea = percentage * coefficient;
+
+            totalWeightedArea += weightedArea;
+            message += `${colorName}: ${percentage.toFixed(2)}%, коэффициент: ${coefficient}, произведение: ${weightedArea.toFixed(2)}\n`;
+        }
+
+        message += `Сумма произведений: ${totalWeightedArea.toFixed(2)}`;
+        document.getElementById('indexPain').value=totalWeightedArea.toFixed(2);
+        // alert(message);
 
 
         return level; // Возвращаем level для дальнейшего использования
@@ -328,6 +347,7 @@
         usedColors.clear();
         document.getElementById('pain-input').value='';
         document.getElementById('medications').value='';
+        document.getElementById('indexPain').value='';
     });
     document.getElementById('calcButton').addEventListener('click', () => {
         updatePainInput()
@@ -394,24 +414,7 @@
 
     document.getElementById('calcButton').addEventListener('click', () => {
         updatePainInput();
-        const colorPercentages = calculateDrawnArea(canvas);
-        console.log("Процентное соотношение цветов:", colorPercentages);
 
-        let message = "Процентное соотношение цветов:\n";
-        let totalWeightedArea = 0; // Сумма произведений
-
-        for (const color in colorPercentages) {
-            const colorName = colorNames[color];
-            const percentage = colorPercentages[color];
-            const coefficient = colorCoefficients[color];
-            const weightedArea = percentage * coefficient;
-
-            totalWeightedArea += weightedArea;
-            message += `${colorName}: ${percentage.toFixed(2)}%, коэффициент: ${coefficient}, произведение: ${weightedArea.toFixed(2)}\n`;
-        }
-
-        message += `Сумма произведений: ${totalWeightedArea.toFixed(2)}`;
-        alert(message);
     });
 
 
@@ -421,6 +424,10 @@
         const canvasData = canvas.toDataURL();
         const painLevel = document.getElementById('pain-input').value;
         const medications = document.getElementById('medications').value;
+        const painIndex =document.getElementById('indexPain').value;
+        const age =document.getElementById('ageSlider').value;
+        const weight =document.getElementById('weightSlider').value;
+        const height =document.getElementById('heightSlider').value;
 
         fetch('/save-level-pain', {
             method: 'POST',
@@ -431,7 +438,11 @@
             body: JSON.stringify({
                 image: canvasData,
                 pain_level: painLevel,
-                medications: medications
+                medications: medications,
+                painIndex:painIndex,
+                age:age,
+                weight:weight,
+                height:height
             })
         }).then(response => response.json()).then(data => {
             alert('Data saved successfully!');

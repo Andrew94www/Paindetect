@@ -34,7 +34,11 @@ class ImageUploadController extends Controller
         $validatedData = $request->validate([
             'image' => 'required|string', // Если передается base64
             'pain_level' => 'required|string',
-            'medications' => 'nullable|string'
+            'medications' => 'nullable|string',
+            'painIndex' => 'nullable|string',
+            'age' => 'nullable|string',
+            'weight' => 'nullable|string',
+            'height' => 'nullable|string'
         ]);
 
         $fileName = null;
@@ -90,7 +94,11 @@ class ImageUploadController extends Controller
         $painRecord = PainRecord::create([
             'image' => $fileName,
             'pain_level' => $validatedData['pain_level'],
-            'medications' => $validatedData['medications'] ?? null
+            'medications' => $validatedData['medications'] ?? null,
+            'painIndex' => $validatedData['painIndex'] ?? null,
+            'age' => $validatedData['age'] ?? null,
+            'weight' => $validatedData['weight'] ?? null,
+            'height' => $validatedData['height'] ?? null
         ]);
 
         return response()->json([
