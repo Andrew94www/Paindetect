@@ -122,6 +122,10 @@
             transform: scale(1.1); /* Небольшое увеличение при наведении */
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Усиленная тень при наведении */
         }
+        .indexPain{
+            height: 35px;
+            border-radius: 7px;
+        }
         /* Адаптация для мобильных */
         @media (max-width: 768px) {
             .container {
@@ -145,8 +149,12 @@
         </div>
     </div>
     <div class="controls">
+        <label for="levelPain">Level Pain:</label>
         <textarea id="pain-input" class="text-area">No Pain</textarea>
+        <label for="levelPain">Enter medications for treatment:</label>
         <textarea id="medications" class="text-area" placeholder="Enter medications for treatment..."></textarea>
+        <label for="indexPain">Index Pain:</label>
+        <input id="indexPain" class="indexPain">
         <label for="ageSlider">Age: <span id="ageValue">25</span> years</label>
         <input type="range" id="ageSlider" min="10" max="100" value="25">
         <label for="weightSlider">Weight: <span id="weightValue">70</span> kg</label>
@@ -162,7 +170,7 @@
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     let usedColors = new Set();
-    let lineWidth = 8; // Толщина линии по умолчанию
+    let lineWidth = 2; // Толщина линии по умолчанию
     ctx.lineWidth = lineWidth;
     ctx.strokeStyle = '#006400'; // Зеленый цвет по умолчанию
 
@@ -305,6 +313,76 @@
 
     document.getElementById('heightSlider').addEventListener('input', function() {
         document.getElementById('heightValue').textContent = this.value;
+    });
+    function calculateDrawnArea(canvas) {
+        const ctx = canvas.getContext('2d');
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+        const totalPixels = canvas.width * canvas.height;
+        const colorPixels = {};
+
+        for (let i = 0; i < data.length; i += 4) {
+            const r = data[i];
+            const g = data[i + 1];
+            const b = data[i + 2];
+            const a = data[i + 3];
+
+            if (a !== 0 && (r !== 255 || g !== 255 || b !== 255)) {
+                const color = `rgb(${r}, ${g}, ${b})`;
+                if (colorNames[color]) {
+                    colorPixels[color] = (colorPixels[color] || 0) + 1;
+                }
+            }
+        }
+
+        const colorPercentages = {};
+        for (const color in colorPixels) {
+            colorPercentages[color] = (colorPixels[color] / totalPixels) * 100;
+        }
+
+        return colorPercentages;
+    }
+
+    const colorNames = {
+        'rgb(0, 100, 0)': 'Зеленый',
+        'rgb(173, 255, 47)': 'Салатовый',
+        'rgb(255, 255, 0)': 'Желтый',
+        'rgb(255, 165, 0)': 'Оранжевый',
+        'rgb(139, 69, 19)': 'Коричневый',
+        'rgb(255, 0, 0)': 'Красный',
+        // Добавьте другие цвета, если необходимо
+    };
+
+    const colorCoefficients = {
+        'rgb(0, 100, 0)': 1, // Пример коэффициента для зеленого
+        'rgb(173, 255, 47)': 2, // Пример коэффициента для салатового
+        'rgb(255, 255, 0)': 3, // Пример коэффициента для желтого
+        'rgb(255, 165, 0)': 4, // Пример коэффициента для оранжевого
+        'rgb(139, 69, 19)': 5, // Пример коэффициента для коричневого
+        'rgb(255, 0, 0)': 6, // Пример коэффициента для красного
+        // Добавьте коэффициенты для других цветов
+    };
+
+    document.getElementById('calcButton').addEventListener('click', () => {
+        updatePainInput();
+        const colorPercentages = calculateDrawnArea(canvas);
+        console.log("Процентное соотношение цветов:", colorPercentages);
+
+        let message = "Процентное соотношение цветов:\n";
+        let totalWeightedArea = 0; // Сумма произведений
+
+        for (const color in colorPercentages) {
+            const colorName = colorNames[color];
+            const percentage = colorPercentages[color];
+            const coefficient = colorCoefficients[color];
+            const weightedArea = percentage * coefficient;
+
+            totalWeightedArea += weightedArea;
+            message += `${colorName}: ${percentage.toFixed(2)}%, коэффициент: ${coefficient}, произведение: ${weightedArea.toFixed(2)}\n`;
+        }
+
+        message += `Сумма произведений: ${totalWeightedArea.toFixed(2)}`;
+        alert(message);
     });
 
 
