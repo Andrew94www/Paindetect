@@ -66,6 +66,17 @@
             gap: 8px;
             margin-top: 10px;
         }
+        .face-picker span {
+            font-size: 14px; /* Увеличим размер шрифта */
+            margin-top: 8px; /* Увеличим отступ сверху */
+            color: #333; /* Изменим цвет текста */
+            font-weight: 500; /* Сделаем текст полужирным */
+            text-align: center; /* Центрируем текст */
+            padding: 5px 10px; /* Добавим внутренний отступ */
+            background-color: #f0f0f0; /* Добавим фон */
+            border-radius: 15px; /* Сделаем края закругленными */
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Добавим внутреннюю тень */
+        }
         .face-option {
             width: 50px;
             height: 50px;
@@ -140,12 +151,30 @@
     <div class="canvas-container">
         <canvas id="canvas" width="300" height="800"></canvas>
         <div class="face-picker">
-            <img class="face-option" src="img/face_0.jpg" alt="No Pain" data-color="#006400">
-            <img class="face-option" src="img/face_1.jpg" alt="Mild Pain" data-color="#ADFF2F">
-            <img class="face-option" src="img/face_2.jpg" alt="Moderate Pain" data-color="#FFFF00">
-            <img class="face-option" src="img/face_3.jpg" alt="Severe Pain" data-color="#FFA500">
-            <img class="face-option" src="img/face_4.jpg" alt="Very Severe Pain" data-color="#8B4513">
-            <img class="face-option" src="img/face_5.jpg" alt="Worst Pain" data-color="#FF0000">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <img class="face-option" src="img/face_0.jpg" alt="No Pain" data-color="#006400">
+                <span>No Pain</span>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <img class="face-option" src="img/face_1.jpg" alt="Mild Pain" data-color="#ADFF2F">
+                <span>Mild Pain</span>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <img class="face-option" src="img/face_2.jpg" alt="Moderate Pain" data-color="#FFFF00">
+                <span>Moderate Pain</span>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <img class="face-option" src="img/face_3.jpg" alt="Severe Pain" data-color="#FFA500">
+                <span>Severe Pain</span>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <img class="face-option" src="img/face_4.jpg" alt="Very Severe Pain" data-color="#8B4513">
+                <span>Very Severe Pain</span>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <img class="face-option" src="img/face_5.jpg" alt="Worst Pain" data-color="#FF0000">
+                <span>Worst Pain</span>
+            </div>
         </div>
     </div>
     <div class="controls">
