@@ -225,7 +225,7 @@
         const colorPercentages = calculateDrawnArea(canvas);
         console.log("Процентное соотношение цветов:", colorPercentages);
 
-        let message = "Процентное соотношение цветов:\n";
+        let message = "Color percentage ratio:\n";
         let totalWeightedArea = 0; // Сумма произведений
 
 
@@ -272,10 +272,10 @@
             const weightedArea = percentage * coefficient;
 
             totalWeightedArea += weightedArea;
-            message += `${colorName}: ${percentage.toFixed(2)}%, коэффициент: ${coefficient}, произведение: ${weightedArea.toFixed(2)}\n`;
+            message += `${colorName}: ${percentage.toFixed(2)}%, product: ${weightedArea.toFixed(2)}\n`;
         }
 
-        message += `Сумма произведений: ${totalWeightedArea.toFixed(2)}`;
+        message += `Total weighted area: ${totalWeightedArea.toFixed(2)}`;
         document.getElementById('indexPain').value=totalWeightedArea.toFixed(2);
         // alert(message);
 
@@ -393,13 +393,13 @@
     }
 
     const colorNames = {
-        'rgb(0, 100, 0)': 'Зеленый',
-        'rgb(173, 255, 47)': 'Салатовый',
-        'rgb(255, 255, 0)': 'Желтый',
-        'rgb(255, 165, 0)': 'Оранжевый',
-        'rgb(139, 69, 19)': 'Коричневый',
-        'rgb(255, 0, 0)': 'Красный',
-        // Добавьте другие цвета, если необходимо
+        'rgb(0, 100, 0)': 'Green',
+        'rgb(173, 255, 47)': 'Lime Green',
+        'rgb(255, 255, 0)': 'Yellow',
+        'rgb(255, 165, 0)': 'Orange',
+        'rgb(139, 69, 19)': 'Brown',
+        'rgb(255, 0, 0)': 'Red',
+        // Add other colors if needed
     };
 
     const colorCoefficients = {
