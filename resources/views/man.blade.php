@@ -11,23 +11,31 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh; /* Изменено на min-height */
             margin: 0;
             background: linear-gradient(135deg, #eef2ff, #c3dafe);
             overflow: auto;
         }
         .container {
             display: grid;
-            grid-template-columns: 4fr 4fr;
-            gap: 40px;
+            grid-template-columns: 1fr; /* 1 колонка на мобильных */
+            gap: 20px;
             background: white;
             box-shadow: 0 25px 30px rgba(0, 0, 0, 0.1);
             border-radius: 20px;
-            padding: 20px;
-            width: 100%;
+            padding: 15px; /* Уменьшен отступ */
+            width: 95%;
             max-width: 1600px;
             box-sizing: border-box;
-            margin: 20px;
+            margin: 10px; /* Уменьшен отступ */
+        }
+        @media (min-width: 768px) {
+            .container {
+                grid-template-columns: 4fr 4fr; /* 2 колонки на десктопе */
+                gap: 40px;
+                padding: 20px;
+                margin: 20px;
+            }
         }
         .canvas-container {
             display: flex;
@@ -52,7 +60,7 @@
         }
         .text-area {
             width: 100%;
-            padding: 10px;
+            padding: 8px; /* Уменьшен отступ */
             border-radius: 8px;
             border: 1px solid #ccc;
             font-size: 14px;
@@ -67,15 +75,15 @@
             margin-top: 10px;
         }
         .face-picker span {
-            font-size: 14px; /* Увеличим размер шрифта */
-            margin-top: 8px; /* Увеличим отступ сверху */
-            color: #333; /* Изменим цвет текста */
-            font-weight: 500; /* Сделаем текст полужирным */
-            text-align: center; /* Центрируем текст */
-            padding: 5px 10px; /* Добавим внутренний отступ */
-            background-color: #f0f0f0; /* Добавим фон */
-            border-radius: 15px; /* Сделаем края закругленными */
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Добавим внутреннюю тень */
+            font-size: 14px;
+            margin-top: 8px;
+            color: #333;
+            font-weight: 500;
+            text-align: center;
+            padding: 5px 10px;
+            background-color: #f0f0f0;
+            border-radius: 15px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .face-option {
             width: 50px;
@@ -112,37 +120,30 @@
         .controls input[type="range"] {
             width: 100%;
             -webkit-appearance: none;
-            height: 10px; /* Увеличиваем высоту слайдера */
-            border-radius: 20px; /* Делаем края более закругленными */
-            background: linear-gradient(to right, #ddd, #eee); /* Градиентный фон */
+            height: 10px;
+            border-radius: 20px;
+            background: linear-gradient(to right, #ddd, #eee);
             outline: none;
             transition: background 0.3s;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Добавляем внутреннюю тень */
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         .controls input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 25px; /* Увеличиваем размер ползунка */
+            width: 25px;
             height: 25px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #4CAF50, #388E3C); /* Градиентный ползунок */
+            background: linear-gradient(135deg, #4CAF50, #388E3C);
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для ползунка */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         .controls input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.1); /* Небольшое увеличение при наведении */
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Усиленная тень при наведении */
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
         .indexPain{
             height: 35px;
             border-radius: 7px;
-        }
-        /* Адаптация для мобильных */
-        @media (max-width: 768px) {
-            .container {
-                grid-template-columns: 1fr;
-                width: 95%;
-            }
         }
     </style>
 </head>
