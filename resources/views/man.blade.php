@@ -179,6 +179,8 @@
         </div>
     </div>
     <div class="controls">
+        <label for="typePain">Type of Pain:</label>
+        <textarea id="type-input" class="text-area"></textarea>
         <label for="levelPain">Level Pain:</label>
         <textarea id="pain-input" class="text-area">No Pain</textarea>
         <label for="levelPain">Enter medications for treatment:</label>
@@ -429,6 +431,7 @@
         const age =document.getElementById('ageSlider').value;
         const weight =document.getElementById('weightSlider').value;
         const height =document.getElementById('heightSlider').value;
+        const typePain = document.getElementById('type-input').value;
 
         fetch('/save-level-pain', {
             method: 'POST',
@@ -443,7 +446,8 @@
                 painIndex:painIndex,
                 age:age,
                 weight:weight,
-                height:height
+                height:height,
+                typePain:typePain
             })
         }).then(response => response.json()).then(data => {
             alert('Data saved successfully!');
