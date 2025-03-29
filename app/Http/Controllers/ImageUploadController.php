@@ -108,5 +108,10 @@ class ImageUploadController extends Controller
             'data' => $painRecord
         ]);
     }
+    public function getData(Request $request){
+        $data = PainRecord::all();
+
+        return response()->json($data);
+    }
 
 }

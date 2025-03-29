@@ -55,5 +55,7 @@ Route::post('/save-image', [ManController::class, 'saveImage']);
 Route::post('/upload-image', [ImageUploadController::class, 'store']);
 Route::post('/submit-measurement', [ManController::class, 'saveVision'])->name('submit-measurement');
 Route::post('/save-level-pain', [ImageUploadController::class, 'createPainLevel'])->name('save-level-pain');
+Route::get('/getData', [ImageUploadController::class, 'getData'])->name('getData');
+
 
 
