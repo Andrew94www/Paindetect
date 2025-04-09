@@ -57,7 +57,10 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
+            height: 700px; /* Задайте желаемую высоту */
+            overflow-y: auto;
         }
+
         .text-area {
             width: 100%;
             padding: 8px; /* Уменьшен отступ */
@@ -145,6 +148,68 @@
             height: 35px;
             border-radius: 7px;
         }
+        /* Modern стили для select и input в одну линию */
+        .adjuvants {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Добавляем расстояние между select и input */
+        }
+
+        .adjuvants label {
+            font-size: 16px;
+            font-weight: bold;
+            margin-right: 10px; /* Отступ справа от label */
+        }
+
+        .adjuvants select {
+            appearance: none;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 1rem;
+            color: #333;
+            cursor: pointer;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            padding-right: 30px;
+            flex-grow: 1; /* Селект занимает большую часть места */
+            flex-shrink: 1;
+            min-width: 0;
+            width: 85%; /* Занимает 90% ширины */
+        }
+
+        .adjuvants select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        .adjuvants select::-ms-expand {
+            display: none;
+        }
+        .dosa{
+            width: 30%;
+        }
+
+       .adjuvants input.adjuvantsInput {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 1rem;
+            color: #333;
+            width: 15%;
+            flex-grow: 1; /* Инпут может занимать оставшееся место */
+            flex-shrink: 0;
+        }
+
+        .adjuvants input.adjuvantsInput:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+        /* Конец стилей для select и input */
     </style>
 </head>
 <body>
@@ -176,23 +241,101 @@
                 <img class="face-option" src="img/face_5.jpg" alt="Worst Pain" data-color="#FF0000">
                 <span>Worst Pain</span>
             </div>
+            <label for="typePain">Type of Pain:</label>
+            <textarea id="type-input" class="text-area"></textarea>
+            <label for="levelPain">Level Pain:</label>
+            <textarea id="pain-input" class="text-area">No Pain</textarea>
+            <label for="indexPain">Index Pain:</label>
+            <input id="indexPain" class="indexPain">
         </div>
     </div>
     <div class="controls">
-        <label for="typePain">Type of Pain:</label>
-        <textarea id="type-input" class="text-area"></textarea>
-        <label for="levelPain">Level Pain:</label>
-        <textarea id="pain-input" class="text-area">No Pain</textarea>
-        <label for="levelPain">Enter medications for treatment:</label>
-        <textarea id="medications" class="text-area" placeholder="Enter medications for treatment..."></textarea>
-        <label for="indexPain">Index Pain:</label>
-        <input id="indexPain" class="indexPain">
         <label for="ageSlider">Age: <span id="ageValue">25</span> years</label>
         <input type="range" id="ageSlider" min="10" max="100" value="25">
         <label for="weightSlider">Weight: <span id="weightValue">70</span> kg</label>
         <input type="range" id="weightSlider" min="30" max="150" value="70">
         <label for="heightSlider">Height: <span id="heightValue">170</span> cm</label>
         <input type="range" id="heightSlider" min="100" max="220" value="170">
+        <label for="adjuvants">Select Adjuvant:</label>
+        <div class="adjuvants">
+            <select id="adjuvants" name="adjuvants">
+                <option value="not_selected">Not selected</option>
+                <option value="gabapentin">Gabapentin</option>
+                <option value="pregabalin">Pregabalin</option>
+                <option value="duloxetine">Duloxetine</option>
+                <option value="amitriptyline">Amitriptyline</option>
+                <option value="dexamethasone">Dexamethasone</option>
+            </select>
+            <input id="adjuvantsDose" class="adjuvantsInput" placeholder="Dose">
+            <div class="dosa">
+                <select id="adjuvantsDosa" name="adjuvantsDosa" class="adjuvantsDosa">
+                    <option value="g">g</option>
+                    <option value="mg">mg</option>
+                    <option value="mkg">mkg</option>
+                </select>
+            </div>
+            <input id="adjuvantsInput" class="adjuvantsInput" placeholder="Multiplicity">
+        </div>
+        <label for="adjuvants">NSAID:</label>
+        <div class="adjuvants">
+            <select id="nsaid" name="nsaid">
+                <option value="not_selected">Not selected</option>
+                <option value="paracetamolum">Paracetamolum</option>
+                <option value="ibuprofen">Ibuprofen</option>
+                <option value="aspirin">Aspirin</option>
+                <option value="analgin">Analgin</option>
+                <option value="dexamethasone">Dexamethasone</option>
+                <option value="diclofenac">Diclofenac</option>
+                <option value="nimesulide">Nimesulide</option>
+                <option value="dexamethasone">Dexamethasone</option>
+                <option value="ketorolac">Ketorolac</option>
+            </select>
+            <input id="nsaidInput" class="adjuvantsInput" placeholder="Dose" name="nsaidInput">
+            <div class="dosa">
+                <select id="nsaidDosa" name="nsaidDosa" class="adjuvantsDosa">
+                    <option value="g">g</option>
+                    <option value="mg">mg</option>
+                    <option value="mkg">mkg</option>
+                </select>
+            </div>
+            <input id="nsaidInputMultiplicity" class="adjuvantsInput" placeholder="Multiplicity">
+        </div>
+        <label for="adjuvants">Weak opioids:</label>
+        <div class="adjuvants">
+            <select id="weak_opioids" name="weak_opioids">
+                <option value="not_selected">Not selected</option>
+                <option value="codeine">Codeine</option>
+                <option value="dihydrocodeine">Dihydrocodeine</option>
+                <option value="tramadol">Tramadol</option>
+            </select>
+            <input id="weak_opioidsDose" class="adjuvantsInput" placeholder="Dose">
+            <div class="dosa">
+                <select id="weak_opioidsDosa" name="weak_opioidsDosa" class="adjuvantsDosa">
+                    <option value="g">g</option>
+                    <option value="mg">mg</option>
+                    <option value="mkg">mkg</option>
+                </select>
+            </div>
+            <input id="weak_opioidsMultiplicity" class="adjuvantsInput" placeholder="Multiplicity">
+        </div>
+        <label for="adjuvants">Strong opioids:</label>
+        <div class="adjuvants">
+            <select id="strong_opioids" name="strong_opioids">
+                <option value="not_selected">Not selected</option>
+                <option value="morphine">Morphine</option>
+                <option value="fentanyl">Fentanyl</option>
+                <option value="oxycodone ">Oxycodone </option>
+            </select>
+            <input id="strong_opioidsDose" class="adjuvantsInput" placeholder="Dose">
+            <div class="dosa">
+                <select id="strong_opioidsDosa" name="strong_opioidsDosa" class="adjuvantsDosa">
+                    <option value="g">g</option>
+                    <option value="mg">mg</option>
+                    <option value="mkg">mkg</option>
+                </select>
+            </div>
+            <input id="strong_opioidsInputMultiplicity" class="adjuvantsInput" placeholder="Multiplicity">
+        </div>
         <button class="clear-button button" id="clearCanvas">Clear</button>
         <button class="calc-button button" id="calcButton">Calc Pain</button>
         <button class="send-button button" id="sendData">Send Data</button>
@@ -432,6 +575,8 @@
         const weight =document.getElementById('weightSlider').value;
         const height =document.getElementById('heightSlider').value;
         const typePain = document.getElementById('type-input').value;
+        const adjuvantsSelect = document.getElementById('adjuvants').value;
+        const adjuvantsInput = document.getElementById('adjuvantsInput').value;
 
         fetch('/save-level-pain', {
             method: 'POST',
@@ -447,11 +592,59 @@
                 age:age,
                 weight:weight,
                 height:height,
-                typePain:typePain
+                typePain:typePain,
+                adjuvantsSelect: adjuvantsSelect,
+                adjuvantsInput: adjuvantsInput
             })
         }).then(response => response.json()).then(data => {
             alert('Data saved successfully!');
         }).catch(error => console.error('Error:', error));
+    });
+
+
+    //Treatment
+
+
+    document.getElementById('calcButton').addEventListener('click', function() {
+        // Получение значений для NSAID
+        const nsaidDrug = document.getElementById('nsaid').value;
+        const nsaidDoseValue = document.getElementById('nsaidInput').value;
+        const nsaidDoseUnit = document.getElementById('nsaidDosa').value;
+        const nsaidMultiplicity = document.getElementById('nsaidInputMultiplicity').value;
+
+        // Получение значений для Weak opioids
+        const weakOpioidsDrug = document.getElementById('weak_opioids').value;
+        const weakOpioidsDoseValue = document.getElementById('weak_opioidsDose').value;
+        const weakOpioidsDoseUnit = document.getElementById('weak_opioidsDosa').value;
+        const weakOpioidsMultiplicity = document.getElementById('weak_opioidsMultiplicity').value;
+
+        // Получение значений для Strong opioids
+        const strongOpioidsDrug = document.getElementById('strong_opioids').value;
+        const strongOpioidsDoseValue = document.getElementById('strong_opioidsDose').value;
+        const strongOpioidsDoseUnit = document.getElementById('strong_opioidsDosa').value;
+        const strongOpioidsMultiplicity = document.getElementById('strong_opioidsInputMultiplicity').value;
+
+        // Вывод значений (например, в консоль)
+        console.log('NSAID:');
+        console.log('  Лекарство:', nsaidDrug);
+        console.log('  Доза:', nsaidDoseValue);
+        console.log('  Единица дозы:', nsaidDoseUnit);
+        console.log('  Кратность:', nsaidMultiplicity);
+
+        console.log('Weak opioids:');
+        console.log('  Лекарство:', weakOpioidsDrug);
+        console.log('  Доза:', weakOpioidsDoseValue);
+        console.log('  Единица дозы:', weakOpioidsDoseUnit);
+        console.log('  Кратность:', weakOpioidsMultiplicity);
+
+        console.log('Strong opioids:');
+        console.log('  Лекарство:', strongOpioidsDrug);
+        console.log('  Доза:', strongOpioidsDoseValue);
+        console.log('  Единица дозы:', strongOpioidsDoseUnit);
+        console.log('  Кратность:', strongOpioidsMultiplicity);
+
+        // Здесь вы можете добавить код для отображения этих значений на странице
+        // Например, используя alert() или добавляя элементы в DOM.
     });
 </script>
 </body>
