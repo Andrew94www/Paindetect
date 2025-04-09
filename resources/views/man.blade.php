@@ -653,7 +653,7 @@
                 console.log('Combination Code: B'); // <<< CORRECTED TO B
             }
             // Condition for 'C': Strong selected, Weak NOT selected
-            else if (!isWeakOpioidSelected && isStrongOpioidSelected) {
+            else if (isStrongOpioidSelected) {
                 console.log('Combination Code: C');
             }
             // Condition for 'A': NEITHER Weak NOR Strong selected
