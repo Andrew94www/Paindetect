@@ -606,45 +606,75 @@
 
 
     document.getElementById('calcButton').addEventListener('click', function() {
-        // Получение значений для NSAID
+        // --- Get values for Adjuvants ---
+        const adjuvantDrug = document.getElementById('adjuvants').value;
+        const adjuvantDoseValue = document.getElementById('adjuvantsDose').value;
+        const adjuvantDoseUnit = document.getElementById('adjuvantsDosa').value;
+        const adjuvantMultiplicity = document.getElementById('adjuvantsInput').value;
+
+        // --- Get values for NSAID ---
         const nsaidDrug = document.getElementById('nsaid').value;
         const nsaidDoseValue = document.getElementById('nsaidInput').value;
         const nsaidDoseUnit = document.getElementById('nsaidDosa').value;
         const nsaidMultiplicity = document.getElementById('nsaidInputMultiplicity').value;
 
-        // Получение значений для Weak opioids
+        // --- Get values for Weak opioids ---
         const weakOpioidsDrug = document.getElementById('weak_opioids').value;
         const weakOpioidsDoseValue = document.getElementById('weak_opioidsDose').value;
         const weakOpioidsDoseUnit = document.getElementById('weak_opioidsDosa').value;
         const weakOpioidsMultiplicity = document.getElementById('weak_opioidsMultiplicity').value;
 
-        // Получение значений для Strong opioids
+        // --- Get values for Strong opioids ---
         const strongOpioidsDrug = document.getElementById('strong_opioids').value;
         const strongOpioidsDoseValue = document.getElementById('strong_opioidsDose').value;
         const strongOpioidsDoseUnit = document.getElementById('strong_opioidsDosa').value;
         const strongOpioidsMultiplicity = document.getElementById('strong_opioidsInputMultiplicity').value;
 
-        // Вывод значений (например, в консоль)
-        console.log('NSAID:');
-        console.log('  Лекарство:', nsaidDrug);
-        console.log('  Доза:', nsaidDoseValue);
-        console.log('  Единица дозы:', nsaidDoseUnit);
-        console.log('  Кратность:', nsaidMultiplicity);
+        // --- Log all collected values ---
+        // (Logging code omitted for brevity - keep the previous logging code here)
+        console.log('--- Collected Data ---');
+        // ... (previous console.log statements for Adjuvant, NSAID, Weak, Strong) ...
+        console.log('----------------------');
 
-        console.log('Weak opioids:');
-        console.log('  Лекарство:', weakOpioidsDrug);
-        console.log('  Доза:', weakOpioidsDoseValue);
-        console.log('  Единица дозы:', weakOpioidsDoseUnit);
-        console.log('  Кратность:', weakOpioidsMultiplicity);
 
-        console.log('Strong opioids:');
-        console.log('  Лекарство:', strongOpioidsDrug);
-        console.log('  Доза:', strongOpioidsDoseValue);
-        console.log('  Единица дозы:', strongOpioidsDoseUnit);
-        console.log('  Кратность:', strongOpioidsMultiplicity);
+        // --- CORRECTED Combination Logic A/B/C ---
+        const isAdjuvantSelected = adjuvantDrug !== 'not_selected';
+        const isNsaidSelected = nsaidDrug !== 'not_selected';
+        const isWeakOpioidSelected = weakOpioidsDrug !== 'not_selected';
+        const isStrongOpioidSelected = strongOpioidsDrug !== 'not_selected';
 
-        // Здесь вы можете добавить код для отображения этих значений на странице
-        // Например, используя alert() или добавляя элементы в DOM.
+        console.log('--- Combination Logic ---');
+
+        // First, check the base requirement: Adjuvant and NSAID must be selected for A, B, or C
+        if (isAdjuvantSelected && isNsaidSelected) {
+
+            // Condition for 'B': Weak selected, Strong NOT selected
+            if (isWeakOpioidSelected && !isStrongOpioidSelected) {
+                console.log('Combination Code: B'); // <<< CORRECTED TO B
+            }
+            // Condition for 'C': Strong selected, Weak NOT selected
+            else if (!isWeakOpioidSelected && isStrongOpioidSelected) {
+                console.log('Combination Code: C');
+            }
+            // Condition for 'A': NEITHER Weak NOR Strong selected
+            else if (!isWeakOpioidSelected && !isStrongOpioidSelected) {
+                console.log('Combination Code: A');
+            }
+            // Handle other cases within Adjuvant+NSAID (e.g., BOTH Weak and Strong selected)
+            else {
+                console.log('Combination Code: Undefined (e.g., both Weak and Strong selected, or other state)');
+            }
+
+        } else {
+            // Adjuvant or NSAID (or both) not selected
+            console.log('Combination Code: Base conditions (Adjuvant + NSAID) not met.');
+        }
+        console.log('-----------------------');
+
+
+        // --- Optional: Display data on page ---
+        // ... (previous examples for alert or DOM manipulation) ...
+
     });
 </script>
 </body>
