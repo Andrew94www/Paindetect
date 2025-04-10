@@ -39,7 +39,9 @@ class ImageUploadController extends Controller
             'age' => 'nullable|string',
             'weight' => 'nullable|string',
             'height' => 'nullable|string',
-            'typePain' => 'nullable|string'
+            'typePain' => 'nullable|string',
+            'analgeticIndexPain' => 'nullable|string',
+            'pain_control' => 'nullable|string'
         ]);
 
         $fileName = null;
@@ -100,7 +102,9 @@ class ImageUploadController extends Controller
             'age' => $validatedData['age'] ?? null,
             'weight' => $validatedData['weight'] ?? null,
             'height' => $validatedData['height'] ?? null,
-            'typePain'=>$validatedData['typePain'] ?? null
+            'typePain'=>$validatedData['typePain'] ?? null,
+            'analgeticIndexPain'=>$validatedData['analgeticIndexPain'] ?? null,
+            'pain_control'=>$validatedData['pain_control'] ?? null
         ]);
 
         return response()->json([

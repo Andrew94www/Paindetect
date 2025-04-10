@@ -144,10 +144,6 @@
             transform: scale(1.1);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
-        .indexPain{
-            height: 35px;
-            border-radius: 7px;
-        }
         /* Modern стили для select и input в одну линию */
         .adjuvants {
             display: flex;
@@ -209,7 +205,21 @@
             border-color: #007bff;
             box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
         }
-        /* Конец стилей для select и input */
+        .painIndexWrapper {
+            display: flex;         /* Enables Flexbox layout for direct children */
+            align-items: center;   /* Vertically aligns items in the middle (looks nice for labels and inputs) */
+            gap: 8px;              /* Adds space BETWEEN the elements (adjust 8px as needed) */
+            margin-bottom: 10px;   /* Optional: Adds some space below this row */
+        }
+
+        /* Optional: You might want to control the width of the input fields */
+        .painIndexWrapper input {
+            width: 30%; /* Example width, adjust as needed */
+            height: 100%;
+            padding: 0px; /* Make input look a bit better */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -245,8 +255,14 @@
             <textarea id="type-input" class="text-area"></textarea>
             <label for="levelPain">Level Pain:</label>
             <textarea id="pain-input" class="text-area">No Pain</textarea>
-            <label for="indexPain">Index Pain:</label>
-            <input id="indexPain" class="indexPain">
+            <div class="painIndexWrapper">
+                <label for="indexPain">Index Pain:</label>
+                <input id="indexPain" class="indexPain">
+                <label for="analgeticIndexPain">Analgetic Index Pain:</label>
+                <input id="analgeticIndexPain" class="analgeticIndexPain">
+                <label for="pain_control">Degree of pain control:</label>
+                <input id="pain_control" class="pain_control">
+            </div>
         </div>
     </div>
     <div class="controls">
@@ -492,8 +508,17 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         usedColors.clear();
         document.getElementById('pain-input').value='';
-        document.getElementById('medications').value='';
         document.getElementById('indexPain').value='';
+        const selects = document.querySelectorAll('select');
+
+        // Перебираем каждый <select> и устанавливаем его значение в 'not_selected'
+        selects.forEach(select => {
+            select.value = 'not_selected';
+        });
+        const inputFields = document.querySelectorAll('.adjuvantsInput');
+        inputFields.forEach(input => {
+            input.value = '';
+        });
     });
     document.getElementById('calcButton').addEventListener('click', () => {
         updatePainInput()
@@ -567,9 +592,11 @@
 
     document.getElementById('sendData').addEventListener('click', () => {
         updatePainInput()
+        calculateAnalgeticIndex()
         const canvasData = canvas.toDataURL();
         const painLevel = document.getElementById('pain-input').value;
-        const medications = document.getElementById('medications').value;
+        const analgeticIndexPain = document.getElementById('analgeticIndexPain').value;
+        const pain_control = document.getElementById('pain_control').value;
         const painIndex =document.getElementById('indexPain').value;
         const age =document.getElementById('ageSlider').value;
         const weight =document.getElementById('weightSlider').value;
@@ -587,14 +614,13 @@
             body: JSON.stringify({
                 image: canvasData,
                 pain_level: painLevel,
-                medications: medications,
+                analgeticIndexPain: analgeticIndexPain,
+                pain_control: pain_control,
                 painIndex:painIndex,
                 age:age,
                 weight:weight,
                 height:height,
                 typePain:typePain,
-                adjuvantsSelect: adjuvantsSelect,
-                adjuvantsInput: adjuvantsInput
             })
         }).then(response => response.json()).then(data => {
             alert('Data saved successfully!');
@@ -604,77 +630,92 @@
 
     //Treatment
 
+  function calculateAnalgeticIndex(){
+      // --- Get values for Adjuvants ---
+      const adjuvantDrug = document.getElementById('adjuvants').value;
+      const adjuvantDoseValue = document.getElementById('adjuvantsDose').value;
+      const adjuvantDoseUnit = document.getElementById('adjuvantsDosa').value;
+      const adjuvantMultiplicity = document.getElementById('adjuvantsInput').value;
 
+      // --- Get values for NSAID ---
+      const nsaidDrug = document.getElementById('nsaid').value;
+      const nsaidDoseValue = document.getElementById('nsaidInput').value;
+      const nsaidDoseUnit = document.getElementById('nsaidDosa').value;
+      const nsaidMultiplicity = document.getElementById('nsaidInputMultiplicity').value;
+
+      // --- Get values for Weak opioids ---
+      const weakOpioidsDrug = document.getElementById('weak_opioids').value;
+      const weakOpioidsDoseValue = document.getElementById('weak_opioidsDose').value;
+      const weakOpioidsDoseUnit = document.getElementById('weak_opioidsDosa').value;
+      const weakOpioidsMultiplicity = document.getElementById('weak_opioidsMultiplicity').value;
+
+      // --- Get values for Strong opioids ---
+      const strongOpioidsDrug = document.getElementById('strong_opioids').value;
+      const strongOpioidsDoseValue = document.getElementById('strong_opioidsDose').value;
+      const strongOpioidsDoseUnit = document.getElementById('strong_opioidsDosa').value;
+      const strongOpioidsMultiplicity = document.getElementById('strong_opioidsInputMultiplicity').value;
+
+      // --- Log all collected values ---
+      // (Logging code omitted for brevity - keep the previous logging code here)
+      console.log('--- Collected Data ---');
+      // ... (previous console.log statements for Adjuvant, NSAID, Weak, Strong) ...
+      console.log('----------------------');
+
+
+      // --- CORRECTED Combination Logic A/B/C ---
+      const isAdjuvantSelected = adjuvantDrug !== 'not_selected';
+      const isNsaidSelected = nsaidDrug !== 'not_selected';
+      const isWeakOpioidSelected = weakOpioidsDrug !== 'not_selected';
+      const isStrongOpioidSelected = strongOpioidsDrug !== 'not_selected';
+
+      console.log('--- Combination Logic ---');
+
+      // First, check the base requirement: Adjuvant and NSAID must be selected for A, B, or C
+      if (isAdjuvantSelected && isNsaidSelected) {
+
+          // Condition for 'B': Weak selected, Strong NOT selected
+          if (isWeakOpioidSelected && !isStrongOpioidSelected) {
+              document.getElementById('analgeticIndexPain').value= '50%-70%'
+              document.getElementById('pain-input').value= 'Severe Pain'
+          }
+          // Condition for 'C': Strong selected, Weak NOT selected
+          else if (isStrongOpioidSelected) {
+              document.getElementById('analgeticIndexPain').value= '>80%'
+              document.getElementById('pain-input').value= 'Worst Pain'
+          }
+          // Condition for 'A': NEITHER Weak NOR Strong selected
+          else if (!isWeakOpioidSelected && !isStrongOpioidSelected) {
+              document.getElementById('analgeticIndexPain').value= '30%'
+              document.getElementById('pain-input').value = 'Moderate Pain'
+          }
+          // Handle other cases within Adjuvant+NSAID (e.g., BOTH Weak and Strong selected)
+          else {
+              console.log('Combination Code: Undefined (e.g., both Weak and Strong selected, or other state)');
+          }
+
+      } else {
+          // Adjuvant or NSAID (or both) not selected
+          console.log('Combination Code: Base conditions (Adjuvant + NSAID) not met.');
+      }
+      console.log('-----------------------');
+
+      console.log(strongOpioidsDrug)
+      console.log(strongOpioidsMultiplicity)
+      console.log(strongOpioidsDoseValue*strongOpioidsMultiplicity)
+      if ((strongOpioidsDrug==='morphine' && strongOpioidsDoseUnit==='mg')&&(strongOpioidsDoseValue*strongOpioidsMultiplicity>=60) ) {
+          document.getElementById('pain_control').value= 'Not Controlled pain'
+      }else {
+          document.getElementById('pain_control').value= 'Controlled pain'
+      }
+
+
+
+      // --- Optional: Display data on page ---
+      // ... (previous examples for alert or DOM manipulation) ...
+
+  }
     document.getElementById('calcButton').addEventListener('click', function() {
-        // --- Get values for Adjuvants ---
-        const adjuvantDrug = document.getElementById('adjuvants').value;
-        const adjuvantDoseValue = document.getElementById('adjuvantsDose').value;
-        const adjuvantDoseUnit = document.getElementById('adjuvantsDosa').value;
-        const adjuvantMultiplicity = document.getElementById('adjuvantsInput').value;
-
-        // --- Get values for NSAID ---
-        const nsaidDrug = document.getElementById('nsaid').value;
-        const nsaidDoseValue = document.getElementById('nsaidInput').value;
-        const nsaidDoseUnit = document.getElementById('nsaidDosa').value;
-        const nsaidMultiplicity = document.getElementById('nsaidInputMultiplicity').value;
-
-        // --- Get values for Weak opioids ---
-        const weakOpioidsDrug = document.getElementById('weak_opioids').value;
-        const weakOpioidsDoseValue = document.getElementById('weak_opioidsDose').value;
-        const weakOpioidsDoseUnit = document.getElementById('weak_opioidsDosa').value;
-        const weakOpioidsMultiplicity = document.getElementById('weak_opioidsMultiplicity').value;
-
-        // --- Get values for Strong opioids ---
-        const strongOpioidsDrug = document.getElementById('strong_opioids').value;
-        const strongOpioidsDoseValue = document.getElementById('strong_opioidsDose').value;
-        const strongOpioidsDoseUnit = document.getElementById('strong_opioidsDosa').value;
-        const strongOpioidsMultiplicity = document.getElementById('strong_opioidsInputMultiplicity').value;
-
-        // --- Log all collected values ---
-        // (Logging code omitted for brevity - keep the previous logging code here)
-        console.log('--- Collected Data ---');
-        // ... (previous console.log statements for Adjuvant, NSAID, Weak, Strong) ...
-        console.log('----------------------');
-
-
-        // --- CORRECTED Combination Logic A/B/C ---
-        const isAdjuvantSelected = adjuvantDrug !== 'not_selected';
-        const isNsaidSelected = nsaidDrug !== 'not_selected';
-        const isWeakOpioidSelected = weakOpioidsDrug !== 'not_selected';
-        const isStrongOpioidSelected = strongOpioidsDrug !== 'not_selected';
-
-        console.log('--- Combination Logic ---');
-
-        // First, check the base requirement: Adjuvant and NSAID must be selected for A, B, or C
-        if (isAdjuvantSelected && isNsaidSelected) {
-
-            // Condition for 'B': Weak selected, Strong NOT selected
-            if (isWeakOpioidSelected && !isStrongOpioidSelected) {
-                console.log('Combination Code: B'); // <<< CORRECTED TO B
-            }
-            // Condition for 'C': Strong selected, Weak NOT selected
-            else if (isStrongOpioidSelected) {
-                console.log('Combination Code: C');
-            }
-            // Condition for 'A': NEITHER Weak NOR Strong selected
-            else if (!isWeakOpioidSelected && !isStrongOpioidSelected) {
-                console.log('Combination Code: A');
-            }
-            // Handle other cases within Adjuvant+NSAID (e.g., BOTH Weak and Strong selected)
-            else {
-                console.log('Combination Code: Undefined (e.g., both Weak and Strong selected, or other state)');
-            }
-
-        } else {
-            // Adjuvant or NSAID (or both) not selected
-            console.log('Combination Code: Base conditions (Adjuvant + NSAID) not met.');
-        }
-        console.log('-----------------------');
-
-
-        // --- Optional: Display data on page ---
-        // ... (previous examples for alert or DOM manipulation) ...
-
+        calculateAnalgeticIndex()
     });
 </script>
 </body>
