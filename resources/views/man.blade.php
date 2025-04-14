@@ -46,12 +46,14 @@
             border: 1px solid #444;
             border-radius: 15px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            background: url('img/chelovek.jpg');
-            background-size: cover;
+            background: url('img/R_PAT_.png');
+            background-size: contain; /* Изменено на contain */
             touch-action: none;
             width: 100%;
             height: auto;
             aspect-ratio: 2 / 1.5;
+            background-repeat: no-repeat; /* Рекомендуется добавить, чтобы избежать повторения, если изображение меньше */
+            background-position: center; /* Рекомендуется добавить для центрирования изображения */
         }
         .controls {
             display: flex;
@@ -225,7 +227,7 @@
 <body>
 <div class="container">
     <div class="canvas-container">
-        <canvas id="canvas" width="300" height="800"></canvas>
+        <canvas id="canvas" width="100" height="100"></canvas>
         <div class="face-picker">
             <div style="display: flex; flex-direction: column; align-items: center;">
                 <img class="face-option" src="img/face_0.jpg" alt="No Pain" data-color="#006400">
@@ -361,7 +363,7 @@
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     let usedColors = new Set();
-    let lineWidth = 2; // Толщина линии по умолчанию
+    let lineWidth = 1; // Увеличена толщина линии
     ctx.lineWidth = lineWidth;
     ctx.strokeStyle = '#006400'; // Зеленый цвет по умолчанию
 
