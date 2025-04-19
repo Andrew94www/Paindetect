@@ -712,8 +712,6 @@
 
 
 
-      // --- Optional: Display data on page ---
-      // ... (previous examples for alert or DOM manipulation) ...
 
   }
     document.getElementById('calcButton').addEventListener('click', function() {
