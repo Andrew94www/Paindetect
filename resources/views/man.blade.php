@@ -36,7 +36,7 @@
             }
         }
 
-        /* Canvas and Face Picker Section */
+        /* Canvas Section */
         .canvas-section {
             display: flex;
             flex-direction: column;
@@ -45,6 +45,9 @@
             border-radius: 15px;
             background-color: #f8f9fa; /* Light background */
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+            /* Можливо, також потрібен скрол, якщо додаватиметься багато інпутів під канвасом */
+            /* max-height: 80vh; */ /* Приклад обмеження висоти */
+            /* overflow-y: auto; */ /* Додати скрол, якщо розкоментувати max-height */
         }
 
         canvas {
@@ -95,16 +98,51 @@
             font-weight: 500;
         }
 
-        /* Controls Section */
+        /* Wrapper for Controls and Buttons */
+        .controls-wrapper {
+            display: flex;
+            flex-direction: column; /* Розташовуємо вміст вертикально */
+            gap: 15px; /* Відступ між блоком прокрутки та кнопками */
+            /* Додаємо ті ж стилі фону/тіні, що були у .controls */
+            padding: 15px;
+            border-radius: 15px;
+            background-color: #f8f9fa;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+        }
+
+
+        /* Controls Section (Scrollable) */
         .controls {
             display: flex;
             flex-direction: column;
             gap: 15px; /* Space between control groups */
-            padding: 15px; /* Add padding */
-            border-radius: 15px;
-            background-color: #f8f9fa; /* Light background */
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+            /* Видаляємо background, padding, border-radius, box-shadow звідси, бо вони тепер у controls-wrapper */
+            padding: 0; /* Важливо скинути внутрішній відступ */
+
+            max-height: 70vh; /* Обмежуємо максимальну висоту для прокрутки */
+            overflow-y: auto; /* Додаємо вертикальну прокрутку при необхідності */
+            flex-grow: 1; /* Дозволяє цьому блоку займати доступний простір */
         }
+
+        /* Додаткові стилі для смуги прокрутки (за бажанням) */
+        .controls::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .controls::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .controls::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        .controls::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
 
         .control-group {
             border: 1px solid #e0e0e0; /* Optional: Group border */
@@ -254,17 +292,48 @@
 
 
         /* Button Styles */
+        .button-group {
+            display: flex; /* Use Flexbox */
+            gap: 10px; /* Space between buttons */
+            margin-top: 15px; /* Space above the button group */
+            padding-top: 15px; /* Додаємо відступ зверху */
+            border-top: 1px solid #e0e0e0; /* Додаємо лінію розділення */
+            flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+            justify-content: center; /* Центруємо кнопки */
+            /* Видаляємо фон/тінь/відступи, бо вони тепер у controls-wrapper */
+            padding: 0;
+            background-color: transparent;
+            box-shadow: none;
+            border-radius: 0;
+        }
+
         .button {
-            padding: 12px 20px; /* Increased padding */
+            padding: 12px 20px;
             font-size: 1rem;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            width: 100%;
             text-align: center;
             transition: background-color 0.3s ease, opacity 0.3s ease;
-            margin-top: 10px; /* Space above buttons */
+            /* Вирівнювання та розмір кнопок у рядку */
+            flex-grow: 1; /* Дозволяє кнопкам розтягуватись */
+            flex-shrink: 0; /* Запобігає сильному стисненню */
+            min-width: 120px; /* Мінімальна ширина перед перенесенням */
+            max-width: 200px; /* Максимальна ширина для кнопок на широких екранах */
+            margin-top: 0; /* Видаляємо верхній відступ */
         }
+        /* На десктопах вирівнюємо простір між кнопками */
+        @media (min-width: 768px) {
+            .button-group {
+                justify-content: space-between;
+                gap: 20px; /* Збільшуємо відстань на широких екранах */
+            }
+            .button {
+                flex-grow: 0; /* Нехай не розтягуються на всю ширину, якщо їх три в ряд */
+                width: auto; /* Ширина за вмістом або min-width */
+            }
+        }
+
         .button:hover {
             opacity: 0.9;
         }
@@ -329,111 +398,119 @@
         </div>
 
     </div>
-    <div class="controls">
-        <div class="control-group">
-            <div class="range-group">
-                <label for="ageSlider">Age: <span id="ageValue">25</span> years</label>
-                <input type="range" id="ageSlider" min="10" max="100" value="25">
+
+    <div class="controls-wrapper">
+        <div class="controls">
+            <div class="control-group">
+                <div class="range-group">
+                    <label for="ageSlider">Age: <span id="ageValue">25</span> years</label>
+                    <input type="range" id="ageSlider" min="10" max="100" value="25">
+                </div>
+                <div class="range-group">
+                    <label for="weightSlider">Weight: <span id="weightValue">70</span> kg</label>
+                    <input type="range" id="weightSlider" min="30" max="150" value="70">
+                </div>
+                <div class="range-group">
+                    <label for="heightSlider">Height: <span id="heightValue">170</span> cm</label>
+                    <input type="range" id="heightSlider" min="100" max="220" value="170">
+                </div>
             </div>
-            <div class="range-group">
-                <label for="weightSlider">Weight: <span id="weightValue">70</span> kg</label>
-                <input type="range" id="weightSlider" min="30" max="150" value="70">
+
+            <div class="control-group">
+                <label>Current Medications:</label>
+                <div class="medication-group">
+                    <div class="medication-row">
+                        <label for="adjuvants">Adjuvant:</label>
+                        <select id="adjuvants" name="adjuvants">
+                            <option value="not_selected">Not selected</option>
+                            <option value="gabapentin">Gabapentin</option>
+                            <option value="pregabalin">Pregabalin</option>
+                            <option value="duloxetine">Duloxetine</option>
+                            <option value="amitriptyline">Amitriptyline</option>
+                            <option value="dexamethasone">Dexamethasone</option>
+                        </select>
+                        <input type="text" id="adjuvantsDose" class="adjuvantsInput" placeholder="Dose">
+                        <div class="dosa">
+                            <select id="adjuvantsDosa" name="adjuvantsDosa">
+                                <option value="g">g</option>
+                                <option value="mg" selected>mg</option> {/* Default to mg */}
+                                <option value="mkg">mkg</option>
+                            </select>
+                        </div>
+                        <input type="text" id="adjuvantsInput" class="adjuvantsInput" placeholder="Times/day">
+                    </div>
+                    <div class="medication-row">
+                        <label for="nsaid">NSAID:</label>
+                        <select id="nsaid" name="nsaid">
+                            <option value="not_selected">Not selected</option>
+                            <option value="paracetamolum">Paracetamolum</option>
+                            <option value="ibuprofen">Ibuprofen</option>
+                            <option value="aspirin">Aspirin</option>
+                            <option value="analgin">Analgin</option>
+                            <option value="dexamethasone">Dexamethasone</option>
+                            <option value="diclofenac">Diclofenac</option>
+                            <option value="nimesulide">Nimesulide</option>
+                            <option value="ketorolac">Ketorolac</option>
+                        </select>
+                        <input type="text" id="nsaidInput" class="adjuvantsInput" placeholder="Dose" name="nsaidInput">
+                        <div class="dosa">
+                            <select id="nsaidDosa" name="nsaidDosa">
+                                <option value="g">g</option>
+                                <option value="mg" selected>mg</option> {/* Default to mg */}
+                                <option value="mkg">mkg</option>
+                            </select>
+                        </div>
+                        <input type="text" id="nsaidInputMultiplicity" class="adjuvantsInput" placeholder="Times/day">
+                    </div>
+                    <div class="medication-row">
+                        <label for="weak_opioids">Weak Opioid:</label>
+                        <select id="weak_opioids" name="weak_opioids">
+                            <option value="not_selected">Not selected</option>
+                            <option value="codeine">Codeine</option>
+                            <option value="dihydrocodeine">Dihydrocodeine</option>
+                            <option value="tramadol">Tramadol</option>
+                        </select>
+                        <input type="text" id="weak_opioidsDose" class="adjuvantsInput" placeholder="Dose">
+                        <div class="dosa">
+                            <select id="weak_opioidsDosa" name="weak_opioidsDosa">
+                                <option value="g">g</option>
+                                <option value="mg" selected>mg</option> {/* Default to mg */}
+                                <option value="mkg">mkg</option>
+                            </select>
+                        </div>
+                        <input type="text" id="weak_opioidsMultiplicity" class="adjuvantsInput" placeholder="Times/day">
+                    </div>
+                    <div class="medication-row">
+                        <label for="strong_opioids">Strong Opioid:</label>
+                        <select id="strong_opioids" name="strong_opioids">
+                            <option value="not_selected">Not selected</option>
+                            <option value="morphine">Morphine</option>
+                            <option value="fentanyl">Fentanyl</option>
+                            <option value="oxycodone">Oxycodone</option>
+                        </select>
+                        <input type="text" id="strong_opioidsDose" class="adjuvantsInput" placeholder="Dose">
+                        <div class="dosa">
+                            <select id="strong_opioidsDosa" name="strong_opioidsDosa">
+                                <option value="g">g</option>
+                                <option value="mg" selected>mg</option> {/* Default to mg */}
+                                <option value="mkg">mkg</option>
+                            </select>
+                        </div>
+                        <input type="text" id="strong_opioidsInputMultiplicity" class="adjuvantsInput" placeholder="Times/day">
+                    </div>
+                </div>
             </div>
-            <div class="range-group">
-                <label for="heightSlider">Height: <span id="heightValue">170</span> cm</label>
-                <input type="range" id="heightSlider" min="100" max="220" value="170">
-            </div>
+
         </div>
 
-        <div class="control-group">
-            <label>Current Medications:</label>
-            <div class="medication-group">
-                <div class="medication-row">
-                    <label for="adjuvants">Adjuvant:</label>
-                    <select id="adjuvants" name="adjuvants">
-                        <option value="not_selected">Not selected</option>
-                        <option value="gabapentin">Gabapentin</option>
-                        <option value="pregabalin">Pregabalin</option>
-                        <option value="duloxetine">Duloxetine</option>
-                        <option value="amitriptyline">Amitriptyline</option>
-                        <option value="dexamethasone">Dexamethasone</option>
-                    </select>
-                    <input type="text" id="adjuvantsDose" class="adjuvantsInput" placeholder="Dose">
-                    <div class="dosa">
-                        <select id="adjuvantsDosa" name="adjuvantsDosa">
-                            <option value="g">g</option>
-                            <option value="mg">mg</option>
-                            <option value="mkg">mkg</option>
-                        </select>
-                    </div>
-                    <input type="text" id="adjuvantsInput" class="adjuvantsInput" placeholder="Times/day">
-                </div>
-                <div class="medication-row">
-                    <label for="nsaid">NSAID:</label>
-                    <select id="nsaid" name="nsaid">
-                        <option value="not_selected">Not selected</option>
-                        <option value="paracetamolum">Paracetamolum</option>
-                        <option value="ibuprofen">Ibuprofen</option>
-                        <option value="aspirin">Aspirin</option>
-                        <option value="analgin">Analgin</option>
-                        <option value="dexamethasone">Dexamethasone</option>
-                        <option value="diclofenac">Diclofenac</option>
-                        <option value="nimesulide">Nimesulide</option>
-                        <option value="ketorolac">Ketorolac</option>
-                    </select>
-                    <input type="text" id="nsaidInput" class="adjuvantsInput" placeholder="Dose" name="nsaidInput">
-                    <div class="dosa">
-                        <select id="nsaidDosa" name="nsaidDosa">
-                            <option value="g">g</option>
-                            <option value="mg">mg</option>
-                            <option value="mkg">mkg</option>
-                        </select>
-                    </div>
-                    <input type="text" id="nsaidInputMultiplicity" class="adjuvantsInput" placeholder="Times/day">
-                </div>
-                <div class="medication-row">
-                    <label for="weak_opioids">Weak Opioid:</label>
-                    <select id="weak_opioids" name="weak_opioids">
-                        <option value="not_selected">Not selected</option>
-                        <option value="codeine">Codeine</option>
-                        <option value="dihydrocodeine">Dihydrocodeine</option>
-                        <option value="tramadol">Tramadol</option>
-                    </select>
-                    <input type="text" id="weak_opioidsDose" class="adjuvantsInput" placeholder="Dose">
-                    <div class="dosa">
-                        <select id="weak_opioidsDosa" name="weak_opioidsDosa">
-                            <option value="g">g</option>
-                            <option value="mg">mg</option>
-                            <option value="mkg">mkg</option>
-                        </select>
-                    </div>
-                    <input type="text" id="weak_opioidsMultiplicity" class="adjuvantsInput" placeholder="Times/day">
-                </div>
-                <div class="medication-row">
-                    <label for="strong_opioids">Strong Opioid:</label>
-                    <select id="strong_opioids" name="strong_opioids">
-                        <option value="not_selected">Not selected</option>
-                        <option value="morphine">Morphine</option>
-                        <option value="fentanyl">Fentanyl</option>
-                        <option value="oxycodone">Oxycodone</option>
-                    </select>
-                    <input type="text" id="strong_opioidsDose" class="adjuvantsInput" placeholder="Dose">
-                    <div class="dosa">
-                        <select id="strong_opioidsDosa" name="strong_opioidsDosa">
-                            <option value="g">g</option>
-                            <option value="mg">mg</option>
-                            <option value="mkg">mkg</option>
-                        </select>
-                    </div>
-                    <input type="text" id="strong_opioidsInputMultiplicity" class="adjuvantsInput" placeholder="Times/day">
-                </div>
-            </div>
+        <div class="button-group">
+            <button class="calc-button button" id="calcButton">Calculate Metrics</button>
+            <button class="send-button button" id="sendData">Send Data</button>
+            <button class="clear-button button" id="clearCanvas">Clear All</button>
         </div>
 
-        <button class="calc-button button" id="calcButton">Calculate Metrics</button>
-        <button class="send-button button" id="sendData">Send Data</button>
-        <button class="clear-button button" id="clearCanvas">Clear All</button>
     </div>
+
 </div>
 <script>
     const canvas = document.getElementById('canvas');
@@ -636,7 +713,8 @@
             if (info) {
                 const percentage = colorPercentages[colorRgb];
                 const coefficient = info.coefficient;
-                const weightedArea = (percentage / 100) * coefficient; // Use percentage as a fraction of the drawn area
+                // Weight by percentage of the *drawn area* and the coefficient
+                const weightedArea = (percentage / 100) * coefficient;
                 totalWeightedArea += weightedArea;
             }
         }
@@ -679,33 +757,27 @@
         const isWeakOpioidSelected = weakOpioidsDrug !== 'not_selected' && weakOpioidsDoseValue > 0 && weakOpioidsMultiplicity > 0;
         const isStrongOpioidSelected = strongOpioidsDrug !== 'not_selected' && strongOpioidsDoseValue > 0 && strongOpioidsMultiplicity > 0;
 
-        if (isAdjuvantSelected && isNsaidSelected) {
-            if (isStrongOpioidSelected) {
-                analgeticIndex = '>80%'; // Corresponds to Step 3 (Strong Opioid + Adjuvant + NSAID)
-            } else if (isWeakOpioidSelected) {
-                analgeticIndex = '50%-70%'; // Corresponds to Step 2 (Weak Opioid + Adjuvant + NSAID)
+        // Simple tiered approach based on common pain management steps
+        if (isStrongOpioidSelected) {
+            analgeticIndex = '>80%'; // Strong Opioid + other meds
+        } else if (isWeakOpioidSelected) {
+            if (isAdjuvantSelected || isNsaidSelected) {
+                analgeticIndex = '50%-70%'; // Weak Opioid + Adjuvant or NSAID
             } else {
-                analgeticIndex = '30%'; // Corresponds to Step 1 (Adjuvant + NSAID only)
+                analgeticIndex = '40%-60%'; // Weak Opioid only
             }
+        } else if (isAdjuvantSelected && isNsaidSelected) {
+            analgeticIndex = '30%'; // Adjuvant + NSAID only
         } else if (isAdjuvantSelected || isNsaidSelected) {
-            // If only one of Adjuvant or NSAID is selected (and others are not strong/weak opioids)
-            if (!isWeakOpioidSelected && !isStrongOpioidSelected) {
-                analgeticIndex = '<30%'; // Less coverage with just one type + no opioids
-            } else if (isWeakOpioidSelected && !isStrongOpioidSelected) {
-                analgeticIndex = '40%-60%'; // Weak Opioid + one of Adjuvant/NSAID
-            } else if (isStrongOpioidSelected) {
-                analgeticIndex = '70%-80%'; // Strong Opioid + one of Adjuvant/NSAID
-            }
-        } else if (isWeakOpioidSelected && !isStrongOpioidSelected) {
-            analgeticIndex = '20%-40%'; // Only Weak Opioid
-        } else if (isStrongOpioidSelected) {
-            analgeticIndex = '60%-70%'; // Only Strong Opioid
+            analgeticIndex = '<30%'; // Only Adjuvant or only NSAID
+        } else {
+            analgeticIndex = '0%'; // No relevant medications selected
         }
 
 
         document.getElementById('analgeticIndexPain').value = analgeticIndex;
 
-        // Determine Pain Control Degree (Simplified Logic based on Morphine Equivalence)
+        // Determine Pain Control Degree (Simplified Logic based on Morphine Equivalence and Pain Level)
         let painControl = 'Controlled Pain'; // Default
 
         // This is a very basic example. A real calculation requires a comprehensive OMEDD conversion table.
@@ -713,22 +785,34 @@
         // and pain is still significant, it might indicate uncontrolled pain.
         // This requires converting ALL opioid doses (and potentially other drugs) to OMEDD.
         // For this example, let's just check for a high dose of oral morphine as a simplified indicator.
-        const totalOralMorphineMgPerDay = (strongOpioidsDrug === 'morphine' && document.getElementById('strong_opioidsDosa').value === 'mg') ?
-            (strongOpioidsDoseValue * strongOpioidsMultiplicity) : 0;
 
-        // You would add similar calculations for other opioids and routes (e.g., Fentanyl patch, IV Morphine)
-        // using appropriate conversion factors to get a total OMEDD.
-
-        // Simplified check: If high dose oral morphine AND high pain level selected
-        const currentPainLevel = document.getElementById('pain-input').value;
-        const highPainLevels = ['Severe Pain', 'Worst Pain', 'Very Severe Pain', 'Moderate Pain']; // Consider which levels indicate potential uncontrolled pain
-
-        if (totalOralMorphineMgPerDay > 60 && highPainLevels.includes(currentPainLevel)) {
-            painControl = 'Potentially Uncontrolled Pain'; // Indicate potential issue
-        } else if (totalOralMorphineMgPerDay > 60) {
-            painControl = 'High Dose Opioids'; // Indicate high dose even if pain is controlled
+        // --- Simplified OMEDD Calculation (Morphine only, oral, mg) ---
+        let totalOMEDD = 0;
+        if (strongOpioidsDrug === 'morphine' && document.getElementById('strong_opioidsDosa').value === 'mg') {
+            totalOMEDD = strongOpioidsDoseValue * strongOpioidsMultiplicity;
         }
-        // Add other logic based on other medication combinations and pain levels
+        // Add other opioid conversions here if needed (e.g., Tramadol * 0.1 to oral morphine eq.)
+
+
+        // --- Pain Control Logic ---
+        const currentPainLevel = document.getElementById('pain-input').value;
+        // Define what are considered "high" pain levels for this logic
+        const highPainLevels = ['Moderate Pain', 'Severe Pain', 'Very Severe Pain', 'Worst Pain'];
+
+        // If OMEDD is high AND pain level is high -> Potentially Uncontrolled
+        if (totalOMEDD > 60 && highPainLevels.includes(currentPainLevel)) {
+            painControl = 'Potentially Uncontrolled Pain';
+        } else if (totalOMEDD > 60) {
+            // If OMEDD is high but pain is NOT high -> High Dose Opioids (Pain might be controlled but requires high doses)
+            painControl = 'High Dose Opioids (Pain Controlled)';
+        } else if (highPainLevels.includes(currentPainLevel) && totalOMEDD <= 60) {
+            // If pain is high but OMEDD is NOT high -> Potentially Uncontrolled (Insufficient analgesia)
+            painControl = 'Potentially Uncontrolled Pain (Insufficient Analgesia)';
+        } else {
+            // Otherwise, assume controlled pain (this is a very simplified assumption)
+            painControl = 'Controlled Pain';
+        }
+
 
         document.getElementById('pain_control').value = painControl;
     }
@@ -785,8 +869,8 @@
 
     // Add event listeners to medication inputs/selects to trigger analgesic calculation
     document.querySelectorAll('.medication-group select, .medication-group input[type="text"]').forEach(element => {
-        element.addEventListener('change', calculateAnalgeticIndex); // Use 'change' event
-        element.addEventListener('input', calculateAnalgeticIndex); // Also use 'input' for text fields
+        element.addEventListener('change', updatePainMetrics); // Use 'change' event - recalculates all metrics
+        element.addEventListener('input', updatePainMetrics); // Also use 'input' for text fields - recalculates all metrics
     });
 
 
@@ -853,7 +937,10 @@
             })
         }).then(response => {
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                // Attempt to read response body for more details on error
+                return response.text().then(text => {
+                    throw new Error(`HTTP error! status: ${response.status}, body: ${text}`);
+                });
             }
             return response.json();
         }).then(data => {
