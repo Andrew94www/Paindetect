@@ -151,7 +151,7 @@
             background-color: #ffffff; /* White background for groups */
         }
 
-        .controls label {
+        .controls label, .canvas-section label { /* Застосовуємо стиль до обох секцій */
             font-size: 1rem; /* Standard font size */
             font-weight: 500; /* Medium weight */
             color: #333;
@@ -159,7 +159,8 @@
             display: block; /* Make label a block element */
         }
 
-        .text-area {
+        .text-area, .canvas-section input[type="text"],
+        .canvas-section select, .canvas-section input[type="number"] { /* Додаємо стилі для нових інпутів/селектів */
             width: 100%;
             padding: 10px;
             border-radius: 8px;
@@ -167,7 +168,13 @@
             font-size: 1rem;
             resize: vertical;
             box-sizing: border-box; /* Include padding and border in width */
+            background-color: #f9f9f9; /* Light background */
         }
+
+        .canvas-section input[type="text"][readonly] {
+            background-color: #e9ecef; /* Сірий фон для полів тільки для читання */
+        }
+
 
         .pain-index-group {
             display: flex;
@@ -186,16 +193,6 @@
             font-size: 0.9rem; /* Slightly smaller label */
             margin-bottom: 3px;
             font-weight: 400;
-        }
-
-        .pain-index-group input[type="text"] {
-            width: 100%; /* Make input fill its container */
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1rem;
-            box-sizing: border-box;
-            background-color: #f9f9f9; /* Light background */
         }
 
 
@@ -344,6 +341,43 @@
         .send-button { background-color: #28a745; color: white; } /* Success green */
         .send-button:hover { background-color: #218838; }
 
+        /* Styles for new Pain Index inputs */
+        .pain-index-inputs {
+            margin-top: 15px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Space between groups of PI inputs */
+        }
+        .pi-input-group {
+            display: flex;
+            flex-direction: column; /* Stack label and input */
+            gap: 5px;
+        }
+        .pi-input-group label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #333;
+            display: block;
+        }
+        .pi-input-group input[type="number"],
+        .pi-input-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+            appearance: none; /* for select arrow */
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            padding-right: 30px;
+        }
     </style>
 </head>
 <body>
@@ -382,9 +416,10 @@
         <label for="pain-input" style="margin-top: 15px;">Current Pain Level (Based on Face Selection):</label>
         <input type="text" id="pain-input" class="text-area" readonly placeholder="Select face above">
 
+
         <div class="pain-index-group">
             <div>
-                <label for="indexPain">Pain Index:</label>
+                <label for="indexPain">Pain Index (Calculated):</label>
                 <input type="text" id="indexPain" readonly placeholder="Calculated PI">
             </div>
             <div>
@@ -413,6 +448,45 @@
                 <div class="range-group">
                     <label for="heightSlider">Height: <span id="heightValue">170</span> cm</label>
                     <input type="range" id="heightSlider" min="100" max="220" value="170">
+                </div>
+            </div>
+            <div class="pain-index-inputs">
+                <label>Pain Index Components:</label>
+                <div class="pi-input-group">
+                    <label for="intensityInput">Pain Intensity (0-10):</label>
+                    <input type="number" id="intensityInput" min="0" max="10" value="0">
+                </div>
+                <div class="pi-input-group">
+                    <label for="frequencySelect">Frequency (Usual Pain Hours/day):</label>
+                    <select id="frequencySelect">
+                        <option value="1">1-2 hours</option>
+                        <option value="2">3-6 hours</option>
+                        <option value="3">6-8 hours</option>
+                        <option value="4">9-12 hours</option>
+                        <option value="5">12-18 hours</option>
+                        <option value="6">18-24 hours</option>
+                    </select>
+                </div>
+                <div class="pi-input-group">
+                    <label for="durationSelect">Duration (Worst Pain Hours/day):</label>
+                    <select id="durationSelect">
+                        <option value="1">1-2 hours</option>
+                        <option value="2">3-6 hours</option>
+                        <option value="3">6-8 hours</option>
+                        <option value="4">9-12 hours</option>
+                        <option value="5">12-18 hours</option>
+                        <option value="6">18-24 hours</option>
+                    </select>
+                </div>
+                <div class="pi-input-group">
+                    <label for="functionalImpactSelect">Functional Impact (Last 2 weeks):</label>
+                    <select id="functionalImpactSelect">
+                        <option value="1">Зовсім ні (Not at all)</option>
+                        <option value="2">Трішки (A little bit)</option>
+                        <option value="3">Помірно (Moderately)</option>
+                        <option value="4">Дуже сильно (Very much)</option>
+                        <option value="5">Надзвичайно (Extremely)</option>
+                    </select>
                 </div>
             </div>
 
@@ -689,10 +763,15 @@
 
 
     function updatePainMetrics() {
-        const colorPercentages = calculateDrawnArea(canvas);
-        console.log("Color percentage ratio:", colorPercentages);
+        // Calculate Pain Index first, based on user inputs
+        const painIndexValue = calculatePainIndex();
+        document.getElementById('indexPain').value = isNaN(painIndexValue) ? 'Invalid Input' : painIndexValue.toFixed(2);
 
-        let totalWeightedArea = 0;
+
+        // Update Pain Level based on canvas drawing (if needed, or rely solely on Intensity input?)
+        // The original code used the drawn color with the highest coefficient for Pain Level.
+        // Let's keep this logic for now, as it seems intentional.
+        const colorPercentages = calculateDrawnArea(canvas);
         let highestCoefficient = 0;
         let calculatedPainLevel = 'No Pain'; // Default
 
@@ -706,26 +785,29 @@
                 }
             }
         }
-
-        // Calculate total weighted area using the coefficients of drawn colors
-        for (const colorRgb in colorPercentages) {
-            const info = colorInfoRgb[colorRgb];
-            if (info) {
-                const percentage = colorPercentages[colorRgb];
-                const coefficient = info.coefficient;
-                // Weight by percentage of the *drawn area* and the coefficient
-                const weightedArea = (percentage / 100) * coefficient;
-                totalWeightedArea += weightedArea;
-            }
-        }
-
-
-        // Update input fields
-        document.getElementById('indexPain').value = totalWeightedArea.toFixed(2);
         // Set the pain level based on the color with the highest coefficient drawn
         document.getElementById('pain-input').value = calculatedPainLevel;
 
-        calculateAnalgeticIndex(); // Also calculate analgesic index when pain metrics are updated
+
+        calculateAnalgeticIndex(); // Also calculate analgesic index
+    }
+
+    function calculatePainIndex() {
+        const intensity = parseFloat(document.getElementById('intensityInput').value);
+        const frequencyScore = parseFloat(document.getElementById('frequencySelect').value);
+        const durationModifierScore = parseFloat(document.getElementById('durationSelect').value);
+        const functionalImpactScore = parseFloat(document.getElementById('functionalImpactSelect').value);
+
+        // Check if inputs are valid numbers
+        if (isNaN(intensity) || isNaN(frequencyScore) || isNaN(durationModifierScore) || isNaN(functionalImpactScore)) {
+            console.error("Invalid input for Pain Index calculation.");
+            return NaN; // Return Not-a-Number if any input is invalid
+        }
+
+        // Formula: (Intensity × Frequency × Duration Modifier × Functional Impact Score) / 10
+        const painIndex = (intensity * frequencyScore * durationModifierScore * functionalImpactScore) / 10;
+
+        return painIndex;
     }
 
 
@@ -759,17 +841,17 @@
 
         // Simple tiered approach based on common pain management steps
         if (isStrongOpioidSelected) {
-            analgeticIndex = '>80%'; // Strong Opioid + other meds
+            analgeticIndex = '>80%'; // Corresponds to Step 3 (Strong Opioid + other meds)
         } else if (isWeakOpioidSelected) {
             if (isAdjuvantSelected || isNsaidSelected) {
-                analgeticIndex = '50%-70%'; // Weak Opioid + Adjuvant or NSAID
+                analgeticIndex = '50%-70%'; // Corresponds to Step 2 (Weak Opioid + Adjuvant or NSAID)
             } else {
                 analgeticIndex = '40%-60%'; // Weak Opioid only
             }
         } else if (isAdjuvantSelected && isNsaidSelected) {
-            analgeticIndex = '30%'; // Adjuvant + NSAID only
+            analgeticIndex = '30%'; // Corresponds to Step 1 (Adjuvant + NSAID only)
         } else if (isAdjuvantSelected || isNsaidSelected) {
-            analgeticIndex = '<30%'; // Only Adjuvant or only NSAID
+            analgeticIndex = '<30%'; // Less coverage with just one type + no opioids
         } else {
             analgeticIndex = '0%'; // No relevant medications selected
         }
@@ -824,7 +906,14 @@
         usedColors.clear();
         document.getElementById('type-input').value = '';
         document.getElementById('pain-input').value = '';
-        document.getElementById('indexPain').value = '';
+
+        // Reset Pain Index inputs
+        document.getElementById('intensityInput').value = 0;
+        document.getElementById('frequencySelect').value = 1; // Set to default option value
+        document.getElementById('durationSelect').value = 1; // Set to default option value
+        document.getElementById('functionalImpactSelect').value = 1; // Set to default option value
+
+        document.getElementById('indexPain').value = ''; // Clear calculated index
         document.getElementById('analgeticIndexPain').value = '';
         document.getElementById('pain_control').value = '';
 
@@ -852,7 +941,15 @@
         document.getElementById('heightValue').textContent = 170;
     });
 
+    // The "Calculate Metrics" button now triggers updatePainMetrics,
+    // which in turn calls calculatePainIndex and calculateAnalgeticIndex.
     document.getElementById('calcButton').addEventListener('click', updatePainMetrics);
+
+    // Also trigger calculations when Pain Index inputs change
+    document.getElementById('intensityInput').addEventListener('input', updatePainMetrics);
+    document.getElementById('frequencySelect').addEventListener('change', updatePainMetrics);
+    document.getElementById('durationSelect').addEventListener('change', updatePainMetrics);
+    document.getElementById('functionalImpactSelect').addEventListener('change', updatePainMetrics);
 
 
     document.getElementById('ageSlider').addEventListener('input', function() {
@@ -882,11 +979,18 @@
         const painLevel = document.getElementById('pain-input').value;
         const analgeticIndexPain = document.getElementById('analgeticIndexPain').value;
         const pain_control = document.getElementById('pain_control').value;
-        const painIndex =document.getElementById('indexPain').value;
+        const painIndex =document.getElementById('indexPain').value; // Get the calculated Pain Index
         const age =document.getElementById('ageSlider').value;
         const weight =document.getElementById('weightSlider').value;
         const height =document.getElementById('heightSlider').value;
         const typePain = document.getElementById('type-input').value;
+
+        // Also collect the raw inputs for Pain Index components
+        const intensityInput = document.getElementById('intensityInput').value;
+        const frequencySelect = document.getElementById('frequencySelect').value;
+        const durationSelect = document.getElementById('durationSelect').value;
+        const functionalImpactSelect = document.getElementById('functionalImpactSelect').value;
+
 
         // Collect medication data
         const medications = {
@@ -917,7 +1021,7 @@
         };
 
 
-        fetch('/save-level-pain', { // Ensure this is the correct endpoint
+        fetch('/save-level-pain', { // Ensure this is the correct endpoint on your server
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -928,11 +1032,16 @@
                 pain_level: painLevel,
                 analgeticIndexPain: analgeticIndexPain,
                 pain_control: pain_control,
-                painIndex: painIndex,
+                painIndex: painIndex, // Include the calculated index
                 age: age,
                 weight: weight,
                 height: height,
                 typePain: typePain,
+                // Include raw Pain Index component inputs for record-keeping
+                pi_intensity: intensityInput,
+                pi_frequency: frequencySelect,
+                pi_duration: durationSelect,
+                pi_functional_impact: functionalImpactSelect,
                 medications: medications // Include medication data
             })
         }).then(response => {
@@ -952,8 +1061,6 @@
         });
     });
 
-    // Initial calculation on page load (optional, depends on desired behavior)
-    // updatePainMetrics(); // Calculate on load if canvas might have initial state or default values
 
 </script>
 </body>
