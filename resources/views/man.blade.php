@@ -18,6 +18,7 @@
             padding: 20px 0; /* Add vertical padding */
             box-sizing: border-box; /* Include padding in height calculation */
         }
+
         .container {
             display: grid;
             grid-template-columns: 1fr; /* 1 column on mobile */
@@ -30,7 +31,9 @@
             max-width: 1600px;
             box-sizing: border-box;
         }
-        @media (min-width: 992px) { /* Adjusted breakpoint for larger screens */
+
+        @media (min-width: 992px) {
+            /* Adjusted breakpoint for larger screens */
             .container {
                 grid-template-columns: 1fr 1fr; /* 2 columns on desktop */
             }
@@ -64,6 +67,7 @@
             aspect-ratio: 2 / 1.5; /* Define aspect ratio */
             margin-bottom: 15px; /* Space below canvas */
         }
+
         .face-picker {
             display: flex;
             justify-content: center;
@@ -71,6 +75,7 @@
             gap: 10px; /* Increased gap */
             margin-bottom: 20px; /* Space below face picker */
         }
+
         .face-option-wrapper {
             display: flex;
             flex-direction: column;
@@ -78,6 +83,7 @@
             text-align: center;
             width: 60px; /* Fixed width for each face option column */
         }
+
         .face-option {
             width: 50px;
             height: 50px;
@@ -87,10 +93,12 @@
             transition: transform 0.3s ease, border-color 0.3s ease;
             object-fit: cover; /* Ensure image covers the circle */
         }
+
         .face-option:hover, .face-option.active {
             transform: scale(1.1);
             border-color: #007bff; /* Highlight color */
         }
+
         .face-option-wrapper span {
             font-size: 12px; /* Smaller font for labels */
             margin-top: 5px;
@@ -189,6 +197,7 @@
             display: flex;
             flex-direction: column;
         }
+
         .pain-index-group label {
             font-size: 0.9rem; /* Slightly smaller label */
             margin-bottom: 3px;
@@ -200,12 +209,14 @@
         .range-group {
             margin-top: 10px;
         }
+
         .range-group label {
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-weight: 500;
         }
+
         .range-group input[type="range"] {
             width: 100%;
             -webkit-appearance: none;
@@ -217,6 +228,7 @@
             box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
             margin-top: 5px;
         }
+
         .range-group input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 25px;
@@ -228,10 +240,12 @@
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
+
         .range-group input[type="range"]::-webkit-slider-thumb:hover {
             transform: scale(1.1);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
+
         /* Adjuvants/Medication Styles */
         .medication-group {
             display: flex;
@@ -246,6 +260,7 @@
             align-items: center;
             flex-wrap: wrap; /* Allow wrapping on small screens */
         }
+
         .medication-row label {
             margin-right: auto; /* Push other elements to the right */
             margin-bottom: 0; /* Remove bottom margin */
@@ -267,6 +282,7 @@
             padding-right: 30px;
             cursor: pointer;
         }
+
         .medication-row input[type="text"] {
             flex-basis: 60px; /* Base width for dose/multiplicity */
             flex-grow: 1; /* Allow growing */
@@ -277,10 +293,12 @@
             box-sizing: border-box;
             background-color: #f9f9f9;
         }
+
         .medication-row .dosa {
             flex-basis: 50px; /* Fixed width for unit select */
             flex-shrink: 0; /* Prevent shrinking */
         }
+
         .medication-row .dosa select {
             width: 100%;
             padding: 10px 5px; /* Adjust padding for smaller select */
@@ -319,12 +337,144 @@
             max-width: 200px; /* Максимальна ширина для кнопок на широких екранах */
             margin-top: 0; /* Видаляємо верхній відступ */
         }
+
+        .medication-row,
+        .medication-details,
+        .calculation-section {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex; /* Use flexbox for better alignment */
+            align-items: center;
+            flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+        }
+
+        .medication-row:last-child,
+        .medication-details:last-child,
+        .calculation-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+
+        label {
+            display: block; /* Make labels block elements */
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+            min-width: 120px; /* Give labels a minimum width */
+            margin-right: 10px;
+        }
+
+        select,
+        input[type="number"],
+        input[type="text"] {
+            flex-grow: 1; /* Allow inputs/selects to take up available space */
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            margin-bottom: 10px; /* Add margin below inputs for wrapping */
+            min-width: 150px; /* Ensure inputs are not too narrow */
+        }
+
+        /* Adjust label and input alignment within flex container */
+        .medication-row label,
+        .medication-details label {
+            margin-bottom: 0; /* Remove bottom margin when using flex */
+            align-self: center; /* Vertically center labels */
+        }
+
+        .medication-row select,
+        .medication-details select,
+        .medication-details input[type="number"] {
+            margin-bottom: 0; /* Remove bottom margin when using flex */
+        }
+
+
+        #multiplicity_section {
+            display: flex;
+            align-items: center;
+            margin-left: 10px; /* Add some space from previous element */
+            flex-grow: 1; /* Allow this section to grow */
+        }
+
+        #multiplicity_section label {
+            min-width: unset; /* Remove minimum width for this specific label */
+            margin-right: 5px;
+            margin-left: 10px;
+        }
+
+        #multiplicity_section input {
+            flex-grow: 1; /* Allow the input to grow */
+            max-width: 80px; /* Limit width of multiplicity input */
+            margin-bottom: 0;
+        }
+
+
+        #fentanyl_unit_display {
+            margin-left: 10px;
+            font-weight: bold;
+            color: #555;
+            align-self: center; /* Vertically center */
+        }
+
+
+        button {
+            display: block; /* Make the button a block element */
+            width: 100%; /* Full width button */
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #ommed_result {
+            background-color: #e9e9e9;
+            font-weight: bold;
+            color: #333;
+        }
+
+        #calculation_error {
+            color: #dc3545; /* Bootstrap danger color */
+            font-weight: bold;
+            margin-left: 10px;
+            align-self: center; /* Vertically center */
+        }
+
+        /* Adjust layout for result row */
+        .result-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .result-row label {
+            margin-bottom: 0;
+            align-self: center;
+        }
+
+        .result-row input {
+            margin-bottom: 0;
+        }
+
         /* На десктопах вирівнюємо простір між кнопками */
         @media (min-width: 768px) {
             .button-group {
                 justify-content: space-between;
                 gap: 20px; /* Збільшуємо відстань на широких екранах */
             }
+
             .button {
                 flex-grow: 0; /* Нехай не розтягуються на всю ширину, якщо їх три в ряд */
                 width: auto; /* Ширина за вмістом або min-width */
@@ -334,12 +484,36 @@
         .button:hover {
             opacity: 0.9;
         }
-        .clear-button { background-color: #dc3545; color: white; } /* Danger red */
-        .clear-button:hover { background-color: #c82333; }
-        .calc-button { background-color: #ffc107; color: #212529; } /* Warning yellow */
-        .calc-button:hover { background-color: #e0a800; }
-        .send-button { background-color: #28a745; color: white; } /* Success green */
-        .send-button:hover { background-color: #218838; }
+
+        .clear-button {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        /* Danger red */
+        .clear-button:hover {
+            background-color: #c82333;
+        }
+
+        .calc-button {
+            background-color: #ffc107;
+            color: #212529;
+        }
+
+        /* Warning yellow */
+        .calc-button:hover {
+            background-color: #e0a800;
+        }
+
+        .send-button {
+            background-color: #28a745;
+            color: white;
+        }
+
+        /* Success green */
+        .send-button:hover {
+            background-color: #218838;
+        }
 
         /* Styles for new Pain Index inputs */
         .pain-index-inputs {
@@ -352,17 +526,20 @@
             flex-direction: column;
             gap: 15px; /* Space between groups of PI inputs */
         }
+
         .pi-input-group {
             display: flex;
             flex-direction: column; /* Stack label and input */
             gap: 5px;
         }
+
         .pi-input-group label {
             font-size: 1rem;
             font-weight: 500;
             color: #333;
             display: block;
         }
+
         .pi-input-group input[type="number"],
         .pi-input-group select {
             width: 100%;
@@ -383,7 +560,8 @@
 <body>
 <div class="container">
     <div class="canvas-section">
-        <canvas id="canvas"></canvas> <div class="face-picker">
+        <canvas id="canvas"></canvas>
+        <div class="face-picker">
             <div class="face-option-wrapper">
                 <img class="face-option" src="img/face_0.jpg" alt="No Pain" data-color="#006400">
                 <span>No Pain</span>
@@ -422,17 +600,18 @@
                 <label for="indexPain">Pain Index (Calculated):</label>
                 <input type="text" id="indexPain" readonly placeholder="Calculated PI">
             </div>
-            <div>
+            <div style="margin-top: 10px;>
                 <label for="analgeticIndexPain">Analgetic Index:</label>
                 <input type="text" id="analgeticIndexPain" readonly placeholder="Calculated AI">
             </div>
-            <div>
+            <div style="margin-top: 10px;>
                 <label for="pain_control">Pain Control Degree:</label>
                 <input type="text" id="pain_control" readonly placeholder="Control status">
             </div>
-            <div>
-                <label for="pain_control">oMEDD:</label>
-                <input type="text" id="ommed" readonly placeholder="Control status">
+            <div style="margin-top: 10px;">
+                <label for="ommed_result">Calculated MME:</label>
+                <input type="text" id="ommed_result" readonly placeholder="Result (mg/day)">
+                <span id="calculation_error" style="color: red; margin-left: 10px;"></span>
             </div>
         </div>
 
@@ -511,7 +690,8 @@
                         <div class="dosa">
                             <select id="adjuvantsDosa" name="adjuvantsDosa">
                                 <option value="g">g</option>
-                                <option value="mg" selected>mg</option> {/* Default to mg */}
+                                <option value="mg" selected>mg</option>
+                                {/* Default to mg */}
                                 <option value="mkg">mkg</option>
                             </select>
                         </div>
@@ -534,7 +714,8 @@
                         <div class="dosa">
                             <select id="nsaidDosa" name="nsaidDosa">
                                 <option value="g">g</option>
-                                <option value="mg" selected>mg</option> {/* Default to mg */}
+                                <option value="mg" selected>mg</option>
+                                {/* Default to mg */}
                                 <option value="mkg">mkg</option>
                             </select>
                         </div>
@@ -552,39 +733,62 @@
                         <div class="dosa">
                             <select id="weak_opioidsDosa" name="weak_opioidsDosa">
                                 <option value="g">g</option>
-                                <option value="mg" selected>mg</option> {/* Default to mg */}
+                                <option value="mg" selected>mg</option>
+                                {/* Default to mg */}
                                 <option value="mkg">mkg</option>
                             </select>
                         </div>
                         <input type="text" id="weak_opioidsMultiplicity" class="adjuvantsInput" placeholder="Times/day">
                     </div>
                     <div class="medication-row">
-                        <label for="strong_opioids">Strong Opioid:</label>
-                        <select id="strong_opioids" name="strong_opioids">
-                            <option value="not_selected">Not selected</option>
-                            <option value="morphine">Morphine</option>
-                            <option value="fentanyl">Fentanyl</option>
-                            <option value="oxycodone">Oxycodone</option>
+                        <label for="strong_opioid">Strong Opioid:</label>
+                        <select id="strong_opioid" name="strong_opioid">
+                            <option value="not_selected" selected>-- Select Medication --</option>
+                            <option value="morphine_oral">Morphine (Oral)</option>
+                            <option value="oxycodone_oral">Oxycodone (Oral)</option>
+                            <option value="fentanyl_td">Fentanyl (TD, Patch)</option>
                         </select>
-                        <input type="text" id="strong_opioidsDose" class="adjuvantsInput" placeholder="Dose">
-                        <div class="dosa">
-                            <select id="strong_opioidsDosa" name="strong_opioidsDosa">
-                                <option value="g">g</option>
-                                <option value="mg" selected>mg</option> {/* Default to mg */}
-                                <option value="mkg">mkg</option>
-                            </select>
-                        </div>
-                        <input type="text" id="strong_opioidsInputMultiplicity" class="adjuvantsInput" placeholder="Times/day">
                     </div>
+
+                    <div class="medication-details" id="medication_details" style="display: none; margin-top: 10px;">
+                        <label for="opioid_dose">Dose:</label>
+                        <input type="number" id="opioid_dose" class="adjuvantsInput" placeholder="Dose" min="0"
+                               step="any">
+
+                        <label for="opioid_unit" id="opioid_unit_label">Unit:</label>
+                        <select id="opioid_unit" name="opioid_unit">
+                            <option value="mg">mg</option>
+                            <option value="mcg">mcg</option>
+                        </select>
+
+                        <span id="multiplicity_section">
+        <label for="opioid_multiplicity">Frequency/Day:</label>
+        <input type="number" id="opioid_multiplicity" class="adjuvantsInput" placeholder="Times/Day" min="1" step="1"
+               value="1">
+    </span>
+
+                        <span id="fentanyl_unit_display" style="display: none; margin-left: 5px;">mcg/hour</span>
+                    </div>
+
+
                 </div>
             </div>
 
         </div>
 
         <div class="button-group">
-            <button class="calc-button button" id="calcButton">Calculate Metrics</button>
-            <button class="send-button button" id="sendData">Send Data</button>
-            <button class="clear-button button" id="clearCanvas">Clear All</button>
+            <div style="margin-top: 15px;">
+                <button type="button" class="calc-button button" onclick="calculateOmed()">Calculate MME</button>
+            </div>
+            <div style="margin-top: 15px;">
+                <button class="calc-button button" id="calcButton">Calculate Metrics</button>
+            </div>
+            <div style="margin-top: 15px;">
+                <button class="send-button button" id="sendData">Send Data</button>
+            </div>
+            <div style="margin-top: 15px;">
+                <button class="clear-button button" id="clearCanvas">Clear All</button>
+            </div>
         </div>
 
     </div>
@@ -660,7 +864,7 @@
             x = (event.clientX - rect.left) * (canvas.width / rect.width);
             y = (event.clientY - rect.top) * (canvas.height / rect.height);
         }
-        return { x, y };
+        return {x, y};
     }
 
     canvas.addEventListener('mousedown', (e) => {
@@ -705,12 +909,12 @@
 
     // Map face colors (hex) to friendly names and coefficients
     const colorInfo = {
-        '#006400': { name: 'No Pain (Green)', coefficient: 1, level: 'No Pain' },
-        '#ADFF2F': { name: 'Very Mild Pain (Lime Green)', coefficient: 2, level: 'Very Mild Pain' },
-        '#FFFF00': { name: 'Mild Pain (Yellow)', coefficient: 3, level: 'Mild Pain' },
-        '#FFA500': { name: 'Moderate Pain (Orange)', coefficient: 4, level: 'Moderate Pain' },
-        '#8B4513': { name: 'Severe Pain (Brown)', coefficient: 5, level: 'Severe Pain' },
-        '#FF0000': { name: 'Worst Pain (Red)', coefficient: 6, level: 'Worst Pain' },
+        '#006400': {name: 'No Pain (Green)', coefficient: 1, level: 'No Pain'},
+        '#ADFF2F': {name: 'Very Mild Pain (Lime Green)', coefficient: 2, level: 'Very Mild Pain'},
+        '#FFFF00': {name: 'Mild Pain (Yellow)', coefficient: 3, level: 'Mild Pain'},
+        '#FFA500': {name: 'Moderate Pain (Orange)', coefficient: 4, level: 'Moderate Pain'},
+        '#8B4513': {name: 'Severe Pain (Brown)', coefficient: 5, level: 'Severe Pain'},
+        '#FF0000': {name: 'Worst Pain (Red)', coefficient: 6, level: 'Worst Pain'},
     };
 
     // Convert hex keys to rgb keys for lookup based on getImageData
@@ -741,7 +945,7 @@
             const color = `rgb(${r}, ${g}, ${b})`;
             if (a > 0 && colorInfoRgb[color]) {
                 // Use a string representation of the pixel coordinates as a unique identifier
-                const pixelKey = `${i/4}`;
+                const pixelKey = `${i / 4}`;
                 if (!drawnPixels.has(pixelKey)) {
                     colorPixels[color] = (colorPixels[color] || 0) + 1;
                     drawnPixels.add(pixelKey);
@@ -769,7 +973,7 @@
     function updatePainMetrics() {
         // Calculate Pain Index first, based on user inputs
         const painIndexValue = calculatePainIndex();
-        const omdd =calculateOmed()
+        const omdd = calculateOmed()
         console.log(omdd)
         document.getElementById('indexPain').value = isNaN(painIndexValue) ? 'Invalid Input' : painIndexValue.toFixed(2);
 
@@ -816,7 +1020,7 @@
         return painIndex;
     }
 
-    function calculateOmed(){
+    function calculateOmed() {
         const strongOpioidsDrug = document.getElementById('strong_opioids').value;
         const strongOpioidsDoseValue = parseFloat(document.getElementById('strong_opioidsDose').value) || 0;
         const strongOpioidsMultiplicity = parseFloat(document.getElementById('strong_opioidsInputMultiplicity').value) || 0;
@@ -847,7 +1051,7 @@
 
 
     // --- Analgetic Index and Pain Control Calculation (Simplified) ---
-    function calculateAnalgeticIndex(){
+    function calculateAnalgeticIndex() {
         // Retrieve selected medications and doses
         const adjuvantDrug = document.getElementById('adjuvants').value;
         const adjuvantDoseValue = parseFloat(document.getElementById('adjuvantsDose').value) || 0;
@@ -934,6 +1138,146 @@
         document.getElementById('pain_control').value = painControl;
     }
 
+    function setupOpioidUI() {
+        const drugSelect = document.getElementById('strong_opioid');
+        const detailsDiv = document.getElementById('medication_details');
+        const doseInput = document.getElementById('opioid_dose');
+        const unitSelect = document.getElementById('opioid_unit');
+        const unitLabel = document.getElementById('opioid_unit_label');
+        const multiplicitySection = document.getElementById('multiplicity_section');
+        const multiplicityInput = document.getElementById('opioid_multiplicity');
+        const fentanylUnitDisplay = document.getElementById('fentanyl_unit_display');
+        const resultInput = document.getElementById('ommed_result');
+        const errorSpan = document.getElementById('calculation_error');
+
+        drugSelect.addEventListener('change', function () {
+            const selectedDrug = this.value;
+            // Сброс при смене препарата
+            doseInput.value = '';
+            multiplicityInput.value = '1';
+            resultInput.value = '';
+            errorSpan.textContent = '';
+            unitSelect.style.display = 'inline-block'; // Показать селектор единиц по умолчанию
+            unitLabel.style.display = 'inline-block';
+            fentanylUnitDisplay.style.display = 'none'; // Скрыть мкг/час
+            multiplicitySection.style.display = 'inline-block'; // Показать кратность по умолчанию
+
+            if (selectedDrug === 'not_selected') {
+                detailsDiv.style.display = 'none';
+            } else {
+                detailsDiv.style.display = 'block';
+                if (selectedDrug === 'fentanyl_td') {
+                    // Настройка для Фентанила ТТС
+                    unitSelect.style.display = 'none'; // Скрыть выбор мг/мкг
+                    unitLabel.style.display = 'none';
+                    fentanylUnitDisplay.style.display = 'inline-block'; // Показать "мкг/час"
+                    multiplicitySection.style.display = 'none'; // Скрыть кратность
+                    doseInput.placeholder = 'Доза (мкг/час)';
+                } else if (selectedDrug === 'morphine_oral' || selectedDrug === 'oxycodone_oral') {
+                    // Настройка для пероральных форм
+                    doseInput.placeholder = 'Разовая доза';
+                    // Установить мг по умолчанию для оральных, если нужно
+                    unitSelect.value = 'mg';
+                }
+                // Добавить другие else if для других препаратов/форм
+            }
+        });
+
+        // Инициализация UI при загрузке страницы (если нужно)
+        // drugSelect.dispatchEvent(new Event('change'));
+    }
+
+    function calculateOmed() {
+        const strongOpioidsDrug = document.getElementById('strong_opioid').value;
+        const strongOpioidsDoseValue = parseFloat(document.getElementById('opioid_dose').value);
+        const strongOpioidsUnit = document.getElementById('opioid_unit').value;
+        const strongOpioidsMultiplicity = parseInt(document.getElementById('opioid_multiplicity').value) || 1; // По умолчанию 1, если поле скрыто или пусто
+        const resultInput = document.getElementById('ommed_result');
+        const errorSpan = document.getElementById('calculation_error');
+
+        resultInput.value = ''; // Очистить результат перед расчетом
+        errorSpan.textContent = ''; // Очистить ошибки
+
+        if (strongOpioidsDrug === 'not_selected') {
+            errorSpan.textContent = 'Пожалуйста, выберите препарат.';
+            return;
+        }
+
+        if (isNaN(strongOpioidsDoseValue) || strongOpioidsDoseValue < 0) {
+            errorSpan.textContent = 'Пожалуйста, введите корректную неотрицательную дозу.';
+            return;
+        }
+        if (isNaN(strongOpioidsMultiplicity) || strongOpioidsMultiplicity < 1) {
+            // Эта проверка сработает только если поле кратности видимо и некорректно заполнено
+            errorSpan.textContent = 'Пожалуйста, введите корректную кратность (минимум 1).';
+            return;
+        }
+
+
+        let omedd = 0;
+        // Коэффициенты конверсии в ОМЭДД (мг/сутки)
+        // Ключ: значение из select, Значение: { factor: число, route: 'oral'/'td', expectedUnit: 'mg'/'mcg/hr' }
+        const conversionFactors = {
+            'morphine_oral': {factor: 1, route: 'oral', expectedUnit: 'mg'},
+            'oxycodone_oral': {factor: 1.5, route: 'oral', expectedUnit: 'mg'},
+            'fentanyl_td': {factor: 2.4, route: 'td', expectedUnit: 'mcg/hr'} // Конвертирует мкг/час в мг/сутки ОМЭДД
+            // Добавьте сюда другие препараты и их коэффициенты/параметры
+        };
+
+        const drugInfo = conversionFactors[strongOpioidsDrug];
+
+        if (drugInfo) {
+            try {
+                let dailyDoseInExpectedUnit = 0;
+
+                if (drugInfo.route === 'oral') {
+                    let doseInMg = strongOpioidsDoseValue;
+                    // Конвертируем разовую дозу в MG, если она введена в MCG
+                    if (strongOpioidsUnit === 'mcg') {
+                        doseInMg = strongOpioidsDoseValue / 1000;
+                    } else if (strongOpioidsUnit !== 'mg') {
+                        throw new Error(`Неожиданная единица измерения ${strongOpioidsUnit} для ${strongOpioidsDrug}`);
+                    }
+
+                    if (drugInfo.expectedUnit !== 'mg') {
+                        // Теоретически, можно добавить обработку, если ожидаемая единица не мг
+                        console.warn(`Ожидаемая единица для ${strongOpioidsDrug} (${drugInfo.expectedUnit}) не совпадает с базовой 'mg'. Проверьте логику.`);
+                    }
+
+                    dailyDoseInExpectedUnit = doseInMg * strongOpioidsMultiplicity; // Суточная доза в мг
+                    omedd = dailyDoseInExpectedUnit * drugInfo.factor;
+
+                } else if (drugInfo.route === 'td') {
+                    // Для трансдермальных форм (Фентанил ТТС)
+                    if (drugInfo.expectedUnit === 'mcg/hr') {
+                        // Доза уже введена в мкг/час, кратность не используется
+                        dailyDoseInExpectedUnit = strongOpioidsDoseValue;
+                        // Фактор 2.4 напрямую переводит mcg/hr в мг/сутки ОМЭДД
+                        omedd = dailyDoseInExpectedUnit * drugInfo.factor;
+                    } else {
+                        throw new Error(`Неожиданная ожидаемая единица ${drugInfo.expectedUnit} для трансдермального препарата ${strongOpioidsDrug}`);
+                    }
+                } else {
+                    throw new Error(`Неизвестный путь введения: ${drugInfo.route}`);
+                }
+
+                // Округляем результат для удобства
+                resultInput.value = omedd.toFixed(2) + " мг/сутки";
+
+            } catch (error) {
+                console.error("Ошибка расчета:", error);
+                errorSpan.textContent = `Ошибка расчета: ${error.message}`;
+            }
+
+        } else {
+            errorSpan.textContent = `Коэффициент конверсии для "${document.getElementById('strong_opioid').options[document.getElementById('strong_opioid').selectedIndex].text}" не найден.`;
+            console.warn(`Неизвестный опиоид или отсутствует коэффициент конверсии для: ${strongOpioidsDrug}`);
+        }
+    }
+
+    // Инициализация UI после загрузки DOM
+    document.addEventListener('DOMContentLoaded', setupOpioidUI);
+
 
     // --- Event Listeners ---
     document.getElementById('clearCanvas').addEventListener('click', () => {
@@ -951,6 +1295,8 @@
         document.getElementById('indexPain').value = ''; // Clear calculated index
         document.getElementById('analgeticIndexPain').value = '';
         document.getElementById('pain_control').value = '';
+
+        document.getElementById('ommed_result').value=''
 
         // Reset face selection visual
         document.querySelectorAll('.face-option').forEach(opt => opt.classList.remove('active'));
@@ -987,17 +1333,18 @@
     document.getElementById('functionalImpactSelect').addEventListener('change', updatePainMetrics);
 
 
-    document.getElementById('ageSlider').addEventListener('input', function() {
+    document.getElementById('ageSlider').addEventListener('input', function () {
         document.getElementById('ageValue').textContent = this.value;
     });
 
-    document.getElementById('weightSlider').addEventListener('input', function() {
+    document.getElementById('weightSlider').addEventListener('input', function () {
         document.getElementById('weightValue').textContent = this.value;
     });
 
-    document.getElementById('heightSlider').addEventListener('input', function() {
+    document.getElementById('heightSlider').addEventListener('input', function () {
         document.getElementById('heightValue').textContent = this.value;
     });
+
 
     // Add event listeners to medication inputs/selects to trigger analgesic calculation
     document.querySelectorAll('.medication-group select, .medication-group input[type="text"]').forEach(element => {
@@ -1014,10 +1361,10 @@
         const painLevel = document.getElementById('pain-input').value;
         const analgeticIndexPain = document.getElementById('analgeticIndexPain').value;
         const pain_control = document.getElementById('pain_control').value;
-        const painIndex =document.getElementById('indexPain').value; // Get the calculated Pain Index
-        const age =document.getElementById('ageSlider').value;
-        const weight =document.getElementById('weightSlider').value;
-        const height =document.getElementById('heightSlider').value;
+        const painIndex = document.getElementById('indexPain').value; // Get the calculated Pain Index
+        const age = document.getElementById('ageSlider').value;
+        const weight = document.getElementById('weightSlider').value;
+        const height = document.getElementById('heightSlider').value;
         const typePain = document.getElementById('type-input').value;
 
         // Also collect the raw inputs for Pain Index components
