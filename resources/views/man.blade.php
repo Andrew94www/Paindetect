@@ -609,7 +609,7 @@
                 <input type="text" id="pain_control" readonly placeholder="Control status">
             </div>
             <div style="margin-top: 10px;">
-                <label for="ommed_result">Calculated MME:</label>
+                <label for="ommed_result">Calculated oMEDD:</label>
                 <input type="text" id="ommed_result" readonly placeholder="Result (mg/day)">
                 <span id="calculation_error" style="color: red; margin-left: 10px;"></span>
             </div>
