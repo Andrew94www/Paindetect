@@ -430,6 +430,10 @@
                 <label for="pain_control">Pain Control Degree:</label>
                 <input type="text" id="pain_control" readonly placeholder="Control status">
             </div>
+            <div>
+                <label for="pain_control">oMEDD:</label>
+                <input type="text" id="ommed" readonly placeholder="Control status">
+            </div>
         </div>
 
     </div>
@@ -765,6 +769,8 @@
     function updatePainMetrics() {
         // Calculate Pain Index first, based on user inputs
         const painIndexValue = calculatePainIndex();
+        const omdd =calculateOmed()
+        console.log(omdd)
         document.getElementById('indexPain').value = isNaN(painIndexValue) ? 'Invalid Input' : painIndexValue.toFixed(2);
 
 
@@ -808,6 +814,35 @@
         const painIndex = (intensity * frequencyScore * durationModifierScore * functionalImpactScore) / 10;
 
         return painIndex;
+    }
+
+    function calculateOmed(){
+        const strongOpioidsDrug = document.getElementById('strong_opioids').value;
+        const strongOpioidsDoseValue = parseFloat(document.getElementById('strong_opioidsDose').value) || 0;
+        const strongOpioidsMultiplicity = parseFloat(document.getElementById('strong_opioidsInputMultiplicity').value) || 0;
+
+        let omedd = 0;
+        // Используем факторы конверсии из документа для пероральных форм (кроме фентанила)
+        const conversionFactors = {
+            'morphine': 1, // Oral conversion factor
+            'oxycodone': 1.5, // Oral conversion factor
+            'fentanyl': 2.4 // Transdermal conversion factor for mcg/hr
+        };
+
+        if (conversionFactors[strongOpioidsDrug]) {
+            if (strongOpioidsDrug === 'fentanyl') {
+
+                omedd = strongOpioidsDoseValue * conversionFactors[strongOpioidsDrug] * strongOpioidsMultiplicity;
+            } else {
+                const dailyDose = strongOpioidsDoseValue * strongOpioidsMultiplicity;
+                omedd = dailyDose * conversionFactors[strongOpioidsDrug];
+            }
+        } else {
+            // Опционально: обработка случая, если выбранный препарат не входит в список
+            console.warn(`Неизвестный опиоид или отсутствует коэффициент конверсии для: ${strongOpioidsDrug}`);
+        }
+
+        document.getElementById('ommed').value = omedd;
     }
 
 
