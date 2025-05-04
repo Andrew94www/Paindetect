@@ -778,7 +778,7 @@
 
         <div class="button-group">
             <div style="margin-top: 15px;">
-                <button type="button" class="calc-button button" onclick="calculateOmed()">Calculate MME</button>
+                <button type="button" class="calc-button button" onclick="calculateOmed()">Calculate oMEDD</button>
             </div>
             <div style="margin-top: 15px;">
                 <button class="calc-button button" id="calcButton">Calculate Metrics</button>
@@ -1043,7 +1043,7 @@
             }
         } else {
             // Опционально: обработка случая, если выбранный препарат не входит в список
-            console.warn(`Неизвестный опиоид или отсутствует коэффициент конверсии для: ${strongOpioidsDrug}`);
+            // console.warn(`Неизвестный опиоид или отсутствует коэффициент конверсии для: ${strongOpioidsDrug}`);
         }
 
         document.getElementById('ommed').value = omedd;
@@ -1175,7 +1175,7 @@
                     doseInput.placeholder = 'Доза (мкг/час)';
                 } else if (selectedDrug === 'morphine_oral' || selectedDrug === 'oxycodone_oral') {
                     // Настройка для пероральных форм
-                    doseInput.placeholder = 'Разовая доза';
+                    doseInput.placeholder = 'Single dose';
                     // Установить мг по умолчанию для оральных, если нужно
                     unitSelect.value = 'mg';
                 }
@@ -1199,17 +1199,17 @@
         errorSpan.textContent = ''; // Очистить ошибки
 
         if (strongOpioidsDrug === 'not_selected') {
-            errorSpan.textContent = 'Пожалуйста, выберите препарат.';
+            errorSpan.textContent = 'Please select a drug.';
             return;
         }
 
         if (isNaN(strongOpioidsDoseValue) || strongOpioidsDoseValue < 0) {
-            errorSpan.textContent = 'Пожалуйста, введите корректную неотрицательную дозу.';
+            errorSpan.textContent = 'Please enter a correct non-negative dose.';
             return;
         }
         if (isNaN(strongOpioidsMultiplicity) || strongOpioidsMultiplicity < 1) {
             // Эта проверка сработает только если поле кратности видимо и некорректно заполнено
-            errorSpan.textContent = 'Пожалуйста, введите корректную кратность (минимум 1).';
+            errorSpan.textContent = 'Please enter a valid multiple (minimum 1).';
             return;
         }
 
