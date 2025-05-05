@@ -1052,90 +1052,150 @@
 
     // --- Analgetic Index and Pain Control Calculation (Simplified) ---
     function calculateAnalgeticIndex() {
-        // Retrieve selected medications and doses
+        // Отримати дані про ад'юванти
         const adjuvantDrug = document.getElementById('adjuvants').value;
         const adjuvantDoseValue = parseFloat(document.getElementById('adjuvantsDose').value) || 0;
-        const adjuvantMultiplicity = parseFloat(document.getElementById('adjuvantsInput').value) || 0; // Assuming "Times/day" means frequency per day
+        const adjuvantMultiplicity = parseFloat(document.getElementById('adjuvantsInput').value) || 0;
 
+        // Отримати дані про НПЗП (NSAID)
         const nsaidDrug = document.getElementById('nsaid').value;
         const nsaidDoseValue = parseFloat(document.getElementById('nsaidInput').value) || 0;
         const nsaidMultiplicity = parseFloat(document.getElementById('nsaidInputMultiplicity').value) || 0;
 
+        // Отримати дані про слабкі опіоїди
         const weakOpioidsDrug = document.getElementById('weak_opioids').value;
         const weakOpioidsDoseValue = parseFloat(document.getElementById('weak_opioidsDose').value) || 0;
         const weakOpioidsMultiplicity = parseFloat(document.getElementById('weak_opioidsMultiplicity').value) || 0;
 
-        const strongOpioidsDrug = document.getElementById('strong_opioids').value;
-        const strongOpioidsDoseValue = parseFloat(document.getElementById('strong_opioidsDose').value) || 0;
-        const strongOpioidsMultiplicity = parseFloat(document.getElementById('strong_opioidsInputMultiplicity').value) || 0;
+        // Отримати дані про сильні опіоїди - ВИКОРИСТОВУВАТИ ПРАВИЛЬНІ ID
+        const strongOpioidsDrug = document.getElementById('strong_opioid').value; // Виправлено ID (було strong_opioids)
+        // Доза та кратність беруться з елементів, що з'являються при виборі сильного опіоїду
+        const strongOpioidsDoseValue = parseFloat(document.getElementById('opioid_dose').value) || 0; // Виправлено ID (було strong_opioidsDose)
+        const strongOpioidsMultiplicity = parseFloat(document.getElementById('opioid_multiplicity').value) || 0; // Виправлено ID (було strong_opioidsInputMultiplicity)
+        const strongOpioidsUnit = document.getElementById('opioid_unit').value; // Отримати одиницю для розрахунку OMEDD
 
+        // --- Розрахунок Анальгетичного Індексу ---
+        let analgeticIndex = '0%'; // За замовчуванням 0%, якщо нічого не вибрано
 
-        // Determine Analgetic Index based on medication combination (Simplified Logic)
-        let analgeticIndex = 'N/A'; // Not Applicable by default
-
+        // Перевірити, чи вибрано кожну категорію з дійсними значеннями
         const isAdjuvantSelected = adjuvantDrug !== 'not_selected' && adjuvantDoseValue > 0 && adjuvantMultiplicity > 0;
         const isNsaidSelected = nsaidDrug !== 'not_selected' && nsaidDoseValue > 0 && nsaidMultiplicity > 0;
         const isWeakOpioidSelected = weakOpioidsDrug !== 'not_selected' && weakOpioidsDoseValue > 0 && weakOpioidsMultiplicity > 0;
-        const isStrongOpioidSelected = strongOpioidsDrug !== 'not_selected' && strongOpioidsDoseValue > 0 && strongOpioidsMultiplicity > 0;
+        // Перевірка вибору сильного опіоїду: доза/кратність мають значення лише якщо препарат ВИБРАНО
+        const isStrongOpioidSelected = strongOpioidsDrug !== 'not_selected' && strongOpioidsDoseValue > 0;
+        // Примітка: для Фентанілу ТД "кратність" може бути не зовсім коректним поняттям, але поки дотримуємося поточної логіки
 
-        // Simple tiered approach based on common pain management steps
+        console.log("Сильний опіоїд вибрано:", isStrongOpioidSelected, "НПЗП вибрано:", isNsaidSelected); // Для відладки
+
+        // Проста логіка на основі щаблів знеболення ВООЗ
         if (isStrongOpioidSelected) {
-            analgeticIndex = '>80%'; // Corresponds to Step 3 (Strong Opioid + other meds)
+            analgeticIndex = '>80%'; // Сходинка 3
         } else if (isWeakOpioidSelected) {
             if (isAdjuvantSelected || isNsaidSelected) {
-                analgeticIndex = '50%-70%'; // Corresponds to Step 2 (Weak Opioid + Adjuvant or NSAID)
+                analgeticIndex = '50%-70%'; // Сходинка 2 + ад'ювант/НПЗП
             } else {
-                analgeticIndex = '40%-60%'; // Weak Opioid only
+                analgeticIndex = '40%-60%'; // Тільки сходинка 2
             }
         } else if (isAdjuvantSelected && isNsaidSelected) {
-            analgeticIndex = '30%'; // Corresponds to Step 1 (Adjuvant + NSAID only)
+            analgeticIndex = '30%'; // Сходинка 1 (Ад'ювант + НПЗП)
         } else if (isAdjuvantSelected || isNsaidSelected) {
-            analgeticIndex = '<30%'; // Less coverage with just one type + no opioids
+            analgeticIndex = '<30%'; // Сходинка 1 (Ад'ювант АБО НПЗП)
+        }
+        // інакше залишається '0%'
+
+        // Відобразити Анальгетичний Індекс (перевірити наявність елемента)
+        const analgeticIndexOutput = document.getElementById('analgeticIndexPain');
+        if (analgeticIndexOutput) {
+            analgeticIndexOutput.value = analgeticIndex;
         } else {
-            analgeticIndex = '0%'; // No relevant medications selected
+            console.error("Елемент з ID 'analgeticIndexPain' не знайдено!");
+            // ПОТРІБНО ДОДАТИ ЦЕЙ ЕЛЕМЕНТ В HTML, наприклад:
+            // <input type="text" id="analgeticIndexPain" readonly>
         }
 
+        // --- Розрахунок Ступеня Контролю Болю ---
+        let painControl = 'Н/Д'; // Стан за замовчуванням
 
-        document.getElementById('analgeticIndexPain').value = analgeticIndex;
-
-        // Determine Pain Control Degree (Simplified Logic based on Morphine Equivalence and Pain Level)
-        let painControl = 'Controlled Pain'; // Default
-
-        // This is a very basic example. A real calculation requires a comprehensive OMEDD conversion table.
-        // Example: If daily oral morphine equivalent is high (> 60mg/day, a common threshold),
-        // and pain is still significant, it might indicate uncontrolled pain.
-        // This requires converting ALL opioid doses (and potentially other drugs) to OMEDD.
-        // For this example, let's just check for a high dose of oral morphine as a simplified indicator.
-
-        // --- Simplified OMEDD Calculation (Morphine only, oral, mg) ---
+        // Спрощений розрахунок OMEDD (Поки тільки для перорального морфіну)
+        // ВАЖЛИВО: Цей розрахунок ДУЖЕ спрощений і потребує розширення!
         let totalOMEDD = 0;
-        if (strongOpioidsDrug === 'morphine' && document.getElementById('strong_opioidsDosa').value === 'mg') {
+        if (strongOpioidsDrug === 'morphine_oral' && strongOpioidsUnit === 'mg') { // Виправлено значення препарату та ID одиниці
             totalOMEDD = strongOpioidsDoseValue * strongOpioidsMultiplicity;
         }
-        // Add other opioid conversions here if needed (e.g., Tramadol * 0.1 to oral morphine eq.)
+        // !!! ПОТРІБНО ДОДАТИ КОНВЕРСІЮ ДЛЯ ІНШИХ СИЛЬНИХ ОПІОЇДІВ (Оксикодон, Фентаніл) !!!
+        else if (strongOpioidsDrug === 'oxycodone_oral' && strongOpioidsUnit === 'mg') {
+            // Приблизний коефіцієнт конверсії Оксикодон -> Морфін перорально = 1.5-2
+            totalOMEDD = strongOpioidsDoseValue * strongOpioidsMultiplicity * 1.5; // Приклад! Використовуйте точні дані
+        } else if (strongOpioidsDrug === 'fentanyl_td' && strongOpioidsUnit === 'mcg') {
+            // Доза фентанілового пластиру - мкг/год. Конверсія відрізняється.
+            // Приблизна конверсія: Фентаніл ТД мкг/год * 2.4 ≈ Морфін перорально мг/добу
+            // Кратність (multiplicity) тут не використовується для добової дози пластиру.
+            totalOMEDD = strongOpioidsDoseValue * 2.4; // Приклад! Використовуйте точні дані
+        }
+
+        // !!! ПОТРІБНО ДОДАТИ КОНВЕРСІЮ ДЛЯ СЛАБКИХ ОПІОЇДІВ (Трамадол, Кодеїн), якщо вони враховуються в OMEDD !!!
+        if (isWeakOpioidSelected && weakOpioidsDrug === 'tramadol') {
+            let tramadolDoseMg = 0;
+            const tramadolUnit = document.getElementById('weak_opioidsDosa').value; // Потрібно перевіряти одиницю
+            if (tramadolUnit === 'mg') tramadolDoseMg = weakOpioidsDoseValue;
+            else if (tramadolUnit === 'g') tramadolDoseMg = weakOpioidsDoseValue * 1000;
+            // Коефіцієнт конверсії Трамадол -> Морфін перорально = 0.1-0.2
+            totalOMEDD += (tramadolDoseMg * weakOpioidsMultiplicity) * 0.1; // Приклад! Використовуйте точні дані
+        }
+        // Додати конверсію для кодеїну та дигідрокодеїну...
 
 
-        // --- Pain Control Logic ---
-        const currentPainLevel = document.getElementById('pain-input').value;
-        // Define what are considered "high" pain levels for this logic
-        const highPainLevels = ['Moderate Pain', 'Severe Pain', 'Very Severe Pain', 'Worst Pain'];
+        // --- Логіка Контролю Болю ---
+        const painIntensityInput = document.getElementById('intensityInput'); // Виправлено ID (було pain-input)
+        let currentPainLevel = -1; // За замовчуванням недійсне значення
 
-        // If OMEDD is high AND pain level is high -> Potentially Uncontrolled
-        if (totalOMEDD > 60 && highPainLevels.includes(currentPainLevel)) {
-            painControl = 'Potentially Uncontrolled Pain';
-        } else if (totalOMEDD > 60) {
-            // If OMEDD is high but pain is NOT high -> High Dose Opioids (Pain might be controlled but requires high doses)
-            painControl = 'High Dose Opioids (Pain Controlled)';
-        } else if (highPainLevels.includes(currentPainLevel) && totalOMEDD <= 60) {
-            // If pain is high but OMEDD is NOT high -> Potentially Uncontrolled (Insufficient analgesia)
-            painControl = 'Potentially Uncontrolled Pain (Insufficient Analgesia)';
+        if (painIntensityInput) {
+            currentPainLevel = parseInt(painIntensityInput.value, 10); // Отримати числове значення інтенсивності (0-10)
         } else {
-            // Otherwise, assume controlled pain (this is a very simplified assumption)
-            painControl = 'Controlled Pain';
+            console.error("Елемент з ID 'intensityInput' не знайдено!");
+        }
+
+        const highPainThreshold = 5; // Поріг високого болю (наприклад, 5 і вище за шкалою 0-10)
+        const moderateOpioidThreshold = 60; // Приклад порогу OMEDD (мг/добу), потребує уточнення
+
+        // Перевірка, чи є інтенсивність болю дійсним числом
+        if (!isNaN(currentPainLevel) && currentPainLevel >= 0 && currentPainLevel <= 10) {
+            const isAnyAnalgesicSelected = isAdjuvantSelected || isNsaidSelected || isWeakOpioidSelected || isStrongOpioidSelected;
+
+            if (totalOMEDD > moderateOpioidThreshold && currentPainLevel >= highPainThreshold) {
+                painControl = 'Потенційно неконтрольований біль';
+            } else if (totalOMEDD > moderateOpioidThreshold) {
+                // Висока доза OMEDD, але біль низький/помірний
+                painControl = 'Високі дози опіоїдів (Біль контрольований)';
+            } else if (currentPainLevel >= highPainThreshold && totalOMEDD <= moderateOpioidThreshold) {
+                // Високий біль, але низька/помірна доза OMEDD
+                if (isAnyAnalgesicSelected) {
+                    painControl = 'Потенційно неконтрольований біль (Недостатнє знеболення)';
+                } else {
+                    painControl = 'Неконтрольований біль (Знеболення не застосовується)';
+                }
+            } else {
+                // Низький/помірний біль ТА низька/помірна доза OMEDD
+                if (isAnyAnalgesicSelected || currentPainLevel === 0) { // Якщо щось приймається або болю немає
+                    painControl = 'Контрольований біль';
+                } else { // Біль низький/помірний, але нічого не приймається
+                    painControl = 'Біль присутній (Знеболення не застосовується)';
+                }
+            }
+        } else {
+            painControl = 'Інтенсивність болю не вказана або некоректна'; // Обробка випадку, коли поле інтенсивності порожнє або не число
         }
 
 
-        document.getElementById('pain_control').value = painControl;
+        // Відобразити Ступінь Контролю Болю (перевірити наявність елемента)
+        const painControlOutput = document.getElementById('pain_control');
+        if (painControlOutput) {
+            painControlOutput.value = painControl;
+        } else {
+            console.error("Елемент з ID 'pain_control' не знайдено!");
+            // ПОТРІБНО ДОДАТИ ЦЕЙ ЕЛЕМЕНТ В HTML, наприклад:
+            // <input type="text" id="pain_control" readonly>
+        }
     }
 
     function setupOpioidUI() {
