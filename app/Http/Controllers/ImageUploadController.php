@@ -118,4 +118,8 @@ class ImageUploadController extends Controller
         return response()->json($data);
     }
 
+    public function getCamera(){
+        return view('camera');
+    }
+
 }

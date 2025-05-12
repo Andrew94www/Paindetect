@@ -620,6 +620,11 @@
     <div class="controls-wrapper">
         <div class="controls">
             <div class="control-group">
+                <div class="id_history">
+                    <input  id="id_history" name="hystory_name"  style="border-radius: 5px;  width:100%;height: 40px;" placeholder="Enter medical history ID";>
+                </div>
+            </div>
+            <div class="control-group">
                 <div class="range-group">
                     <label for="ageSlider">Age: <span id="ageValue">25</span> years</label>
                     <input type="range" id="ageSlider" min="10" max="100" value="25">
@@ -1320,9 +1325,23 @@
                 } else {
                     throw new Error(`Неизвестный путь введения: ${drugInfo.route}`);
                 }
+             let omeddValue = parseFloat(omedd.toFixed(2))
+                let risk =''
+                if (omeddValue >= 0 && omeddValue <= 50) {
+                    risk = "Low dose – lower risk";
+                } else if (omeddValue > 50 && omeddValue <= 90) {
+                    risk = "Moderate dose – increasing risk";
+                } else if (omeddValue > 90 && omeddValue <= 200) {
+                    risk = "High dose – elevated risk, monitor closely";
+                } else if (omeddValue > 200) {
+                    risk = "Very high dose – consider opioid rotation or specialist consult";
+                } else {
+                    risk = "Invalid oMEDD value (less than 0)";
+                }
+
 
                 // Округляем результат для удобства
-                resultInput.value = omedd.toFixed(2) + " мг/сутки";
+                resultInput.value ='(' + omedd.toFixed(2) + " mg/day"+')'+risk;
 
             } catch (error) {
                 console.error("Ошибка расчета:", error);
