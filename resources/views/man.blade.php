@@ -555,6 +555,31 @@
             background-position: right 10px center;
             padding-right: 30px;
         }
+        .control-group-face {
+            text-align: center; /* Центрує вміст по горизонталі */
+            background-color: #fefefe; /* Світлий фон */
+            width: 80%;
+            border-radius: 10px; /* Заокруглені кути */
+            padding: 20px; /* Внутрішні відступи */
+            margin: 20px auto; /* Центрує блок по горизонталі та додає зовнішні відступи */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Легка тінь для об'єму */
+            border: 1px solid #ddd; /* Тонка рамка */
+        }
+
+        /*
+          Стилі для зображення всередині контейнера.
+        */
+        .control-group-face img {
+            max-width: 99%; /* Зображення не буде ширшим за контейнер */
+            height: auto;    /* Зберігає пропорції */
+            border-radius: 8px; /* Заокруглені кути для зображення */
+            transition: transform 0.3s ease-in-out; /* Плавний ефект при наведенні */
+        }
+
+        /* Ефект при наведенні на зображення */
+        .control-group-face a:hover img {
+            transform: scale(1.08); /* Збільшення при наведенні */
+        }
     </style>
 </head>
 <body>
@@ -614,11 +639,14 @@
                 <span id="calculation_error" style="color: red; margin-left: 10px;"></span>
             </div>
         </div>
-
     </div>
-
     <div class="controls-wrapper">
         <div class="controls">
+            <div class="control-group-face">
+                <a href="{{ route('getCamera')}}">
+                    <img src="img/face_man.jpg" alt="Чоловіче обличчя" style="width:200px; height:100px;">
+                </a>
+            </div>
             <div class="control-group">
                 <div class="id_history">
                     <input  id="id_history" name="hystory_name"  style="border-radius: 5px;  width:100%;height: 40px;" placeholder="Enter medical history ID";>
@@ -797,7 +825,6 @@
         </div>
 
     </div>
-
 </div>
 <script>
     const canvas = document.getElementById('canvas');
