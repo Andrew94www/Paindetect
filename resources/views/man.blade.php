@@ -1121,17 +1121,17 @@
 
         // Проста логіка на основі щаблів знеболення ВООЗ
         if (isStrongOpioidSelected) {
-            analgeticIndex = '>80%'; // Сходинка 3
+            analgeticIndex = '80'; // Сходинка 3
         } else if (isWeakOpioidSelected) {
             if (isAdjuvantSelected || isNsaidSelected) {
-                analgeticIndex = '50%-70%'; // Сходинка 2 + ад'ювант/НПЗП
+                analgeticIndex = '50-70'; // Сходинка 2 + ад'ювант/НПЗП
             } else {
-                analgeticIndex = '40%-60%'; // Тільки сходинка 2
+                analgeticIndex = '40-60'; // Тільки сходинка 2
             }
         } else if (isAdjuvantSelected && isNsaidSelected) {
-            analgeticIndex = '30%'; // Сходинка 1 (Ад'ювант + НПЗП)
+            analgeticIndex = '30'; // Сходинка 1 (Ад'ювант + НПЗП)
         } else if (isAdjuvantSelected || isNsaidSelected) {
-            analgeticIndex = '<30%'; // Сходинка 1 (Ад'ювант АБО НПЗП)
+            analgeticIndex = '30'; // Сходинка 1 (Ад'ювант АБО НПЗП)
         }
         // інакше залишається '0%'
 
