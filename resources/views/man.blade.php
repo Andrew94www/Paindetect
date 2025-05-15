@@ -1107,7 +1107,7 @@
         const strongOpioidsUnit = document.getElementById('opioid_unit').value; // Отримати одиницю для розрахунку OMEDD
 
         // --- Розрахунок Анальгетичного Індексу ---
-        let analgeticIndex = '0%'; // За замовчуванням 0%, якщо нічого не вибрано
+        let analgeticIndex = '0'; // За замовчуванням 0%, якщо нічого не вибрано
 
         // Перевірити, чи вибрано кожну категорію з дійсними значеннями
         const isAdjuvantSelected = adjuvantDrug !== 'not_selected' && adjuvantDoseValue > 0 && adjuvantMultiplicity > 0;
