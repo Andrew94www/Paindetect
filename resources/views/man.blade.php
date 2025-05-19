@@ -707,23 +707,24 @@
             </div>
 
             <div class="control-group">
-                <label>Current Medications:</label>
+                <label>PNbs type block:</label>
                 <div class="medication-group">
                     <div class="medication-row">
-                        <label for="adjuvants">Adjuvant:</label>
+                        <label for="adjuvants">Local anaesthetic:</label>
                         <select id="adjuvants" name="adjuvants">
                             <option value="not_selected">Not selected</option>
-                            <option value="gabapentin">Gabapentin</option>
-                            <option value="pregabalin">Pregabalin</option>
-                            <option value="duloxetine">Duloxetine</option>
-                            <option value="amitriptyline">Amitriptyline</option>
-                            <option value="dexamethasone">Dexamethasone</option>
+                            <option value="lidocaine">Lidocaine</option>
+                            <option value="bupivacaine">Bupivacaine</option>
+                            <option value="ropivacaine">Ropivacaine</option>
+{{--                            <option value="amitriptyline">Amitriptyline</option>--}}
+{{--                            <option value="dexamethasone">Dexamethasone</option>--}}
                         </select>
                         <input type="text" id="adjuvantsDose" class="adjuvantsInput" placeholder="Dose">
                         <div class="dosa">
                             <select id="adjuvantsDosa" name="adjuvantsDosa">
                                 <option value="g">g</option>
-                                <option value="mg" selected>mg</option>
+                                <option value="ml" selected>ml</option>
+                                <option value="mg">mg</option>
                                 {/* Default to mg */}
                                 <option value="mkg">mkg</option>
                             </select>
