@@ -25,6 +25,10 @@ Route::get('/getList', function () {
 Route::get('/', function () {
     return view('start');
 })->name('start');
+
+Route::get('/lending', function () {
+    return view('lending');
+})->name('lending');
 Route::post('/index/patient', [ChronicPainController::class, 'cretatePatientIndex'])->name('index');
 Route::middleware(['set_locale'])->group(function () {
 
