@@ -707,7 +707,7 @@
             </div>
 
             <div class="control-group">
-                <label>PNbs type block:</label>
+                <input  id="id_history" name="hystory_name"  style="border-radius: 5px;  width:100%;height: 40px;" placeholder="Enter PNbs type block:";>
                 <div class="medication-group">
                     <div class="medication-row">
                         <label for="adjuvants">Local anaesthetic:</label>
