@@ -121,5 +121,8 @@ class ImageUploadController extends Controller
     public function getCamera(){
         return view('camera');
     }
+    public function getInteraction(){
+        return view('interaction');
+    }
 
 }

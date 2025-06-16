@@ -61,6 +61,8 @@ Route::post('/submit-measurement', [ManController::class, 'saveVision'])->name('
 Route::post('/save-level-pain', [ImageUploadController::class, 'createPainLevel'])->name('save-level-pain');
 Route::get('/getData', [ImageUploadController::class, 'getData'])->name('getData');
 Route::get('/getCamera', [ImageUploadController::class, 'getCamera'])->name('getCamera');
+Route::get('/interaction', [ImageUploadController::class, 'getInteraction'])->name('interaction');
+
 
 
 
