@@ -555,6 +555,7 @@
             background-position: right 10px center;
             padding-right: 30px;
         }
+
         .control-group-face {
             text-align: center; /* Центрує вміст по горизонталі */
             background-color: #fefefe; /* Світлий фон */
@@ -571,7 +572,7 @@
         */
         .control-group-face img {
             max-width: 99%; /* Зображення не буде ширшим за контейнер */
-            height: auto;    /* Зберігає пропорції */
+            height: auto; /* Зберігає пропорції */
             border-radius: 8px; /* Заокруглені кути для зображення */
             transition: transform 0.3s ease-in-out; /* Плавний ефект при наведенні */
         }
@@ -626,206 +627,216 @@
                 <input type="text" id="indexPain" readonly placeholder="Calculated PI">
             </div>
             <div style="margin-top: 10px;>
-                <label for="analgeticIndexPain">Analgetic Index:</label>
-                <input type="text" id="analgeticIndexPain" readonly placeholder="Calculated AI">
-            </div>
-            <div style="margin-top: 10px;>
-                <label for="pain_control">Pain Control Degree:</label>
-                <input type="text" id="pain_control" readonly placeholder="Control status">
-            </div>
-            <div style="margin-top: 10px;">
-                <label for="ommed_result">Calculated oMEDD:</label>
-                <input type="text" id="ommed_result" readonly placeholder="Result (mg/day)">
-                <span id="calculation_error" style="color: red; margin-left: 10px;"></span>
+                <label for=" analgeticIndexPain
+            ">Analgetic Index:</label>
+            <input type="text" id="analgeticIndexPain" readonly placeholder="Calculated AI">
+        </div>
+        <div style="margin-top: 10px;>
+                <label for=" pain_control
+        ">Pain Control Degree:</label>
+        <input type="text" id="pain_control" readonly placeholder="Control status">
+    </div>
+    <div style="margin-top: 10px;">
+        <label for="ommed_result">Calculated oMEDD:</label>
+        <input type="text" id="ommed_result" readonly placeholder="Result (mg/day)">
+        <span id="calculation_error" style="color: red; margin-left: 10px;"></span>
+    </div>
+</div>
+</div>
+<div class="controls-wrapper">
+    <div class="controls">
+        <div class="control-group-face">
+            <a href="{{ route('getCamera')}}">
+                <img src="img/face_man.jpg" alt="Чоловіче обличчя" style="width:200px; height:100px;">
+            </a>
+        </div>
+        <div class="control-group">
+            <div class="id_history">
+                <input id="id_history" name="hystory_name" style="border-radius: 5px;  width:100%;height: 40px;"
+                       placeholder="Enter medical history ID" ;>
             </div>
         </div>
-    </div>
-    <div class="controls-wrapper">
-        <div class="controls">
-            <div class="control-group-face">
-                <a href="{{ route('getCamera')}}">
-                    <img src="img/face_man.jpg" alt="Чоловіче обличчя" style="width:200px; height:100px;">
-                </a>
+        <div class="control-group">
+            <div class="range-group">
+                <label for="ageSlider">Age: <span id="ageValue">25</span> years</label>
+                <input type="range" id="ageSlider" min="10" max="100" value="25">
             </div>
-            <div class="control-group">
-                <div class="id_history">
-                    <input  id="id_history" name="hystory_name"  style="border-radius: 5px;  width:100%;height: 40px;" placeholder="Enter medical history ID";>
-                </div>
+            <div class="range-group">
+                <label for="weightSlider">Weight: <span id="weightValue">70</span> kg</label>
+                <input type="range" id="weightSlider" min="30" max="150" value="70">
             </div>
-            <div class="control-group">
-                <div class="range-group">
-                    <label for="ageSlider">Age: <span id="ageValue">25</span> years</label>
-                    <input type="range" id="ageSlider" min="10" max="100" value="25">
-                </div>
-                <div class="range-group">
-                    <label for="weightSlider">Weight: <span id="weightValue">70</span> kg</label>
-                    <input type="range" id="weightSlider" min="30" max="150" value="70">
-                </div>
-                <div class="range-group">
-                    <label for="heightSlider">Height: <span id="heightValue">170</span> cm</label>
-                    <input type="range" id="heightSlider" min="100" max="220" value="170">
-                </div>
+            <div class="range-group">
+                <label for="heightSlider">Height: <span id="heightValue">170</span> cm</label>
+                <input type="range" id="heightSlider" min="100" max="220" value="170">
             </div>
-            <div class="pain-index-inputs">
-                <label>Pain Index Components:</label>
-                <div class="pi-input-group">
-                    <label for="intensityInput">Pain Intensity (0-10):</label>
-                    <input type="number" id="intensityInput" min="0" max="10" value="0">
-                </div>
-                <div class="pi-input-group">
-                    <label for="frequencySelect">Frequency (Usual Pain Hours/day):</label>
-                    <select id="frequencySelect">
-                        <option value="1">1-2 hours</option>
-                        <option value="2">3-6 hours</option>
-                        <option value="3">6-8 hours</option>
-                        <option value="4">9-12 hours</option>
-                        <option value="5">12-18 hours</option>
-                        <option value="6">18-24 hours</option>
-                    </select>
-                </div>
-                <div class="pi-input-group">
-                    <label for="durationSelect">Duration (Worst Pain Hours/day):</label>
-                    <select id="durationSelect">
-                        <option value="1">1-2 hours</option>
-                        <option value="2">3-6 hours</option>
-                        <option value="3">6-8 hours</option>
-                        <option value="4">9-12 hours</option>
-                        <option value="5">12-18 hours</option>
-                        <option value="6">18-24 hours</option>
-                    </select>
-                </div>
-                <div class="pi-input-group">
-                    <label for="functionalImpactSelect">Functional Impact (Last 2 weeks):</label>
-                    <select id="functionalImpactSelect">
-                        <option value="1">Зовсім ні (Not at all)</option>
-                        <option value="2">Трішки (A little bit)</option>
-                        <option value="3">Помірно (Moderately)</option>
-                        <option value="4">Дуже сильно (Very much)</option>
-                        <option value="5">Надзвичайно (Extremely)</option>
-                    </select>
-                </div>
+        </div>
+        <div class="pain-index-inputs">
+            <label>Pain Index Components:</label>
+            <div class="pi-input-group">
+                <label for="intensityInput">Pain Intensity (0-10):</label>
+                <input type="number" id="intensityInput" min="0" max="10" value="0">
             </div>
+            <div class="pi-input-group">
+                <label for="frequencySelect">Frequency (Usual Pain Hours/day):</label>
+                <select id="frequencySelect">
+                    <option value="1">1-2 hours</option>
+                    <option value="2">3-6 hours</option>
+                    <option value="3">6-8 hours</option>
+                    <option value="4">9-12 hours</option>
+                    <option value="5">12-18 hours</option>
+                    <option value="6">18-24 hours</option>
+                </select>
+            </div>
+            <div class="pi-input-group">
+                <label for="durationSelect">Duration (Worst Pain Hours/day):</label>
+                <select id="durationSelect">
+                    <option value="1">1-2 hours</option>
+                    <option value="2">3-6 hours</option>
+                    <option value="3">6-8 hours</option>
+                    <option value="4">9-12 hours</option>
+                    <option value="5">12-18 hours</option>
+                    <option value="6">18-24 hours</option>
+                </select>
+            </div>
+            <div class="pi-input-group">
+                <label for="functionalImpactSelect">Functional Impact (Last 2 weeks):</label>
+                <select id="functionalImpactSelect">
+                    <option value="1">Зовсім ні (Not at all)</option>
+                    <option value="2">Трішки (A little bit)</option>
+                    <option value="3">Помірно (Moderately)</option>
+                    <option value="4">Дуже сильно (Very much)</option>
+                    <option value="5">Надзвичайно (Extremely)</option>
+                </select>
+            </div>
+        </div>
 
-            <div class="control-group">
-                <input  id="id_history" name="hystory_name"  style="border-radius: 5px;  width:100%;height: 40px;" placeholder="Enter PNbs type block:";>
-                <div class="medication-group">
-                    <div class="medication-row">
-                        <label for="adjuvants">Local anaesthetic:</label>
-                        <select id="adjuvants" name="adjuvants">
-                            <option value="not_selected">Not selected</option>
-                            <option value="lidocaine">Lidocaine</option>
-                            <option value="bupivacaine">Bupivacaine</option>
-                            <option value="ropivacaine">Ropivacaine</option>
-{{--                            <option value="amitriptyline">Amitriptyline</option>--}}
-{{--                            <option value="dexamethasone">Dexamethasone</option>--}}
-                        </select>
-                        <input type="text" id="adjuvantsDose" class="adjuvantsInput" placeholder="Dose">
-                        <div class="dosa">
-                            <select id="adjuvantsDosa" name="adjuvantsDosa">
-                                <option value="g">g</option>
-                                <option value="ml" selected>ml</option>
-                                <option value="mg">mg</option>
-                                {/* Default to mg */}
-                                <option value="mkg">mkg</option>
-                            </select>
-                        </div>
-                        <input type="text" id="adjuvantsInput" class="adjuvantsInput" placeholder="Times/day">
-                    </div>
-                    <div class="medication-row">
-                        <label for="nsaid">NSAID:</label>
-                        <select id="nsaid" name="nsaid">
-                            <option value="not_selected">Not selected</option>
-                            <option value="paracetamolum">Paracetamolum</option>
-                            <option value="ibuprofen">Ibuprofen</option>
-                            <option value="aspirin">Aspirin</option>
-                            <option value="analgin">Analgin</option>
-                            <option value="dexamethasone">Dexamethasone</option>
-                            <option value="diclofenac">Diclofenac</option>
-                            <option value="nimesulide">Nimesulide</option>
-                            <option value="ketorolac">Ketorolac</option>
-                        </select>
-                        <input type="text" id="nsaidInput" class="adjuvantsInput" placeholder="Dose" name="nsaidInput">
-                        <div class="dosa">
-                            <select id="nsaidDosa" name="nsaidDosa">
-                                <option value="g">g</option>
-                                <option value="mg" selected>mg</option>
-                                {/* Default to mg */}
-                                <option value="mkg">mkg</option>
-                            </select>
-                        </div>
-                        <input type="text" id="nsaidInputMultiplicity" class="adjuvantsInput" placeholder="Times/day">
-                    </div>
-                    <div class="medication-row">
-                        <label for="weak_opioids">Weak Opioid:</label>
-                        <select id="weak_opioids" name="weak_opioids">
-                            <option value="not_selected">Not selected</option>
-                            <option value="codeine">Codeine</option>
-                            <option value="dihydrocodeine">Dihydrocodeine</option>
-                            <option value="tramadol">Tramadol</option>
-                        </select>
-                        <input type="text" id="weak_opioidsDose" class="adjuvantsInput" placeholder="Dose">
-                        <div class="dosa">
-                            <select id="weak_opioidsDosa" name="weak_opioidsDosa">
-                                <option value="g">g</option>
-                                <option value="mg" selected>mg</option>
-                                {/* Default to mg */}
-                                <option value="mkg">mkg</option>
-                            </select>
-                        </div>
-                        <input type="text" id="weak_opioidsMultiplicity" class="adjuvantsInput" placeholder="Times/day">
-                    </div>
-                    <div class="medication-row">
-                        <label for="strong_opioid">Strong Opioid:</label>
-                        <select id="strong_opioid" name="strong_opioid">
-                            <option value="not_selected" selected>-- Select Medication --</option>
-                            <option value="morphine_oral">Morphine (Oral)</option>
-                            <option value="oxycodone_oral">Oxycodone (Oral)</option>
-                            <option value="fentanyl_td">Fentanyl (TD, Patch)</option>
-                        </select>
-                    </div>
-
-                    <div class="medication-details" id="medication_details" style="display: none; margin-top: 10px;">
-                        <label for="opioid_dose">Dose:</label>
-                        <input type="number" id="opioid_dose" class="adjuvantsInput" placeholder="Dose" min="0"
-                               step="any">
-
-                        <label for="opioid_unit" id="opioid_unit_label">Unit:</label>
-                        <select id="opioid_unit" name="opioid_unit">
+        <div class="control-group">
+            <input id="id_history" name="hystory_name" style="border-radius: 5px;  width:100%;height: 40px;"
+                   placeholder="Enter PNbs type block:" ;>
+            <div class="medication-group">
+                <div class="medication-row">
+                    <label for="adjuvants">Local anaesthetic:</label>
+                    <select id="adjuvants" name="adjuvants">
+                        <option value="not_selected">Not selected</option>
+                        <option value="lidocaine">Lidocaine</option>
+                        <option value="bupivacaine">Bupivacaine</option>
+                        <option value="ropivacaine">Ropivacaine</option>
+                        {{--                            <option value="amitriptyline">Amitriptyline</option>--}}
+                        {{--                            <option value="dexamethasone">Dexamethasone</option>--}}
+                    </select>
+                    <input type="text" id="adjuvantsDose" class="adjuvantsInput" placeholder="Dose">
+                    <div class="dosa">
+                        <select id="adjuvantsDosa" name="adjuvantsDosa">
+                            <option value="g">g</option>
+                            <option value="ml" selected>ml</option>
                             <option value="mg">mg</option>
-                            <option value="mcg">mcg</option>
+                            {/* Default to mg */}
+                            <option value="mkg">mkg</option>
                         </select>
+                    </div>
+                    <input type="text" id="adjuvantsInput" class="adjuvantsInput" placeholder="Times/day">
+                </div>
+                <div class="medication-row">
+                    <label for="nsaid">NSAID:</label>
+                    <select id="nsaid" name="nsaid">
+                        <option value="not_selected">Not selected</option>
+                        <option value="paracetamolum">Paracetamolum</option>
+                        <option value="ibuprofen">Ibuprofen</option>
+                        <option value="aspirin">Aspirin</option>
+                        <option value="analgin">Analgin</option>
+                        <option value="dexamethasone">Dexamethasone</option>
+                        <option value="diclofenac">Diclofenac</option>
+                        <option value="nimesulide">Nimesulide</option>
+                        <option value="ketorolac">Ketorolac</option>
+                    </select>
+                    <input type="text" id="nsaidInput" class="adjuvantsInput" placeholder="Dose" name="nsaidInput">
+                    <div class="dosa">
+                        <select id="nsaidDosa" name="nsaidDosa">
+                            <option value="g">g</option>
+                            <option value="mg" selected>mg</option>
+                            {/* Default to mg */}
+                            <option value="mkg">mkg</option>
+                        </select>
+                    </div>
+                    <input type="text" id="nsaidInputMultiplicity" class="adjuvantsInput" placeholder="Times/day">
+                </div>
+                <div class="medication-row">
+                    <label for="weak_opioids">Weak Opioid:</label>
+                    <select id="weak_opioids" name="weak_opioids">
+                        <option value="not_selected">Not selected</option>
+                        <option value="codeine">Codeine</option>
+                        <option value="dihydrocodeine">Dihydrocodeine</option>
+                        <option value="tramadol">Tramadol</option>
+                    </select>
+                    <input type="text" id="weak_opioidsDose" class="adjuvantsInput" placeholder="Dose">
+                    <div class="dosa">
+                        <select id="weak_opioidsDosa" name="weak_opioidsDosa">
+                            <option value="g">g</option>
+                            <option value="mg" selected>mg</option>
+                            {/* Default to mg */}
+                            <option value="mkg">mkg</option>
+                        </select>
+                    </div>
+                    <input type="text" id="weak_opioidsMultiplicity" class="adjuvantsInput" placeholder="Times/day">
+                </div>
+                <div class="medication-row">
+                    <label for="strong_opioid">Strong Opioid:</label>
+                    <select id="strong_opioid" name="strong_opioid">
+                        <option value="not_selected" selected>-- Select Medication --</option>
+                        <option value="morphine_oral">Morphine (Oral)</option>
+                        <option value="oxycodone_oral">Oxycodone (Oral)</option>
+                        <option value="fentanyl_td">Fentanyl (TD, Patch)</option>
+                    </select>
+                </div>
 
-                        <span id="multiplicity_section">
+                <div class="medication-details" id="medication_details" style="display: none; margin-top: 10px;">
+                    <label for="opioid_dose">Dose:</label>
+                    <input type="number" id="opioid_dose" class="adjuvantsInput" placeholder="Dose" min="0"
+                           step="any">
+
+                    <label for="opioid_unit" id="opioid_unit_label">Unit:</label>
+                    <select id="opioid_unit" name="opioid_unit">
+                        <option value="mg">mg</option>
+                        <option value="mcg">mcg</option>
+                    </select>
+
+                    <span id="multiplicity_section">
         <label for="opioid_multiplicity">Frequency/Day:</label>
         <input type="number" id="opioid_multiplicity" class="adjuvantsInput" placeholder="Times/Day" min="1" step="1"
                value="1">
     </span>
 
-                        <span id="fentanyl_unit_display" style="display: none; margin-left: 5px;">mcg/hour</span>
-                    </div>
-
-
+                    <span id="fentanyl_unit_display" style="display: none; margin-left: 5px;">mcg/hour</span>
                 </div>
-            </div>
 
-        </div>
 
-        <div class="button-group">
-            <div style="margin-top: 15px;">
-                <button type="button" class="calc-button button" onclick="calculateOmed()">Calculate oMEDD</button>
-            </div>
-            <div style="margin-top: 15px;">
-                <button class="calc-button button" id="calcButton">Calculate Metrics</button>
-            </div>
-            <div style="margin-top: 15px;">
-                <button class="send-button button" id="sendData">Send Data</button>
-            </div>
-            <div style="margin-top: 15px;">
-                <button class="clear-button button" id="clearCanvas">Clear All</button>
             </div>
         </div>
 
     </div>
+
+    <div class="button-group">
+        <div style="margin-top: 15px;">
+            <button type="button" class="calc-button button" onclick="calculateOmed()">Calculate oMEDD</button>
+        </div>
+        <div style="margin-top: 15px;">
+            <button class="calc-button button" id="calcButton">Calculate Metrics</button>
+        </div>
+        <div style="margin-top: 15px;">
+            <button class="send-button button" id="sendData">Send Data</button>
+        </div>
+        <div style="margin-top: 15px;">
+            <button class="clear-button button" id="clearCanvas">Clear All</button>
+        </div>
+    </div>
+    <div class="button-group">
+        <div style="margin-top: 15px;">
+            <a href="{{ route('interaction') }}" style="width: 100%;" class="button send-button">Interaction</a>
+        </div>
+
+    </div>
+
+</div>
 </div>
 <script>
     const canvas = document.getElementById('canvas');
@@ -1353,8 +1364,8 @@
                 } else {
                     throw new Error(`Неизвестный путь введения: ${drugInfo.route}`);
                 }
-             let omeddValue = parseFloat(omedd.toFixed(2))
-                let risk =''
+                let omeddValue = parseFloat(omedd.toFixed(2))
+                let risk = ''
                 if (omeddValue >= 0 && omeddValue <= 50) {
                     risk = "Low dose – lower risk";
                 } else if (omeddValue > 50 && omeddValue <= 90) {
@@ -1369,7 +1380,7 @@
 
 
                 // Округляем результат для удобства
-                resultInput.value ='(' + omedd.toFixed(2) + " mg/day"+')'+risk;
+                resultInput.value = '(' + omedd.toFixed(2) + " mg/day" + ')' + risk;
 
             } catch (error) {
                 console.error("Ошибка расчета:", error);
@@ -1403,7 +1414,7 @@
         document.getElementById('analgeticIndexPain').value = '';
         document.getElementById('pain_control').value = '';
 
-        document.getElementById('ommed_result').value=''
+        document.getElementById('ommed_result').value = ''
 
         // Reset face selection visual
         document.querySelectorAll('.face-option').forEach(opt => opt.classList.remove('active'));
