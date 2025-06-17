@@ -831,7 +831,9 @@
     </div>
     <div class="button-group">
         <div style="margin-top: 15px;">
-            <a href="{{ route('interaction') }}" style="width: 100%;" class="button send-button">Interaction</a>
+            <a href="{{ route('interaction') }}" style="width: 100%; border-radius: 10px; display: inline-block; box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);" class="button">
+                <img src="img/interaction.jpg" alt="Чоловіче обличчя" style="width:200px; height:100px;">
+            </a>
         </div>
 
     </div>

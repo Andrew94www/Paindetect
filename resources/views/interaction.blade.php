@@ -110,6 +110,7 @@
             { id: 18, name: 'Фентаніл', tradeNames: ['Дюрогезик'] },
             { id: 19, name: 'Метадон', tradeNames: ['Метафін'] },
             { id: 20, name: 'Кодеїн', tradeNames: ['Кодтерпін (комб.)'] },
+            { id: 36, name: 'Морфін', tradeNames: ['Морфін', 'МСТ Континус'] }, // <-- ДОБАВЛЕНО
             // ГКС
             { id: 21, name: 'Преднізолон', tradeNames: ['Преднізолон'] },
             { id: 22, name: 'Дексаметазон', tradeNames: ['Дексаметазон'] },
@@ -148,6 +149,10 @@
 
         // Максимально расширенная база данных взаимодействий
         const interactionsDB = [
+            // НОВЫЕ ВЗАИМОДЕЙСТВИЯ С МОРФИНОМ
+            { pair: [36, 23], risk: 'Критичний', color: 'red', mechanism: 'Синергічне пригнічення ЦНС та дихального центру (μ-опіоїдні та ГАМК-А рецептори). Може призвести до глибокої седації, пригнічення дихання, коми та смерті.', recommendation: 'FDA Black Box Warning. Уникати комбінації, якщо це можливо. Якщо необхідно, використовувати мінімальні дози під ретельним наглядом.', alternatives: ['Неопіоїдні анальгетики'], dosage: 'Тільки в умовах стаціонару з моніторингом.', source: 'fda.gov' },
+            { pair: [36, 9], risk: 'Високий', color: 'orange', mechanism: 'Підвищений ризик серотонінового синдрому (менший, ніж з трамадолом) та посилення седативного ефекту. Флуоксетин може інгібувати метаболізм морфіну.', recommendation: 'Застосовувати з обережністю. Моніторинг на ознаки серотонінової токсичності (зміни психічного стану, вегетативна нестабільність) та надмірної седації.', alternatives: ['НПЗЗ, Парацетамол'], dosage: 'Розглянути зниження дози морфіну.', source: 'drugs.com' },
+            { pair: [36, 13], risk: 'Критичний', color: 'red', mechanism: 'Значне посилення депресивного впливу на ЦНС та дихальну систему. Може призвести до непередбачуваної та небезпечної седації та пригнічення дихання.', recommendation: 'Пацієнтам слід категорично уникати вживання алкоголю під час лікування морфіном.', alternatives: ['-'], dosage: 'Комбінація протипоказана.', source: 'medscape.com' },
             // НПВС + ...
             { pair: [1, 3], risk: 'Високий', color: 'orange', mechanism: 'НПЗЗ інгібують ЦОГ-1 в тромбоцитах, порушуючи їх агрегацію, що синергічно посилює антикоагулянтний ефект варфарину.', recommendation: 'Уникати комбінації. Використовувати ІПП. Моніторинг МНВ.', alternatives: ['Парацетамол'], dosage: 'Не застосовувати разом.', source: 'drugs.com' },
             { pair: [14, 3], risk: 'Високий', color: 'orange', mechanism: 'Диклофенак, як і інші НПЗЗ, пригнічує агрегацію тромбоцитів, значно підвищуючи ризик кровотеч у пацієнтів, що приймають варфарин.', recommendation: 'Комбінація не рекомендована. Ретельний моніторинг МНВ.', alternatives: ['Парацетамол'], dosage: 'Не застосовувати разом.', source: 'drugs.com' },
@@ -218,6 +223,7 @@
                 }
                 drugInput.value = '';
                 autocompleteList.innerHTML = '';
+                drugInput.focus();
             }
         }
 
@@ -237,8 +243,8 @@
                     if (interaction) {
                         interactionsFound.push({
                             ...interaction,
-                            drug1: selectedDrugs[i],
-                            drug2: selectedDrugs[j]
+                            drug1: selectedDrugs.find(d => d.id === drug1Id),
+                            drug2: selectedDrugs.find(d => d.id === drug2Id)
                         });
                     }
                 }
@@ -247,8 +253,8 @@
             if (interactionsFound.length > 0) {
                 const isRenal = renalCheckbox.checked;
                 interactionsFound.sort((a,b) => {
-                    const aScore = a.risk === 'Критичний' ? 3 : 2;
-                    const bScore = b.risk === 'Критичний' ? 3 : 2;
+                    const aScore = a.risk === 'Критичний' ? 3 : (a.risk === 'Високий' ? 2 : 1);
+                    const bScore = b.risk === 'Критичний' ? 3 : (b.risk === 'Високий' ? 2 : 1);
                     return bScore - aScore;
                 });
 
@@ -263,14 +269,14 @@
                          </div>`;
                     }
                     resultsHTML += `
-                        <div class="mb-4 p-4 rounded-lg border-l-4 ${style.border} ${style.bg} cursor-pointer hover:shadow-md" data-interaction='${JSON.stringify(inter)}'>
-                            <div class="flex justify-between items-start">
+                        <div class="mb-4 p-4 rounded-lg border-l-4 ${style.border} ${style.bg} cursor-pointer hover:shadow-md transition-all" data-interaction='${JSON.stringify(inter)}'>
+                            <div class="flex justify-between items-start gap-4">
                                 <div>
                                     <p class="font-bold text-lg ${style.text}">${inter.drug1.name} + ${inter.drug2.name}</p>
-                                    <p class="text-slate-600 truncate">${inter.mechanism}</p>
+                                    <p class="text-slate-600">${inter.mechanism}</p>
                                     ${specialWarning}
                                 </div>
-                                <span class="text-sm font-semibold ${style.text} whitespace-nowrap px-3 py-1 ${style.bg} rounded-full border ${style.border}">${inter.risk} ризик</span>
+                                <span class="text-sm font-semibold ${style.text} whitespace-nowrap px-3 py-1 ${style.bg} rounded-full border ${style.border} flex-shrink-0">${inter.risk} ризик</span>
                             </div>
                         </div>
                     `;
@@ -284,7 +290,10 @@
                 });
 
             } else if (selectedDrugs.length > 1) {
-                resultsContainer.innerHTML = `<div class="p-4 bg-green-50 text-green-800 rounded-lg border-l-4 border-green-500">Критичних взаємодій між обраними препаратами не знайдено.</div>`
+                resultsContainer.innerHTML = `<div class="p-4 bg-green-50 text-green-800 rounded-lg border-l-4 border-green-500 flex items-center gap-3">
+                <i class="ph-duotone ph-check-circle text-2xl"></i>
+                <p class="font-medium">Критичних взаємодій між обраними препаратами не знайдено.</p>
+                </div>`
             }
         }
 
@@ -292,25 +301,25 @@
             const style = riskStyles[inter.color];
             const sourceUrl = `https://${inter.source}`;
             modalPrintArea.innerHTML = `
-                <div class="no-print flex justify-between items-center">
-                    <button id="print-button" class="px-3 py-1 bg-slate-200 text-slate-700 rounded-md hover:bg-slate-300 flex items-center gap-2"><i class="ph ph-printer"></i>Друк</button>
+                <div class="no-print flex justify-between items-center pb-4 border-b">
+                    <button id="print-button" class="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 flex items-center gap-2 text-sm font-medium"><i class="ph ph-printer"></i>Надрукувати</button>
                     <button id="closeModal" class="text-slate-400 hover:text-slate-700"><i class="ph-bold ph-x text-2xl"></i></button>
                 </div>
-                <div class="mt-4 flex items-start gap-4 pb-4 border-b ${style.border}">
-                     <i class="ph-duotone ${style.icon} ${style.text} text-4xl"></i>
+                <div class="mt-4 flex items-start gap-4 pb-4">
+                     <i class="ph-duotone ${style.icon} ${style.text} text-5xl flex-shrink-0"></i>
                      <div>
-                        <span class="text-sm font-medium ${style.text}">${inter.risk} ризик</span>
-                        <h3 class="text-2xl font-bold text-slate-900">${inter.drug1.name} + ${inter.drug2.name}</h3>
+                        <span class="text-sm font-semibold ${style.text} px-2 py-0.5 rounded-md ${style.bg} border ${style.border}">${inter.risk} ризик</span>
+                        <h3 class="text-2xl font-bold text-slate-900 mt-1">${inter.drug1.name} + ${inter.drug2.name}</h3>
                      </div>
                 </div>
                 <div class="mt-4 space-y-5">
-                    <div><h4 class="font-semibold">Механізм взаємодії:</h4><p class="text-slate-600">${inter.mechanism}</p></div>
-                    <div><h4 class="font-semibold">Клінічні рекомендації:</h4><p class="text-slate-600">${inter.recommendation}</p></div>
-                    <div><h4 class="font-semibold text-blue-800">Корекція дози:</h4><p class="p-2 bg-blue-50 rounded-md text-blue-900">${inter.dosage}</p></div>
-                    <div><h4 class="font-semibold text-green-800">Безпечніші альтернативи:</h4><p class="text-slate-600">${inter.alternatives.join(', ')}</p></div>
+                    <div><h4 class="font-semibold text-slate-800 text-lg mb-1">Механізм взаємодії:</h4><p class="text-slate-600">${inter.mechanism}</p></div>
+                    <div><h4 class="font-semibold text-slate-800 text-lg mb-1">Клінічні рекомендації:</h4><p class="text-slate-600">${inter.recommendation}</p></div>
+                    <div><h4 class="font-semibold text-blue-800 text-lg mb-1">Корекція дози / Застосування:</h4><p class="p-3 bg-blue-50 rounded-lg text-blue-900 font-medium">${inter.dosage}</p></div>
+                    <div><h4 class="font-semibold text-green-800 text-lg mb-1">Безпечніші альтернативи:</h4><p class="text-slate-600">${inter.alternatives.join(', ')}</p></div>
                 </div>
                 <div class="mt-6 pt-4 border-t text-xs text-slate-500 no-print">
-                    Джерело: <a href="${sourceUrl}" target="_blank" class="text-blue-600 hover:underline">${inter.source}</a>
+                    Джерело: <a href="${sourceUrl}" target="_blank" class="text-blue-600 hover:underline">${inter.source}</a>. Цей інструмент не замінює клінічне рішення лікаря.
                 </div>
             `;
             modal.classList.remove('hidden');
@@ -336,7 +345,11 @@
             matches.slice(0, 5).forEach(drug => {
                 const item = document.createElement('div');
                 item.className = 'autocomplete-item';
-                item.textContent = drug.name;
+                // Highlight matches
+                const regex = new RegExp(`(${term})`, 'gi');
+                const drugDisplayName = `${drug.name} <span class="text-slate-400 text-sm">(${drug.tradeNames.join(', ')})</span>`;
+                item.innerHTML = drugDisplayName.replace(regex, `<strong class="font-bold text-blue-600">$1</strong>`);
+
                 item.addEventListener('click', () => {
                     drugInput.value = drug.name;
                     autocompleteList.innerHTML = '';
@@ -359,7 +372,11 @@
             }
         });
         modal.addEventListener('click', (e) => { if (e.target === modal) hideModal(); });
-
+        document.addEventListener('click', (e) => {
+            if (!drugInput.contains(e.target) && !autocompleteList.contains(e.target)) {
+                autocompleteList.innerHTML = '';
+            }
+        });
     });
 </script>
 </body>
