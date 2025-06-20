@@ -62,6 +62,7 @@ Route::post('/save-level-pain', [ImageUploadController::class, 'createPainLevel'
 Route::get('/getData', [ImageUploadController::class, 'getData'])->name('getData');
 Route::get('/getCamera', [ImageUploadController::class, 'getCamera'])->name('getCamera');
 Route::get('/interaction', [ImageUploadController::class, 'getInteraction'])->name('interaction');
+Route::get('/protesys', [ImageUploadController::class, 'getProtesys'])->name('protesys');
 
 
 

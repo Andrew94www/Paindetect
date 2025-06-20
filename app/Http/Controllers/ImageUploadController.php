@@ -124,5 +124,8 @@ class ImageUploadController extends Controller
     public function getInteraction(){
         return view('interaction');
     }
+    public function getProtesys(){
+        return view('protesys');
+    }
 
 }

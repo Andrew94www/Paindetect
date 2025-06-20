@@ -831,8 +831,13 @@
     </div>
     <div class="button-group">
         <div style="margin-top: 15px;">
-            <a href="{{ route('interaction') }}" style="width: 100%; border-radius: 10px; display: inline-block; box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);" class="button">
-                <img src="img/interaction.jpg" alt="Чоловіче обличчя" style="width:200px; height:100px;">
+            <a href="{{ route('interaction') }}" style="width: 90%; border-radius: 10px; display: inline-block; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);" class="button">
+                <img src="img/interaction.jpg" alt="" style="width:200px; height:100px;">
+            </a>
+        </div>
+        <div style="margin-top: 15px;">
+            <a href="{{ route('protesys') }}" style="width: 100%; border-radius: 10px; display: inline-block; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);" class="button">
+                <img src="img/prot.jpg" alt="" style="width:200px; height:100px;">
             </a>
         </div>
 
