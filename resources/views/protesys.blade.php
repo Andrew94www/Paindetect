@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prothesys - Stump Pain Prognosis</title>
+    <title>Prothesys - Stump Pain Prognosis with Pain Drawing</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,6 +29,29 @@
             background: #facc15; /* yellow-400 */
             cursor: pointer;
             border-radius: 50%;
+        }
+        /* Styles for the drawing canvas */
+        #canvas-container {
+            position: relative;
+            width: 100%;
+            max-width: 300px; /* Control max size */
+            margin: 0 auto; /* Center the canvas */
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        #pain-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+            touch-action: none; /* Prevents scrolling on touch devices while drawing */
+        }
+        #bg-image {
+            display: block;
+            width: 100%;
+            height: auto;
         }
     </style>
 </head>
@@ -110,12 +133,16 @@
                         <input type="range" id="local_pain" min="0" max="10" value="4" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer">
                     </div>
 
-                    <div>
-                        <label for="pain_area_percent" class="flex justify-between text-sm font-medium text-gray-300 mb-2">
-                            <span>Pain Area (% of body)</span>
-                            <span id="pain_area_value" class="font-bold text-yellow-400">3</span>
+                    <!-- Pain Drawing Area -->
+                    <div class="space-y-3 text-center">
+                        <label class="block text-sm font-medium text-gray-300 mb-2">
+                            Pain Drawing Area: <span id="pain_area_value" class="font-bold text-yellow-400">0</span> %
                         </label>
-                        <input type="range" id="pain_area_percent" min="0" max="20" value="3" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer">
+                        <div id="canvas-container">
+                            <img id="bg-image" src="img/protesys.jpg" alt="Body silhouette for pain drawing">
+                            <canvas id="pain-canvas"></canvas>
+                        </div>
+                        <button type="button" id="clear-canvas-btn" class="text-sm bg-slate-700 hover:bg-slate-600 text-yellow-300 font-semibold py-2 px-4 rounded-lg transition-colors">Clear Drawing</button>
                     </div>
 
                     <div>
@@ -128,7 +155,7 @@
                 </fieldset>
 
                 <!-- Results Section -->
-                <div id="results-container" class="pt-4">
+                <div id="results-container" class="pt-4 mt-6 border-t-2 border-slate-700">
                     <h2 class="text-xl font-semibold text-yellow-300 mb-4">🔎 Result</h2>
                     <div id="results" class="space-y-4">
                         <!-- Prognosis will be inserted here by JavaScript -->
@@ -151,27 +178,162 @@
         const painIntensitySlider = document.getElementById('local_pain');
         const painIntensityValue = document.getElementById('pain_intensity_value');
 
-        const painAreaSlider = document.getElementById('pain_area_percent');
+        // --- Canvas Drawing Functionality ---
+        const canvas = document.getElementById('pain-canvas');
+        const ctx = canvas.getContext('2d');
+        const bgImage = document.getElementById('bg-image');
+        const clearBtn = document.getElementById('clear-canvas-btn');
         const painAreaValue = document.getElementById('pain_area_value');
+
+        let isDrawing = false;
+        let painAreaPercentForCalculation = 0; // The 0-20 value for the model
+        let silhouettePixelCount = 0; // Total pixels of the silhouette itself
+
+        // Analyze the silhouette image to get the total drawable area
+        function analyzeSilhouette() {
+            // Ensure image is loaded before analysis
+            if (!bgImage.complete || bgImage.naturalWidth === 0) {
+                setTimeout(analyzeSilhouette, 100); // Try again shortly
+                return;
+            }
+
+            // Use a temporary canvas to draw the image and count its pixels
+            const tempCanvas = document.createElement('canvas');
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCanvas.width = bgImage.naturalWidth;
+            tempCanvas.height = bgImage.naturalHeight;
+            tempCtx.drawImage(bgImage, 0, 0);
+
+            const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+            const data = imageData.data;
+            let pixelCount = 0;
+            // The background is black (R,G,B = 0). Count any non-black pixel.
+            for (let i = 0; i < data.length; i += 4) {
+                if (data[i] > 0 || data[i + 1] > 0 || data[i + 2] > 0) {
+                    pixelCount++;
+                }
+            }
+            silhouettePixelCount = pixelCount;
+        }
+
+        // Set canvas size based on the background image's displayed size
+        function setCanvasSize() {
+            canvas.width = bgImage.clientWidth;
+            canvas.height = bgImage.clientHeight;
+            ctx.lineJoin = 'round';
+            ctx.lineCap = 'round';
+            ctx.lineWidth = 15; // Brush size
+            ctx.strokeStyle = 'rgba(255, 0, 0, 0.6)'; // Semi-transparent red
+        }
+
+        // Initial setup once the image is loaded
+        bgImage.onload = () => {
+            setCanvasSize();
+            analyzeSilhouette();
+        };
+        // If image is already cached/loaded, run setup
+        if (bgImage.complete) {
+            setCanvasSize();
+            analyzeSilhouette();
+        }
+        // Recalculate on window resize
+        window.addEventListener('resize', setCanvasSize);
+
+        function getEventPosition(event) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+
+            if (event.touches && event.touches.length > 0) {
+                return {
+                    x: (event.touches[0].clientX - rect.left) * scaleX,
+                    y: (event.touches[0].clientY - rect.top) * scaleY
+                };
+            }
+            return {
+                x: (event.clientX - rect.left) * scaleX,
+                y: (event.clientY - rect.top) * scaleY
+            };
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            const { x, y } = getEventPosition(e);
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            e.preventDefault(); // prevent scrolling on touch
+            const { x, y } = getEventPosition(e);
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        }
+
+        function stopDrawing() {
+            if (!isDrawing) return;
+            isDrawing = false;
+            ctx.closePath();
+            calculatePainArea(); // Calculate area and update prognosis
+        }
+
+        function calculatePainArea() {
+            if (silhouettePixelCount === 0) return; // Avoid division by zero
+
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+            let drawnPixels = 0;
+
+            for (let i = 0; i < data.length; i += 4) {
+                if (data[i + 3] > 0) { // Check alpha channel of the drawing
+                    drawnPixels++;
+                }
+            }
+
+            // Calculate the percentage of the SILHOUETTE that is covered
+            const visualPercentage = Math.min(100, (drawnPixels / silhouettePixelCount) * 100);
+
+            // Update the UI to show the 0-100% visual value
+            painAreaValue.textContent = Math.round(visualPercentage);
+
+            // Map the 0-100% visual value to the 0-20% clinical value for the calculation
+            painAreaPercentForCalculation = visualPercentage * 0.2;
+
+            calculatePrognosis();
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            calculatePainArea(); // Recalculate to set area to 0 and update
+        }
+
+        // Event Listeners for drawing
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        window.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseleave', stopDrawing);
+
+        canvas.addEventListener('touchstart', startDrawing);
+        canvas.addEventListener('touchmove', draw);
+        window.addEventListener('touchend', stopDrawing);
+
+        clearBtn.addEventListener('click', clearCanvas);
 
         // --- Function to Calculate and Display Prognosis ---
         function calculatePrognosis() {
-            // Get values from the form
             const daysSinceAmputation = parseInt(daysSlider.value);
-            // The 'value' attribute of the healing status options needs to be the original Russian
-            // for the logic to work, but the display text is in English.
             const healingStatus = document.getElementById('healing_status').value;
             const phantomPain = document.querySelector('input[name="phantom_pain"]:checked').value;
             const previousTherapy = document.querySelector('input[name="previous_therapy"]:checked').value;
             const localPain = parseInt(painIntensitySlider.value);
-            const painAreaPercent = parseInt(painAreaSlider.value);
             const prosthesisReady = document.querySelector('input[name="prosthesis_ready"]:checked').value;
 
             // --- Risk Score Calculation ---
             let riskScore = 0;
             if (localPain >= 6) riskScore += 2;
-            if (painAreaPercent >= 5) riskScore += 2;
-            if (healingStatus === 'Осложненное') riskScore += 1; // Logic uses original Russian value
+            if (painAreaPercentForCalculation >= 5) riskScore += 2; // Uses correctly scaled value
+            if (healingStatus === 'Осложненное') riskScore += 1;
             if (phantomPain === 'Yes') riskScore += 1;
             if (previousTherapy !== 'Effective') riskScore += 1;
             if (prosthesisReady === 'No' && daysSinceAmputation > 60) riskScore += 2;
@@ -198,7 +360,7 @@
                 prosthesisPrognosisHTML = `<div class="p-4 rounded-lg border border-sky-500 bg-sky-900/50 text-sky-300">
                                                  <p class="font-semibold">✅ Prosthesis use has started</p>
                                                </div>`;
-            } else if (daysSinceAmputation < 60 && healingStatus === "Первичное натяжение") { // Logic uses original Russian value
+            } else if (daysSinceAmputation < 60 && healingStatus === "Первичное натяжение") {
                 prosthesisPrognosisHTML = `<div class="p-4 rounded-lg border border-sky-500 bg-sky-900/50 text-sky-300">
                                                  <p class="font-semibold">🕒 Prosthesis fitting possible in the next 2-4 weeks</p>
                                                </div>`;
@@ -208,25 +370,20 @@
                                                </div>`;
             }
 
-            // --- Display Results ---
             resultsDiv.innerHTML = riskLevelHTML + prosthesisPrognosisHTML;
         }
 
-        // --- Event Listeners ---
-        // Update slider value displays dynamically
+        // --- Other Event Listeners ---
         daysSlider.addEventListener('input', (e) => {
             daysValue.textContent = e.target.value;
+            calculatePrognosis();
         });
         painIntensitySlider.addEventListener('input', (e) => {
             painIntensityValue.textContent = e.target.value;
-        });
-        painAreaSlider.addEventListener('input', (e) => {
-            painAreaValue.textContent = e.target.value;
+            calculatePrognosis();
         });
 
-        // Recalculate prognosis on any form change
         form.addEventListener('change', calculatePrognosis);
-        form.addEventListener('input', calculatePrognosis);
 
         // Initial calculation on page load
         calculatePrognosis();
