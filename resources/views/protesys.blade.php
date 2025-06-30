@@ -161,9 +161,10 @@
 
                     <!-- Pain Drawing Area -->
                     <div class="space-y-3 text-center">
-                        <label class="block text-sm font-medium text-gray-300 mb-2">
-                            Pain Drawing Area: <span id="pain_area_value" class="font-bold text-yellow-400">0</span> %
-                        </label>
+                        <div></div>
+{{--                        <label class="block text-sm font-medium text-gray-300 mb-2">--}}
+{{--                            Pain Drawing Area: <span id="pain_area_value" class="font-bold text-yellow-400">0</span> %--}}
+{{--                        </label>--}}
                         <div id="canvas-container">
                             <!-- Base64 encoded SVG for body silhouette to prevent cross-origin issues -->
                             <img id="bg-image" src="img/protesys.jpg" alt="Body silhouette for pain drawing">
