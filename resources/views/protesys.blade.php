@@ -397,34 +397,51 @@
 
         // Calculate the percentage of the drawn area relative to the silhouette
         function calculatePainArea() {
-            if (silhouettePixelCount === 0) {
-                painAreaValue.textContent = 0;
-                painAreaPercentForCalculation = 0;
-                calculatePrognosis();
-                return; // Avoid division by zero
-            }
-
+            // Получаем данные пикселей с холста рисования
             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             const data = imageData.data;
             let drawnPixels = 0;
 
+            // Итерируем по всем пикселям холста
             for (let i = 0; i < data.length; i += 4) {
-                if (data[i + 3] > 0) { // Check alpha channel of the drawing layer
+                // Проверяем альфа-канал: если пиксель не полностью прозрачен (значит, он закрашен)
+                if (data[i + 3] > 0) {
                     drawnPixels++;
                 }
             }
 
-            // Calculate the visual percentage of the silhouette that is covered
-            const visualPercentage = Math.min(100, (drawnPixels / silhouettePixelCount) * 100);
+            // Общее количество пикселей на холсте
+            const totalCanvasPixels = canvas.width * canvas.height;
 
-            // Update the UI to show the 0-100% visual value
-            painAreaValue.textContent = Math.round(visualPercentage);
+            // Рассчитываем фактический процент закрашенных пикселей относительно всего холста
+            let rawVisualPercentage = 0;
+            if (totalCanvasPixels > 0) { // Избегаем деления на ноль, если холст пуст
+                rawVisualPercentage = (drawnPixels / totalCanvasPixels) * 100;
+            }
 
-            // Map the 0-100% visual value to the 0-20 clinical value for the model's calculation
-            // This assumes a linear scaling for the model's input
-            painAreaPercentForCalculation = visualPercentage * 0.2;
+            // --- Изменения для масштабирования отображаемого значения ---
+            // Порог, при котором отображается 100%
+            const thresholdPercentage = 10; // Изменено с 40 на 10
 
-            calculatePrognosis(); // Recalculate prognosis after area changes
+            let displayPercentage;
+            if (rawVisualPercentage >= thresholdPercentage) {
+                // Если фактическое закрашивание достигло или превысило 10%, отображаем 100%
+                displayPercentage = 100;
+            } else {
+                // Линейно масштабируем фактический процент к диапазону 0-100%,
+                // чтобы 10% закрашивания соответствовали 100% на дисплее.
+                displayPercentage = (rawVisualPercentage / thresholdPercentage) * 100;
+            }
+            // --- Конец изменений ---
+
+            // Обновляем UI, показывая масштабированный процент
+            painAreaValue.textContent = Math.round(displayPercentage);
+
+            // Для расчета модели: масштабируем полученное displayPercentage (0-100) к 0-20
+            painAreaPercentForCalculation = displayPercentage * 0.2;
+
+            // Пересчитываем прогноз
+            calculatePrognosis();
         }
 
         // Clear the canvas drawing
