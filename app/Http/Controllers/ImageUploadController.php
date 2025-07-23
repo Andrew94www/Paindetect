@@ -127,5 +127,7 @@ class ImageUploadController extends Controller
     public function getProtesys(){
         return view('protesys');
     }
-
+    public function getTCare(){
+        return view('tcare');
+    }
 }
