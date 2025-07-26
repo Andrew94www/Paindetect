@@ -836,6 +836,11 @@
             </a>
         </div>
         <div style="margin-top: 15px;">
+            <a href="{{ route('tcare') }}" style="width: 100%;  border-radius: 10px; display: inline-block; box-shadow: 4px 2px 10px rgba(0, 0, 0, 0.3);" class="button">
+                <img src="img/tcare.png" alt="" style="width:200px; height:140px;">
+            </a>
+        </div>
+        <div style="margin-top: 15px;">
             <a href="{{ route('protesys') }}" style="width: 100%; border-radius: 10px; display: inline-block; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);" class="button">
                 <img src="img/prot.jpg" alt="" style="width:200px; height:100px;">
             </a>
