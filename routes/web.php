@@ -3,7 +3,6 @@
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\ManController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChronicPainController;
 
