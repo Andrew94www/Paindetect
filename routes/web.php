@@ -3,6 +3,7 @@
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\ManController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChronicPainController;
 
@@ -86,6 +87,8 @@ Route::post('/logout', [RegisterController::class, 'logout'])->name('logout');
 Route::get('/home', function () {
     return 'Welcome to the home page! You are logged in as: ' . Auth::user()->name;
 })->middleware('auth');
+
+Route::resource('users', UserController::class)->middleware('auth');;
 
 
 
