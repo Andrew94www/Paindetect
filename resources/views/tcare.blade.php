@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>T-CaRe - Chronic Pain Risk Assessment</title>
+    <title>E-Calculator - Chronic Pain Risk Assessment</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,8 +52,8 @@
                 <path class="text-yellow-400" d="M45.5,16.1c-5.5,0-10,4.5-10,10s4.5,10,10,10s10-4.5,10-10S51,16.1,45.5,16.1z M49.7,30.3c-0.8,0.8-2.1,0.8-2.8,0c-0.8-0.8-0.8-2.1,0-2.8c0.8-0.8,2.1-0.8,2.8,0C50.5,28.2,50.5,29.5,49.7,30.3z M41.3,30.3c-0.8,0.8-2.1,0.8-2.8,0c-0.8-0.8-0.8-2.1,0-2.8c0.8-0.8,2.1-0.8,2.8,0C42.1,28.2,42.1,29.5,41.3,30.3z M49.5,37.5c-1.5,1.5-3.5,2.3-5.5,2.3s-4-0.8-5.5-2.3c-0.4-0.4-0.4-1,0-1.4c0.4-0.4,1-0.4,1.4,0c1.2,1.2,2.8,1.8,4.1,1.8s2.9-0.6,4.1-1.8c0.4-0.4,1-0.4,1.4,0C49.9,36.5,49.9,37.1,49.5,37.5z"/>
             </svg>
             <div>
-                <h1 class="text-4xl font-bold text-blue-700">T-CaRe</h1>
-                <p class="text-lg text-gray-600">Thoracic – Chronification Pain Assessment and Recovery Engine</p>
+                <h1 class="text-4xl font-bold text-blue-700">E-Calculator</h1>
+                <p class="text-lg text-gray-600">Thoracic – Chronification Pain Assessment and Recovery E-Calculator</p>
             </div>
         </div>
     </header>
