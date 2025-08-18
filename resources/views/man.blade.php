@@ -846,6 +846,12 @@
             </a>
         </div>
 
+        <div style="margin-top: 15px;">
+            <a href="{{ route('wound') }}" style="width: 100%; border-radius: 10px; display: inline-block; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);" class="button">
+                <img src="img/wound.png" alt="" style="width:200px; height:120px;">
+            </a>
+        </div>
+
     </div>
 
 </div>
