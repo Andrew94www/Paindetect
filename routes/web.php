@@ -71,6 +71,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/interaction', [ImageUploadController::class, 'getInteraction'])->name('interaction');
     Route::get('/protesys', [ImageUploadController::class, 'getProtesys'])->name('protesys');
     Route::get('/tcare', [ImageUploadController::class, 'getTCare'])->name('tcare');
+    Route::get('/wound', function () {
+        return view('wound');
+    })->name('wound');
 });
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
@@ -87,9 +90,6 @@ Route::post('/logout', [RegisterController::class, 'logout'])->name('logout');
 Route::get('/home', function () {
     return 'Welcome to the home page! You are logged in as: ' . Auth::user()->name;
 })->middleware('auth');
-Route::get('/wound', function () {
-    return view('wound');
-})->name('wound');
 
 Route::resource('users', UserController::class)->middleware('auth');;
 
