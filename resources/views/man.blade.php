@@ -647,7 +647,13 @@
     <div class="controls">
         <div class="control-group-face">
             <a href="{{ route('getCamera')}}">
-                <img src="img/face_man.jpg" alt="Чоловіче обличчя" style="width:200px; height:100px;">
+                <img src="img/man03.jpg" alt="Чоловіче обличчя" style=" width:100px; height:100px;">
+            </a>
+            <a href="{{ route('vision')}}">
+                <img src="img/vis03.jpg" alt="Чоловіче обличчя" style="width:100px; height:100px; background-color: #fefefe">
+            </a>
+            <a href="{{ route('detect')}}">
+                <img src="img/ekg03.jpg" alt="Чоловіче обличчя" style="width:100px; height:100px;">
             </a>
         </div>
         <div class="control-group">
