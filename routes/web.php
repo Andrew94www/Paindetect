@@ -74,6 +74,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/wound', function () {
         return view('wound');
     })->name('wound');
+    Route::get('/repain', function () {
+        return view('repain');
+    })->name('repain');
 });
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
