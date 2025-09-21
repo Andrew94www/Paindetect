@@ -118,6 +118,19 @@
                 </div>
             </div>
 
+            <!-- Image Upload Section -->
+            <div class="mt-6 p-4 border border-slate-200 rounded-lg">
+                <h3 class="font-semibold text-lg border-b pb-2 text-slate-700">Додаткові дані</h3>
+                <div class="mt-4">
+                    <label for="image-input" class="block text-sm font-medium text-slate-600 mb-1">Зображення (напр., УЗД-зображення)</label>
+                    <input type="file" id="image-input" accept="image/*" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    <div class="mt-4 flex justify-center items-center h-48 border-2 border-dashed border-slate-300 rounded-lg overflow-hidden">
+                        <img id="image-preview" src="#" alt="Image preview" class="hidden max-h-full max-w-full object-contain">
+                        <p id="image-placeholder" class="text-slate-400 text-center">Виберіть зображення для завантаження</p>
+                    </div>
+                </div>
+            </div>
+
             <!-- Action Button -->
             <div class="mt-8 text-center">
                 <button type="submit" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-transform transform hover:scale-105">
@@ -144,6 +157,7 @@
                     <ul id="recommendations-list" class="list-disc list-inside space-y-2 text-slate-600">
                         <li>Завантаження рекомендацій...</li>
                     </ul>
+                    <p id="image-analysis" class="text-sm italic mt-4 text-slate-500 hidden"></p>
                 </div>
             </div>
             <p class="text-xs text-slate-400 text-center mt-8">*Цей інструмент є системою підтримки прийняття рішень. Остаточне клінічне рішення залишається за лікарем.</p>
@@ -160,6 +174,28 @@
     const riskPercentageEl = document.getElementById('risk-percentage');
     const riskBandEl = document.getElementById('risk-band');
     const recommendationsListEl = document.getElementById('recommendations-list');
+    const imageInput = document.getElementById('image-input');
+    const imagePreview = document.getElementById('image-preview');
+    const imagePlaceholder = document.getElementById('image-placeholder');
+    const imageAnalysisEl = document.getElementById('image-analysis');
+
+    // Display a preview of the selected image
+    imageInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imagePreview.src = e.target.result;
+                imagePreview.classList.remove('hidden');
+                imagePlaceholder.classList.add('hidden');
+            };
+            reader.readAsDataURL(file);
+        } else {
+            imagePreview.src = '#';
+            imagePreview.classList.add('hidden');
+            imagePlaceholder.classList.remove('hidden');
+        }
+    });
 
     form.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -180,21 +216,42 @@
             adjuvant_dexa: document.getElementById('adjuvant_dexa').value
         };
 
-        // Simulate API call delay
+        const imageFile = imageInput.files[0];
+
+        if (imageFile) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const imageData = reader.result;
+                simulatePrediction(patientData, imageData);
+            };
+            reader.readAsDataURL(imageFile);
+        } else {
+            simulatePrediction(patientData, null);
+        }
+    });
+
+    /**
+     * Simulates the AI model prediction, including an image if available.
+     * This function serves as a placeholder for a real API call.
+     * @param {object} patientData - The patient and procedure data.
+     * @param {string|null} imageData - The Base64 representation of the image, or null.
+     */
+    function simulatePrediction(patientData, imageData) {
         setTimeout(() => {
-            const risk = calculateRisk(patientData);
-            displayResults(risk);
+            const risk = calculateRisk(patientData, imageData);
+            displayResults(risk, imageData);
             loader.classList.add('hidden');
             resultsContent.classList.remove('hidden');
         }, 1000);
-    });
+    }
 
     /**
      * Simulates the AI model prediction with a rule-based heuristic.
      * @param {object} data - The patient and procedure data.
+     * @param {string|null} imageData - The Base64 image data.
      * @returns {object} - An object containing the probability and risk band.
      */
-    function calculateRisk(data) {
+    function calculateRisk(data, imageData) {
         let riskScore = 0.05; // Base risk
 
         // Patient factors
@@ -214,6 +271,11 @@
         if(data.la_dose_mg > 200) riskScore += 0.05;
 
         if (data.adjuvant_dexa === 'yes') riskScore -= 0.10;
+
+        // Simulate a small risk increase if an image is provided
+        if (imageData) {
+            riskScore += 0.05;
+        }
 
         // Clamp the score between 0.01 and 0.99
         riskScore = Math.max(0.01, Math.min(0.99, riskScore));
@@ -257,8 +319,9 @@
     /**
      * Updates the UI with the calculated results.
      * @param {object} risk - The risk object from calculateRisk.
+     * @param {string|null} imageData - The Base64 image data.
      */
-    function displayResults(risk) {
+    function displayResults(risk, imageData) {
         const percentage = (risk.probability * 100).toFixed(0);
         riskPercentageEl.textContent = `${percentage}%`;
 
@@ -282,6 +345,14 @@
         resultsContent.classList.add(currentClass.border);
         const recommendations = getRecommendations(risk.band);
         recommendationsListEl.innerHTML = recommendations.map(rec => `<li>${rec}</li>`).join('');
+
+        // Display AI analysis of the image
+        if (imageData) {
+            imageAnalysisEl.textContent = "Аналіз зображення: наявність зображення свідчить про необхідність додаткового розгляду візуальних даних, що може впливати на ризик.";
+            imageAnalysisEl.classList.remove('hidden');
+        } else {
+            imageAnalysisEl.classList.add('hidden');
+        }
     }
 </script>
 </body>
