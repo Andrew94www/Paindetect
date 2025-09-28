@@ -130,6 +130,19 @@
                     <div class="flex items-center space-x-2"><input id="pneumothorax" type="checkbox" class="h-5 w-5 text-blue-600 focus:ring-blue-500"><label for="pneumothorax" class="text-sm md:text-base">Pneumothorax</label></div>
                     <div class="flex items-center space-x-2"><input id="nerve_contact" type="checkbox" class="h-5 w-5 text-blue-600 focus:ring-blue-500"><label for="nerve_contact" class="text-sm md:text-base">Nerve Contact</label></div>
                 </div>
+
+                <!-- NEW: CT Scan Upload Section -->
+                <div class="mt-6 pt-4 border-t border-gray-200">
+                    <label class="block text-lg font-semibold text-gray-700 mb-2">Upload CT Scan (Optional)</label>
+                    <div class="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-4">
+                        <button id="upload-ct-btn" type="button" class="w-full sm:w-auto flex-shrink-0 bg-blue-100 text-blue-800 font-medium py-2 px-4 rounded-lg hover:bg-blue-200 transition duration-300 shadow-sm flex items-center justify-center border border-blue-300">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                            Upload CT Scan File
+                        </button>
+                        <input type="file" id="ct-file-input" class="hidden" accept=".dcm, .jpg, .png, .nii, .stl">
+                        <span id="file-name-display" class="text-sm text-gray-500 truncate mt-1 sm:mt-0">No file selected. (.dcm, .nii, .stl, .jpg, .png)</span>
+                    </div>
+                </div>
             </div>
 
             <!-- Calculation Button and Results -->
@@ -286,6 +299,11 @@
         const heightInput = document.getElementById('height');
         const bmiDisplay = document.getElementById('bmi-display');
 
+        // File Upload Elements
+        const ctFileInput = document.getElementById('ct-file-input');
+        const uploadCtBtn = document.getElementById('upload-ct-btn');
+        const fileNameDisplay = document.getElementById('file-name-display');
+
         // Pain Map Elements
         const viewAnteriorBtn = document.getElementById('view-anterior-btn');
         const viewPosteriorBtn = document.getElementById('view-posterior-btn');
@@ -299,7 +317,11 @@
         let selectedPainZones = new Set();
         let calculatedBmi = 0;
 
-        // --- Calculation Logic ---
+        // --- Calculation Logic (Hypothetical) ---
+
+        /**
+         * Calculates the Body Mass Index (BMI).
+         */
         function calculateBmi() {
             const weight = parseFloat(weightInput.value);
             const height = parseFloat(heightInput.value);
@@ -313,7 +335,11 @@
             }
         }
 
-        // Module 1: Patient Profile & Clinical Risk Profiler (Example logic)
+        /**
+         * Calculates the STUMBL Score based on clinical inputs.
+         * @param {object} inputs - The input data object.
+         * @returns {number} The calculated STUMBL score.
+         */
         function calculateStumblScore(inputs) {
             let score = 0;
             // Scoring based on general clinical risk indicators (hypothetical model)
@@ -325,6 +351,11 @@
             return score;
         }
 
+        /**
+         * Identifies clinical and psychosocial risk flags.
+         * @param {object} inputs - The input data object.
+         * @returns {string[]} An array of identified risk flags.
+         */
         function getClinicalRiskFlags(inputs) {
             const flags = [];
             // Psychosocial and early management risk factors
@@ -335,7 +366,11 @@
             return flags;
         }
 
-        // Module 2: Thoracic CT Imaging Interpreter (Example logic)
+        /**
+         * Calculates the Imaging Risk Score based on CT findings.
+         * @param {object} inputs - The input data object.
+         * @returns {string} The calculated imaging score formatted as a string.
+         */
         function calculateImagingRiskScore(inputs) {
             let score = 0;
             // Scoring based on severity of injury
@@ -350,7 +385,13 @@
             return Math.min(score, 10).toFixed(1); // Cap at 10 and format
         }
 
-        // Module 3: Chronification Risk Estimator (Example logic)
+        /**
+         * Predicts the final chronification risk level.
+         * @param {number} stumblScore - The calculated STUMBL score.
+         * @param {number} imagingScore - The calculated imaging score.
+         * @param {object} inputs - The input data object.
+         * @returns {{level: string, color: string}} The risk level and corresponding Tailwind color class.
+         */
         function predictChronificationRisk(stumblScore, imagingScore, inputs) {
             let totalScore = 0;
             // Weighting clinical and imaging factors
@@ -367,9 +408,33 @@
         }
 
         // --- Event Handlers ---
+
+        // BMI Calculation Handlers
         weightInput.addEventListener('input', calculateBmi);
         heightInput.addEventListener('input', calculateBmi);
 
+        // CT File Upload Handlers
+        uploadCtBtn.addEventListener('click', () => {
+            ctFileInput.click(); // Trigger the hidden file input
+        });
+
+        ctFileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                // Display the selected file name and highlight it
+                fileNameDisplay.textContent = file.name;
+                fileNameDisplay.classList.remove('text-gray-500');
+                fileNameDisplay.classList.add('text-blue-600', 'font-medium');
+            } else {
+                // Reset display if no file is selected (e.g., user cancels the dialog)
+                fileNameDisplay.textContent = 'No file selected.';
+                fileNameDisplay.classList.add('text-gray-500');
+                fileNameDisplay.classList.remove('text-blue-600', 'font-medium');
+            }
+        });
+
+
+        // Main Calculation Handler
         calculateBtn.addEventListener('click', () => {
             // 1. Get all input values
             const inputs = {
@@ -395,11 +460,12 @@
             // 2. Perform calculations
             const stumbl = calculateStumblScore(inputs);
             const flags = getClinicalRiskFlags(inputs);
-            const imagingScore = calculateImagingRiskScore(inputs);
-            const finalRisk = predictChronificationRisk(stumbl, parseFloat(imagingScore), inputs);
+            const imagingScore = parseFloat(calculateImagingRiskScore(inputs)); // Convert back to number for prediction
+            const finalRisk = predictChronificationRisk(stumbl, imagingScore, inputs);
 
             // 3. Display results
             stumblScoreEl.textContent = stumbl;
+            imagingScoreEl.textContent = imagingScore.toFixed(1); // Display formatted
 
             riskFlagsEl.innerHTML = ''; // Clear previous flags
             if (flags.length > 0) {
@@ -414,8 +480,6 @@
                 li.className = 'text-gray-500';
                 riskFlagsEl.appendChild(li);
             }
-
-            imagingScoreEl.textContent = imagingScore;
 
             finalRiskEl.textContent = finalRisk.level;
             finalRiskContainer.className = `p-6 rounded-lg text-center text-white shadow-xl ${finalRisk.color}`;
@@ -448,8 +512,6 @@
                 // Get all elements sharing this zoneId (for bilateral/multi-part zones)
                 const segments = document.querySelectorAll(`[data-zone-id="${zoneId}"]`);
 
-                let isSelected = false;
-
                 // Check if the current element is selected
                 if (zone.classList.contains('selected')) {
                     // If selected, deselect all segments with this ID
@@ -459,7 +521,6 @@
                     // If not selected, select all segments with this ID
                     segments.forEach(seg => seg.classList.add('selected'));
                     selectedPainZones.add(zoneId);
-                    isSelected = true;
                 }
 
                 updateSelectedZonesList();
