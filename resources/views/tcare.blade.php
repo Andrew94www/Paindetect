@@ -351,11 +351,7 @@
             return score;
         }
 
-        /**
-         * Identifies clinical and psychosocial risk flags.
-         * @param {object} inputs - The input data object.
-         * @returns {string[]} An array of identified risk flags.
-         */
+
         function getClinicalRiskFlags(inputs) {
             const flags = [];
             // Psychosocial and early management risk factors
@@ -366,11 +362,7 @@
             return flags;
         }
 
-        /**
-         * Calculates the Imaging Risk Score based on CT findings.
-         * @param {object} inputs - The input data object.
-         * @returns {string} The calculated imaging score formatted as a string.
-         */
+
         function calculateImagingRiskScore(inputs) {
             let score = 0;
             // Scoring based on severity of injury
@@ -385,13 +377,7 @@
             return Math.min(score, 10).toFixed(1); // Cap at 10 and format
         }
 
-        /**
-         * Predicts the final chronification risk level.
-         * @param {number} stumblScore - The calculated STUMBL score.
-         * @param {number} imagingScore - The calculated imaging score.
-         * @param {object} inputs - The input data object.
-         * @returns {{level: string, color: string}} The risk level and corresponding Tailwind color class.
-         */
+
         function predictChronificationRisk(stumblScore, imagingScore, inputs) {
             let totalScore = 0;
             // Weighting clinical and imaging factors
