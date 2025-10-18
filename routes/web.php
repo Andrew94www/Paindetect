@@ -80,6 +80,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/infusion', function () {
         return view('infusion');
     })->name('infusion');
+    Route::get('/rehab', function () {
+        return view('rehab');
+    })->name('rehab');
 });
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
