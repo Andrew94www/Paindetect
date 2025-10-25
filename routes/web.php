@@ -83,6 +83,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/rehab', function () {
         return view('rehab');
     })->name('rehab');
+    Route::get('/resp', function () {
+        return view('resp');
+    })->name('resp');
+
 });
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
