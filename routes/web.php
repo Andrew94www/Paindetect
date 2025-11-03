@@ -86,6 +86,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/resp', function () {
         return view('resp');
     })->name('resp');
+    Route::get('/msk', function () {
+        return view('msk');
+    })->name('msk');
 
 });
 
