@@ -623,14 +623,14 @@
             </div>
 
             <div class="link-group" style="margin-top: 15px;">
-                <!-- These are now styled as disabled links, as requested --><a href="#" class="btn btn-link">Camera</a>
-                <a href="#" class="btn btn-link">Vision</a>
+                <!-- These are now styled as disabled links, as requested --><a href="{{ route('getCamera') }}" class="btn btn-link">Camera</a>
+                <a href="{{ route('vision') }}" class="btn btn-link">Vision</a>
                 <a href="#" class="btn btn-link">EKG</a>
-                <a href="#" class="btn btn-link">Interaction</a>
-                <a href="#" class="btn btn-link">TCare</a>
-                <a href="#" class="btn btn-link">Repain</a>
-                <a href="#" class="btn btn-link">Protesys</a>
-                <a href="#" class="btn btn-link">Wound</a>
+                <a href="{{ route('interaction') }}" class="btn btn-link">Interaction</a>
+                <a href="{{ route('tcare') }}" class="btn btn-link">TCare</a>
+                <a href="{{ route('repain') }}" class="btn btn-link">Repain</a>
+                <a href="{{ route('protesys') }}" class="btn btn-link">Protesys</a>
+                <a href="{{ route('wound') }}" class="btn btn-link">Wound</a>
             </div>
         </div>
     </div>
