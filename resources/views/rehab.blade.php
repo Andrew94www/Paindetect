@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>R-RI: Rehab Recovery Index (CDSS)</title>
-    <!-- Tailwind CSS and Inter Font -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS and Inter Font --><script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <!-- Icon Library (Lucide) -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Icon Library (Lucide) --><script src="https://unpkg.com/lucide@latest"></script>
     <style>
         /* General Dark Mode and Typography */
         body {
@@ -29,28 +27,36 @@
         .nociceptive-bar { background-color: #58a6ff; }
         .neuropathic-bar { background-color: #E9C46A; }
         .nociplastic-bar { background-color: #E76F51; }
-        /* Heatmap Grid */
+
+        /* --- NEW STYLES FOR SVG BODY MAP --- */
         #pain-heatmap-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(5, 1fr);
-            gap: 4px;
             width: 100%;
-            aspect-ratio: 3 / 5;
-            max-width: 400px;
+            max-width: 300px; /* Constrain width */
             margin: 0 auto;
+            padding: 10px;
+            box-sizing: border-box;
         }
-        .region-box {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-size: 0.75rem;
-            font-weight: 600;
-            border-radius: 8px;
-            transition: background-color 0.3s;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+
+        .human-body-svg {
+            width: 100%;
+            height: auto;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
+
+        .body-part {
+            fill: #1e2329; /* Default "no pain" color */
+            stroke: #58a6ff; /* Outline color */
+            stroke-width: 2;
+            transition: fill 0.3s ease;
+            cursor: pointer;
+        }
+
+        .body-part:hover {
+            fill: #30363d; /* Subtle hover effect */
+        }
+        /* --- END OF NEW STYLES --- */
+
         /* Tab Styles */
         .tab-button.active {
             border-bottom: 3px solid #58a6ff;
@@ -84,8 +90,7 @@
 </header>
 
 <div class="card p-6 rounded-xl shadow-2xl">
-    <!-- Tab Navigation -->
-    <div class="border-b border-[#30363d] mb-6">
+    <!-- Tab Navigation --><div class="border-b border-[#30363d] mb-6">
         <nav class="flex space-x-4 overflow-x-auto">
             <button class="tab-button py-2 px-4 text-lg font-medium active" data-tab="input">1. Data Entry</button>
             <button class="tab-button py-2 px-4 text-lg font-medium" data-tab="analysis">2. R-RI Analysis</button>
@@ -93,15 +98,12 @@
         </nav>
     </div>
 
-    <!-- Tab Content Container -->
-    <div id="app-tabs">
+    <!-- Tab Content Container --><div id="app-tabs">
 
-        <!-- Tab 1: Data Entry -->
-        <div class="tab-content" id="tab-input">
+        <!-- Tab 1: Data Entry --><div class="tab-content" id="tab-input">
             <div class="grid lg:grid-cols-3 gap-8">
 
-                <!-- Clinical Context -->
-                <div class="lg:col-span-3 pb-4 border-b border-[#30363d]">
+                <!-- Clinical Context --><div class="lg:col-span-3 pb-4 border-b border-[#30363d]">
                     <h2 class="text-xl font-semibold mb-3 text-[#E9C46A] flex items-center">
                         <i data-lucide="clipboard-list" class="w-5 h-5 mr-2"></i> Clinical Context
                     </h2>
@@ -124,27 +126,45 @@
                     </div>
                 </div>
 
-                <!-- Pain Map -->
-                <div>
+                <!-- Pain Map --><div>
                     <h2 class="text-xl font-semibold mb-3 text-white flex items-center">
                         <i data-lucide="map" class="w-5 h-5 mr-2 text-white"></i> 1. Pain Map (NRS 0–10)
                     </h2>
                     <div id="pain-sliders" class="space-y-3 mb-6">
-                        <!-- Sliders dynamically generated -->
-                    </div>
+                        <!-- Sliders dynamically generated --></div>
                     <div class="bg-[#1e2329] p-4 rounded-lg flex flex-col items-center border border-[#30363d]">
                         <h3 class="text-lg font-medium mb-3 text-[#58a6ff]">Body Heatmap</h3>
+
+                        <!-- NEW SVG BODY MAP -->
                         <div id="pain-heatmap-container" class="w-full">
-                            <!-- Heatmap boxes dynamically generated -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 450" class="human-body-svg">
+                                <!-- Head & Neck -->
+                                <circle id="head" class="body-part" cx="100" cy="40" r="30"/>
+                                <rect id="neck" class="body-part" x="90" y="70" width="20" height="20" rx="5"/>
+                                <!-- Torso -->
+                                <path id="chest" class="body-part" d="M80 90 L120 90 L130 150 L70 150 Z"/>
+                                <rect id="abdomen" class="body-part" x="75" y="150" width="50" height="60" rx="5"/>
+                                <rect id="pelvis" class="body-part" x="80" y="210" width="40" height="30" rx="5"/>
+                                <!-- Arms -->
+                                <rect id="l_shoulder" class="body-part" x="55" y="90" width="25" height="25" rx="10"/>
+                                <rect id="r_shoulder" class="body-part" x="120" y="90" width="25" height="25" rx="10"/>
+                                <path id="l_arm" class="body-part" d="M55 105 L45 190 L30 185 L40 100 Z"/>
+                                <path id="r_arm" class="body-part" d="M145 105 L155 190 L170 185 L160 100 Z"/>
+                                <!-- Legs -->
+                                <rect id="l_thigh" class="body-part" x="70" y="240" width="25" height="80" rx="10"/>
+                                <rect id="r_thigh" class="body-part" x="105" y="240" width="25" height="80" rx="10"/>
+                                <rect id="l_leg" class="body-part" x="70" y="325" width="25" height="100" rx="10"/>
+                                <rect id="r_leg" class="body-part" x="105" y="325" width="25" height="100" rx="10"/>
+                            </svg>
                         </div>
+                        <!-- END OF SVG BODY MAP -->
+
                     </div>
                 </div>
 
-                <!-- PROMs, Function, and Wearables -->
-                <div class="lg:col-span-2 space-y-6">
+                <!-- PROMs, Function, and Wearables --><div class="lg:col-span-2 space-y-6">
 
-                    <!-- PROMS -->
-                    <div class="border border-[#30363d] p-4 rounded-lg">
+                    <!-- PROMS --><div class="border border-[#30363d] p-4 rounded-lg">
                         <h3 class="text-xl font-medium mb-3 text-[#E9C46A] flex items-center">
                             <i data-lucide="bar-chart-2" class="w-5 h-5 mr-2"></i> Subjective Assessments (PROMs)
                         </h3>
@@ -167,10 +187,10 @@
                         </div>
                     </div>
 
-                    <!-- FUNCTION -->
-                    <div class="border border-[#30363d] p-4 rounded-lg">
+                    <!-- FUNCTION --><div class="border border-[#30363d] p-4 rounded-lg">
                         <h3 class="text-xl font-medium mb-3 text-[#2A9D8F] flex items-center">
-                            <i data-lucide="footprints" class="w-5 h-5 mr-2"></i> Objective Function (Tests)
+                            <!-- ### FIX HERE ### -->
+                            <i data-lucide="footprints" class="w-5 h-5 mr-2"></i>
                         </h3>
                         <div class="grid md:grid-cols-3 gap-4">
                             <label class="block">
@@ -196,8 +216,7 @@
                         </div>
                     </div>
 
-                    <!-- WEARABLES/SLEEP -->
-                    <div class="border border-[#30363d] p-4 rounded-lg">
+                    <!-- WEARABLES/SLEEP --><div class="border border-[#30363d] p-4 rounded-lg">
                         <h3 class="text-xl font-medium mb-3 text-[#58a6ff] flex items-center">
                             <i data-lucide="watch" class="w-5 h-5 mr-2"></i> Wearables / Recovery
                         </h3>
@@ -224,18 +243,15 @@
             </div>
         </div>
 
-        <!-- Tab 2: R-RI Analysis -->
-        <div class="tab-content hidden" id="tab-analysis">
+        <!-- Tab 2: R-RI Analysis --><div class="tab-content hidden" id="tab-analysis">
             <div class="grid lg:grid-cols-4 gap-8">
 
-                <!-- R-RI Gauge & Trend (Col 1) -->
-                <div class="lg:col-span-1 text-center card p-5 rounded-xl shadow-lg">
+                <!-- R-RI Gauge & Trend (Col 1) --><div class="lg:col-span-1 text-center card p-5 rounded-xl shadow-lg">
                     <h2 class="text-xl font-semibold mb-3 text-white flex items-center justify-center">
                         <i data-lucide="trending-up" class="w-5 h-5 mr-2"></i> R-RI Score
                     </h2>
                     <div id="rri-gauge-container" class="w-full max-w-sm mx-auto">
-                        <!-- SVG Gauge will be drawn here -->
-                    </div>
+                        <!-- SVG Gauge will be drawn here --></div>
                     <div id="rri-status" class="mt-4 text-lg font-bold"></div>
                     <div id="trend-info" class="mt-2 text-sm text-gray-400"></div>
 
@@ -246,16 +262,14 @@
                     </div>
                 </div>
 
-                <!-- Phenotype and Decomposition (Col 2 & 3) -->
-                <div class="lg:col-span-2 space-y-6">
+                <!-- Phenotype and Decomposition (Col 2 & 3) --><div class="lg:col-span-2 space-y-6">
                     <div class="card p-5 rounded-xl shadow-lg">
                         <h2 class="text-xl font-semibold mb-4 text-white flex items-center">
                             <i data-lucide="brain" class="w-5 h-5 mr-2"></i> Pain Phenotype (AI Heuristics)
                         </h2>
                         <p class="text-gray-400 mb-4">Predicting the dominant pain mechanism for targeted therapy.</p>
                         <div id="phenotype-chart" class="space-y-3">
-                            <!-- Phenotype bars will be generated here -->
-                        </div>
+                            <!-- Phenotype bars will be generated here --></div>
                     </div>
 
                     <div class="card p-5 rounded-xl shadow-lg">
@@ -264,21 +278,17 @@
                         </h2>
                         <p class="text-gray-400 mb-4">Contribution of each weighted component to the total index score.</p>
                         <div id="decomposition-chart" class="space-y-3">
-                            <!-- Decomposition bars will be generated here -->
-                        </div>
+                            <!-- Decomposition bars will be generated here --></div>
                     </div>
                 </div>
 
-                <!-- KPI Block (Col 4) -->
-                <div class="lg:col-span-1 space-y-4">
+                <!-- KPI Block (Col 4) --><div class="lg:col-span-1 space-y-4">
                     <div class="card p-5 rounded-xl shadow-lg">
                         <h3 class="text-lg font-semibold mb-3 text-[#58a6ff]">Key Performance Indicators (KPIs)</h3>
                         <div id="kpi-block" class="space-y-3">
-                            <!-- Dynamic KPI metrics here -->
-                        </div>
+                            <!-- Dynamic KPI metrics here --></div>
                     </div>
-                    <!-- Export Button in Analysis Tab -->
-                    <div class="card p-5 rounded-xl shadow-lg text-center">
+                    <!-- Export Button in Analysis Tab --><div class="card p-5 rounded-xl shadow-lg text-center">
                         <h2 class="text-xl font-semibold mb-4 text-white">Export Session Data</h2>
                         <button onclick="exportJSON()" class="w-full py-2 px-6 rounded-lg font-semibold bg-[#2A9D8F] text-white hover:bg-[#2A9D8F]/80 transition duration-150 flex items-center justify-center">
                             <i data-lucide="download" class="w-5 h-5 mr-2"></i> Download JSON
@@ -288,15 +298,13 @@
             </div>
         </div>
 
-        <!-- Tab 3: AI Recommendations -->
-        <div class="tab-content hidden" id="tab-recommendations">
+        <!-- Tab 3: AI Recommendations --><div class="tab-content hidden" id="tab-recommendations">
             <h2 class="text-3xl font-bold mb-6 text-[#E9C46A] flex items-center">
                 <i data-lucide="lightbulb" class="w-7 h-7 mr-3"></i> Personalized Recommendations (CDSS)
             </h2>
             <p class="text-gray-400 mb-6">AI-driven suggestions for adjusting the patient's treatment plan based on objective data and clinical heuristics.</p>
             <div id="recommendation-content" class="space-y-6">
-                <!-- Dynamic recommendations will be placed here -->
-            </div>
+                <!-- Dynamic recommendations will be placed here --></div>
             <div class="mt-10 border-t border-[#30363d] pt-6">
                 <p class="text-sm text-gray-500">
                     *Recommendations are based on R-RI weighting and dominant phenotype. They are designed to inform clinical decisions, not replace them.
@@ -310,8 +318,7 @@
     <p>⚠️ **Disclaimer:** This is a Clinical Decision Support System (CDSS) prototype (MVP), NOT a medical device. Always use professional clinical judgment.</p>
 </footer>
 
-<!-- Initialize Lucide Icons -->
-<script>
+<!-- Initialize Lucide Icons --><script>
     lucide.createIcons();
 </script>
 <script>
@@ -322,15 +329,23 @@
         "Good": ["#2A9D8F", "Excellent Progress (> 70)", "success"],
     };
 
+    // UPDATED PAIN_REGIONS TO MATCH SVG IDs
     const PAIN_REGIONS = [
-        {code: "head", name: "Head/Neck", r: 0, c: 1}, {code: "l_shoulder", name: "Left Shoulder", r: 1, c: 0},
-        {code: "chest", name: "Chest/Upper Back", r: 1, c: 1}, {code: "r_shoulder", name: "Right Shoulder", r: 1, c: 2},
-        {code: "l_arm", name: "Left Arm", r: 2, c: 0}, {code: "abdomen", name: "Abdomen/Lower Back", r: 2, c: 1},
-        {code: "r_arm", name: "Right Arm", r: 2, c: 2}, {code: "l_thigh", name: "Left Thigh", r: 3, c: 0},
-        {code: "pelvis", name: "Pelvis", r: 3, c: 1}, {code: "r_thigh", name: "Right Thigh", r: 3, c: 2},
-        {code: "l_leg", name: "Left Leg/Foot", r: 4, c: 0}, {code: "knees", name: "Knees", r: 4, c: 1},
-        {code: "r_leg", name: "Right Leg/Foot", r: 4, c: 2},
+        {code: "head", name: "Head"},
+        {code: "neck", name: "Neck"},
+        {code: "l_shoulder", name: "L Shoulder"},
+        {code: "r_shoulder", name: "R Shoulder"},
+        {code: "l_arm", name: "L Arm"},
+        {code: "r_arm", name: "R Arm"},
+        {code: "chest", name: "Chest / Upper Back"},
+        {code: "abdomen", name: "Abdomen / Lower Back"},
+        {code: "pelvis", name: "Pelvis"},
+        {code: "l_thigh", name: "L Thigh"},
+        {code: "r_thigh", name: "R Thigh"},
+        {code: "l_leg", name: "L Leg / Foot"},
+        {code: "r_leg", name: "R Leg / Foot"},
     ];
+    // Note: The 'r' and 'c' properties are no longer needed.
 
     const WEIGHTS = {
         "pain": 0.30,
@@ -503,34 +518,34 @@
         return RRI_COLORS.Poor;
     }
 
+    // REWRITTEN drawBodyHeatmap function
     function drawBodyHeatmap(painMap) {
-        const container = document.getElementById('pain-heatmap-container');
-        if (!container) return;
-        container.innerHTML = '';
 
-        const getColor = (v) => {
-            const norm = Math.max(0, Math.min(1, v / 10.0));
-            const r = Math.round(255 * norm);
-            const g = Math.round(255 * (1 - 0.5 * norm));
-            const b = Math.round(255 * (1 - norm));
-            return `rgba(${r}, ${g}, ${b}, 0.85)`;
+        const getGradientColor = (intensity) => {
+            if (intensity === 0) {
+                return '#1e2329'; // Default "no pain" color (matches CSS)
+            }
+            const hueStart = 120; // Green
+            const hueEnd = 0;   // Red
+            const saturation = 100;
+            const lightness = 50;
+
+            // Map intensity (1-10) to a hue range (green to red)
+            const hue = hueStart - ((intensity - 1) / 9) * (hueStart - hueEnd);
+            return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
         };
 
         PAIN_REGIONS.forEach(region => {
             const intensity = painMap.regions[region.code] || 0;
-            const box = document.createElement('div');
-            box.className = 'region-box border border-[#30363d]';
-            box.style.backgroundColor = getColor(intensity);
-            box.style.gridRow = `${region.r + 1}`;
-            box.style.gridColumn = `${region.c + 1}`;
-            const shortName = region.name.split('/')[0];
-            box.textContent = `${shortName} (${intensity})`;
+            const color = getGradientColor(intensity);
 
-            box.style.color = intensity < 5 ? '#161b22' : '#fff';
-            container.appendChild(box);
+            const element = document.getElementById(region.code);
+            if (element) {
+                element.style.fill = color;
+            }
         });
-        // Re-render Lucide icons if any were used here (though none are now)
-        lucide.createIcons();
+
+        // No need to create icons here anymore
     }
 
     function drawRRIGauge(rriValue) {
@@ -865,7 +880,7 @@
         currentSession = new Session(data);
 
         // Re-render all visuals
-        drawBodyHeatmap(data.pain_map);
+        drawBodyHeatmap(data.pain_map); // This now calls the new SVG function
         drawRRIGauge(currentSession.rri_score);
         updatePhenotypeChart(phenotype);
         updateDecompositionChart(rriResult.decomposition);
@@ -949,9 +964,12 @@
         }
     }
 
+    // UPDATED initializePainSliders to match new PAIN_REGIONS
     function initializePainSliders() {
         const container = document.getElementById('pain-sliders');
         if (!container) return;
+
+        container.innerHTML = ''; // Clear any old content
 
         PAIN_REGIONS.forEach(r => {
             const code = r.code;
@@ -981,6 +999,25 @@
             button.addEventListener('click', (e) => {
                 const tabId = e.target.getAttribute('data-tab');
                 switchTab(tabId);
+            });
+        });
+
+        // Add listeners to SVG parts
+        document.querySelectorAll('.body-part').forEach(part => {
+            part.addEventListener('click', () => {
+                const slider = document.getElementById(`pm_slider_${part.id}`);
+                if (slider) {
+                    // Cycle through 0, 5, 10 on click
+                    let currentValue = parseInt(slider.value);
+                    if (currentValue < 5) {
+                        slider.value = 5;
+                    } else if (currentValue < 10) {
+                        slider.value = 10;
+                    } else {
+                        slider.value = 0;
+                    }
+                    updateAll(); // Trigger update
+                }
             });
         });
 
