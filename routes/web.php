@@ -21,7 +21,7 @@ use App\Http\Controllers\ChronicPainController;
 
 // }
 // );
-//Route::middleware('auth')->group(function () {
+Route::middleware('auth')->group(function () {
     Route::get('/getList', function () {
         return view('index');
     })->name('indexPatient');
@@ -90,7 +90,7 @@ use App\Http\Controllers\ChronicPainController;
         return view('msk');
     })->name('msk');
 
-//});
+});
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
