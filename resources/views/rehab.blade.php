@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>R-RI: Rehab Recovery Index (CDSS)</title>
+    <title>R-RI: Rehab</title>
     <!-- Tailwind CSS and Inter Font --><script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <!-- Icon Library (Lucide) --><script src="https://unpkg.com/lucide@latest"></script>
