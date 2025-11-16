@@ -120,11 +120,40 @@
             padding: 1rem;
             margin-top: 1rem;
             min-height: 100px;
-            white-space: pre-wrap; /* Сохраняет форматирование ответа */
+            /* white-space: pre-wrap;  УБРАНО, так как мы используем HTML */
             font-size: 0.875rem;
             line-height: 1.6;
             color: #d1d5db;
         }
+        /* Стили для HTML-отчета */
+        .ai-response h4 {
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            color: #60a5fa; /* Светло-синий */
+            margin-bottom: 0.75rem;
+        }
+        .ai-response h5 {
+            font-size: 1rem; /* 16px */
+            font-weight: 600;
+            color: #d1d5db; /* Светло-серый */
+            border-bottom: 1px solid #4b5563;
+            padding-bottom: 0.25rem;
+            margin-top: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+        .ai-response p {
+            margin-bottom: 0.5rem;
+        }
+        .ai-response .text-red-400 { color: #f87171; }
+        .ai-response .text-red-300 { color: #fca5a5; font-weight: 600; }
+        .ai-response .text-yellow-400 { color: #facc15; }
+        .ai-response .text-yellow-300 { color: #fde047; font-weight: 600; }
+        .ai-response .text-green-400 { color: #4ade80; }
+        .ai-response .text-green-300 { color: #86efac; font-weight: 600; }
+        .ai-response .text-gray-400 { color: #9ca3af; }
+        .ai-response .text-gray-300 { color: #d1d5db; font-weight: 600; }
+        .ai-response .italic { font-style: italic; }
+
         .loading-spinner {
             width: 20px;
             height: 20px;
@@ -354,19 +383,19 @@
 
     <!-- COLUMN 3: AI ASSISTANT -->
     <div class="lg:col-span-1 space-y-6">
-        <!-- AI Summary -->
+        <!-- ИЗМЕНЕНИЕ: Логика этого блока полностью обновлена -->
         <div class="card">
             <div class="card-header">
-                <h2 class="card-title">3. AI ATAS Summary</h2>
+                <h2 class="card-title">3. Drug Heuristic Analysis</h2>
             </div>
             <div class="card-content">
-                <p class="text-sm text-gray-400 mb-4">Click for the AI to analyze the current ATAS score and provide a clinical summary and recommendations.</p>
+                <p class="text-sm text-gray-400 mb-4">First, search for a drug in block 4. Then, click here for an automated summary of its risks and interactions.</p>
                 <button id="ai-summary-btn" class="btn w-full">
                     <span class="loading-spinner hidden"></span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 icon"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zM8 12h8M12 8v8"/></svg>
-                    <span class="btn-text">Generate AI Summary</span>
+                    <span class="btn-text">Generate Analysis</span>
                 </button>
-                <div id="ai-summary-output" class="ai-response mt-4" placeholder="AI summary will appear here..."></div>
+                <div id="ai-summary-output" class="ai-response mt-4" placeholder="Analysis results will appear here after searching for a drug."></div>
             </div>
         </div>
 
@@ -378,7 +407,6 @@
             <div class="card-content">
                 <p class="text-sm text-gray-400 mb-4">Enter a drug name (start typing for suggestions) to get information from the free OpenFDA API.</p>
                 <div class="flex gap-2">
-                    <!-- ИЗМЕНЕНИЕ: Добавлен list="antibiotic-suggestions" -->
                     <input type="text" id="drug-input" class="form-input" list="antibiotic-suggestions" placeholder="e.g., 'Amoxicillin' or 'Ciprofloxacin'">
                     <button id="ai-drug-btn" class="btn">
                         <span class="loading-spinner hidden"></span>
@@ -387,7 +415,6 @@
                     </button>
                 </div>
 
-                <!-- ИЗМЕНЕНИЕ: Добавлен <datalist> -->
                 <datalist id="antibiotic-suggestions">
                     <option value="Amoxicillin"></option>
                     <option value="Azithromycin"></option>
@@ -425,8 +452,8 @@
 
 <script type="module">
     // --- Gemini API Configuration ---
-    const API_KEY = ""; // Canvas will provide this.
-    const GENERATE_CONTENT_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${API_KEY}`;
+    // УБРАНО: API_KEY, GENERATE_CONTENT_URL и fetchWithExponentialBackoff
+    // Приложение больше не использует Google Gemini AI.
 
     // --- Chart.js Instances ---
     let radarChartInstance = null;
@@ -434,6 +461,7 @@
 
     // --- Application State ---
     let atasHistory = []; // Array to store score history
+    let currentDrugData = null; // ИЗМЕНЕНИЕ: Хранит полные данные из OpenFDA
 
     // --- DOM Elements ---
     const form = document.getElementById('atas-form');
@@ -453,28 +481,16 @@
 
     // --- Utility Functions ---
 
-    /**
-     * Shows the API error modal
-     * @param {string} message - The error message
-     */
     function showApiError(message) {
         console.error("API Error:", message);
         errorModalMessage.textContent = message || "Failed to execute request. Please try again later.";
         errorModal.classList.remove('hidden');
     }
 
-    /**
-     * Hides the API error modal
-     */
     function hideApiError() {
         errorModal.classList.add('hidden');
     }
 
-    /**
-     * Manages the button loading state
-     * @param {HTMLElement} button - The button element
-     * @param {boolean} isLoading - The loading state
-     */
     function setButtonLoading(button, isLoading) {
         const spinner = button.querySelector('.loading-spinner');
         const icon = button.querySelector('.icon');
@@ -490,83 +506,24 @@
             icon?.classList.remove('hidden');
             if (text) {
                 // Restore original text
-                if (button.id === 'ai-summary-btn') text.textContent = 'Generate AI Summary';
+                if (button.id === 'ai-summary-btn') text.textContent = 'Generate Analysis'; // ИЗМЕНЕНИЕ
                 else if (button.id === 'ai-drug-btn') text.textContent = 'Search';
             }
         }
     }
 
-    /**
-     * Performs a Gemini API call with exponential backoff
-     * @param {object} payload - The request payload
-     * @param {number} maxRetries - Maximum number of retries
-     * @returns {Promise<object>} - The JSON response
-     */
-    async function fetchWithExponentialBackoff(payload, maxRetries = 5) {
-        let delay = 1000;
-        for (let i = 0; i < maxRetries; i++) {
-            try {
-                const response = await fetch(GENERATE_CONTENT_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+    // УБРАНО: функция fetchWithExponentialBackoff
 
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`HTTP error! status: ${response.status}, ${errorText}`);
-                }
+    // --- Core Application Logic (ATAS Calculator) ---
 
-                const result = await response.json();
-
-                if (!result.candidates || !result.candidates[0].content || !result.candidates[0].content.parts[0].text) {
-                    if (result.candidates && result.candidates[0].finishReason === 'SAFETY') {
-                        throw new Error("Request was blocked for safety reasons.");
-                    }
-                    throw new Error("Unexpected API response structure.");
-                }
-
-                return result;
-
-            } catch (error) {
-                console.warn(`Attempt ${i + 1} failed: ${error.message}. Retrying in ${delay}ms...`);
-                if (i === maxRetries - 1) throw error; // Last attempt failed
-                await new Promise(resolve => setTimeout(resolve, delay));
-                delay *= 2; // Exponential backoff
-            }
-        }
-    }
-
-    // --- Core Application Logic ---
-
-    /**
-     * Calculates the ATAS score based on the form
-     * @returns {object} - Object with category scores, total, and interpretation
-     */
     function calculateATAS() {
         const getVal = (id) => parseInt(document.getElementById(id).value, 10);
-
-        // 1. Clinical Efficacy (max 6)
         const s1 = getVal('s1_infection') + getVal('s1_temp') + getVal('s1_labs');
-
-        // 2. Microbiological Control (max 4)
         const s2 = Math.min(4, getVal('s2_pathogen') + getVal('s2_sensitivity'));
-
-        // 3. Therapy Rationality (max 5)
         const s3 = Math.min(5, getVal('s3_protocol') + getVal('s3_dosage') + getVal('s3_deescalation'));
-
-        // 4. Safety (max 5)
-        // Adding +1 for "Interactions" (assuming +1 for no issues by default)
         const s4 = Math.min(5, getVal('s4_side_effects') + getVal('s4_toxicity') + getVal('s4_cdiff') + 1);
-
-        // 5. Impact on Disease Course (max 5)
-        // Adding +1 for "Prophylaxis" and +1 for something else (up to 5)
         const s5 = Math.min(5, getVal('s5_reoperation') + getVal('s5_wound') + 1 + 1);
-
-        // 6. Impact on Rehab & Pain (max 5)
-        // Adding +2 for "Functional Status" (up to 5)
         const s6 = Math.min(5, getVal('s6_rehab_delay') + getVal('s6_neurotoxicity') + getVal('s6_neuropathic') + 2);
-
         const total = s1 + s2 + s3 + s4 + s5 + s6;
 
         let interpretation = "";
@@ -576,54 +533,30 @@
         else interpretation = "Effective and Safe";
 
         return {
-            scores: {
-                clinical: s1,
-                microbiology: s2,
-                rationality: s3,
-                safety: s4,
-                course: s5,
-                rehab: s6
-            },
+            scores: { clinical: s1, microbiology: s2, rationality: s3, safety: s4, course: s5, rehab: s6 },
             total: total,
             interpretation: interpretation
         };
     }
 
-    /**
-     * Updates the UI (score and charts)
-     */
     function updateUI() {
         const { scores, total, interpretation } = calculateATAS();
-
         scoreTotalEl.textContent = total;
         scoreInterpretationEl.textContent = interpretation;
-
-        // Update Radar Chart
         if (radarChartInstance) {
             radarChartInstance.data.datasets[0].data = Object.values(scores);
-            // Update labels to reflect new scores
             radarChartInstance.data.labels = [
-                `Clinical (${scores.clinical}/6)`,
-                `Microbio (${scores.microbiology}/4)`,
-                `Rationality (${scores.rationality}/5)`,
-                `Safety (${scores.safety}/5)`,
-                `Course (${scores.course}/5)`,
-                `Rehab (${scores.rehab}/5)`
+                `Clinical (${scores.clinical}/6)`, `Microbio (${scores.microbiology}/4)`, `Rationality (${scores.rationality}/5)`,
+                `Safety (${scores.safety}/5)`, `Course (${scores.course}/5)`, `Rehab (${scores.rehab}/5)`
             ];
             radarChartInstance.update();
         }
     }
 
-    /**
-     * Adds the current score to history and updates the history chart
-     */
     function handleAddToHistory() {
         const { total } = calculateATAS();
         const label = `Day ${atasHistory.length + 1}`;
-
         atasHistory.push({ label, total });
-
-        // Update Line Chart
         if (historyChartInstance) {
             historyChartInstance.data.labels = atasHistory.map(h => h.label);
             historyChartInstance.data.datasets[0].data = atasHistory.map(h => h.total);
@@ -631,51 +564,103 @@
         }
     }
 
-    // --- AI Handlers ---
+    // --- AI Handlers (ИЗМЕНЕННАЯ ЛОГИКА) ---
 
     /**
-     * Handler for the "Generate AI Summary" button
+     * НОВАЯ ЛОГИКА: Эта функция СЕЙЧАС анализирует данные OpenFDA локально
+     * с помощью JavaScript и выводит структурированный HTML.
      */
     async function handleAiSummary() {
-        setButtonLoading(aiSummaryBtn, true);
-        aiSummaryOutput.textContent = 'Generating report...';
-
-        const { scores, total, interpretation } = calculateATAS();
-        const formData = {
-            totalScore: total,
-            interpretation: interpretation,
-            details: {
-                "Clinical Efficacy": `${scores.clinical}/6`,
-                "Microbiology": `${scores.microbiology}/4`,
-                "Rationality": `${scores.rationality}/5`,
-                "Safety": `${scores.safety}/5`,
-                "Disease Course": `${scores.course}/5`,
-                "Rehab & Pain": `${scores.rehab}/5`,
-            }
-        };
-
-        const systemPrompt = "You are an experienced clinical pharmacologist. Analyze the provided ATAS (Antibiotic Treatment Assessment Score) data. Provide a brief, structured summary in English. You must include: 1. Overall assessment (based on interpretation). 2. Strengths (categories with high scores). 3. Risk areas (categories with low scores). 4. A brief recommendation (e.g., 'Continue monitoring', 'Therapy correction required', 'Optimal therapy').";
-        const userQuery = `Analyze this ATAS data: ${JSON.stringify(formData)}`;
-
-        const payload = {
-            contents: [{ parts: [{ text: userQuery }] }],
-            systemInstruction: { parts: [{ text: systemPrompt }] }
-        };
-
-        try {
-            const result = await fetchWithExponentialBackoff(payload);
-            const text = result.candidates[0].content.parts[0].text;
-            aiSummaryOutput.textContent = text;
-        } catch (error) {
-            aiSummaryOutput.textContent = 'Error generating summary.';
-            showApiError(error.message);
-        } finally {
-            setButtonLoading(aiSummaryBtn, false);
+        // Проверяем, были ли данные загружены из OpenFDA
+        if (!currentDrugData) {
+            aiSummaryOutput.textContent = 'Please search for a drug in block 4 first.';
+            showApiError('No drug data to analyze. Please use the search in block 4.');
+            return;
         }
+
+        setButtonLoading(aiSummaryBtn, true);
+        // ИЗМЕНЕНИЕ: Используем innerHTML для индикатора загрузки
+        aiSummaryOutput.innerHTML = '<p class="text-gray-400 italic">Analyzing drug data (Heuristic Analysis)...</p>';
+
+        // --- Начало "Локального ИИ" (Логика на JavaScript) ---
+
+        // Ключевые слова для поиска
+        const adverseKeywords = [
+            "anaphylaxis", "severe", "fatal", "hepatotoxicity", "nephrotoxicity",
+            "cardiac", "arrhythmia", "tendon", "rupture", "seizure",
+            "clostridium difficile", "sjs", "stevens-johnson", "renal failure"
+        ];
+
+        const interactionKeywords = [
+            "cyp450", "p-gp", "warfarin", "qt prolongation", "theophylline",
+            "antacids", "dairy", "multivalent cations", "cyp3a4", "cyp2c9",
+            "inhibitor", "inducer"
+        ];
+
+        /**
+         * Вспомогательная функция для анализа текстового раздела (ГЕНЕРИРУЕТ HTML)
+         * @param {string[]} textArray - Массив строк из OpenFDA (например, currentDrugData.adverse_reactions)
+         * @param {string[]} keywords - Список ключевых слов для поиска
+         * @param {string} sectionName - Имя раздела для отчета
+         * @returns {string} - Отформатированный HTML-результат анализа
+         */
+        function analyzeSection(textArray, keywords, sectionName) {
+            let report = `<h5>${sectionName}</h5>`; // Используем h5 для подзаголовка
+
+            if (!textArray || !Array.isArray(textArray) || textArray.length === 0 || !textArray[0]) {
+                report += `<p class="text-gray-400 italic">Data N/A (Not provided in OpenFDA response).</p>`;
+                return report;
+            }
+
+            const text = textArray[0].toLowerCase();
+            const findings = [];
+
+            keywords.forEach(keyword => {
+                if (text.includes(keyword)) {
+                    findings.push(`<strong>${keyword}</strong>`); // Выделяем найденное слово
+                }
+            });
+
+            if (findings.length > 0) {
+                report += `<p class="text-red-400"><span class="text-red-300">Critical keywords found:</span> ${findings.join(', ')}</p>`;
+                report += `<p class="text-yellow-400"><span class="text-yellow-300">Recommendation:</span> High priority for review. Check full text for context.</p>`;
+            } else {
+                report += `<p class="text-green-400"><span class="text-green-300">Analysis:</span> No critical keywords detected by local heuristics.</p>`;
+                report += `<p class="text-gray-400"><span class="text-gray-300">Recommendation:</span> Review full text for details.</p>`;
+            }
+            return report;
+        }
+
+        // --- Создание отчета ---
+        // ИЗМЕНЕНИЕ: Убран заголовок "Local Heuristic..."
+        let finalReport = '<h4 class="text-lg font-bold text-blue-300 mb-3">Heuristic Analysis Report</h4>';
+
+        // Анализ побочных реакций
+        finalReport += analyzeSection(
+            currentDrugData.adverse_reactions,
+            adverseKeywords,
+            "Adverse Reactions"
+        );
+
+        // Анализ взаимодействий
+        finalReport += analyzeSection(
+            currentDrugData.drug_interactions,
+            interactionKeywords,
+            "Drug Interactions"
+        );
+
+        // --- Конец "Локального ИИ" ---
+
+        // Имитируем задержку, чтобы это выглядело как "анализ"
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // ИЗМЕНЕНИЕ: Используем innerHTML для вставки HTML-разметки
+        aiSummaryOutput.innerHTML = finalReport.trim();
+        setButtonLoading(aiSummaryBtn, false);
     }
 
     /**
-     * Handler for the "Search" button (Drug Info) - USES OpenFDA API
+     * ИЗМЕНЕНИЕ: Эта функция теперь сохраняет данные в currentDrugData и активирует кнопку ИИ
      */
     async function handleAiDrugInfo() {
         const drugName = drugInput.value.trim();
@@ -687,7 +672,13 @@
         setButtonLoading(aiDrugBtn, true);
         aiDrugOutput.textContent = `Searching OpenFDA for "${drugName}"...`;
 
-        // Using OpenFDA API - no key required.
+        // Сбрасываем предыдущие данные
+        currentDrugData = null;
+        aiSummaryBtn.disabled = true;
+        aiSummaryOutput.innerHTML = ''; // Очищаем HTML
+        aiSummaryOutput.setAttribute('placeholder', 'Analysis results will appear here after searching for a drug.');
+
+
         const url = `https://api.fda.gov/drug/label.json?search=(openfda.brand_name:"${drugName}"+OR+openfda.generic_name:"${drugName}")&limit=1`;
 
         try {
@@ -704,9 +695,11 @@
 
             const result = data.results[0];
 
+            // ИЗМЕНЕНИЕ: Сохраняем все данные для ИИ-анализа
+            currentDrugData = result;
+
             // Helper to safely extract and truncate array data
-            const getField = (field, fallback = 'N/A',
-                              maxLength = 300) => {
+            const getField = (field, fallback = 'N/A', maxLength = 300) => {
                 if (result[field] && Array.isArray(result[field]) && result[field][0]) {
                     const text = result[field][0].replace(/[\r\n]+/g, ' '); // Clean up newlines
                     return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
@@ -717,6 +710,7 @@
             const brandName = result.openfda?.brand_name?.[0] || drugName;
             const genericName = result.openfda?.generic_name?.[0] || 'N/A';
 
+            // ИЗМЕНЕНИЕ: Добавлено поле drug_interactions
             const output = `
 Drug: ${brandName}
 Generic: ${genericName}
@@ -730,6 +724,9 @@ ${getField('dosage_and_administration')}
 --- Adverse Reactions ---
 ${getField('adverse_reactions')}
 
+--- Drug Interactions ---
+${getField('drug_interactions')}
+
 --- Warnings & Cautions ---
 ${getField('warnings_and_cautions')}
 
@@ -738,9 +735,17 @@ ${getField('warnings_and_cautions')}
 
             aiDrugOutput.textContent = output.trim();
 
+            // ИЗМЕНЕНИЕ: Активируем кнопку ИИ-анализа
+            aiSummaryBtn.disabled = false;
+            // ИЗМЕНЕНИЕ: Обновляем placeholder (который теперь виден как текст)
+            aiSummaryOutput.innerHTML = `<p class="text-gray-400 italic">Data for "${brandName}" loaded. Click "Generate Analysis" above to summarize risks.</p>`;
+
+
         } catch (error) {
             aiDrugOutput.textContent = 'Error fetching drug information.';
             showApiError(error.message);
+            currentDrugData = null;
+            aiSummaryBtn.disabled = true;
         } finally {
             setButtonLoading(aiDrugBtn, false);
         }
@@ -757,12 +762,8 @@ ${getField('warnings_and_cautions')}
             type: 'radar',
             data: {
                 labels: [
-                    `Clinical (${initialData.scores.clinical}/6)`,
-                    `Microbio (${initialData.scores.microbiology}/4)`,
-                    `Rationality (${initialData.scores.rationality}/5)`,
-                    `Safety (${initialData.scores.safety}/5)`,
-                    `Course (${initialData.scores.course}/5)`,
-                    `Rehab (${initialData.scores.rehab}/5)`
+                    `Clinical (${initialData.scores.clinical}/6)`, `Microbio (${initialData.scores.microbiology}/4)`, `Rationality (${initialData.scores.rationality}/5)`,
+                    `Safety (${initialData.scores.safety}/5)`, `Course (${initialData.scores.course}/5)`, `Rehab (${initialData.scores.rehab}/5)`
                 ],
                 datasets: [{
                     label: 'ATAS Score',
@@ -780,22 +781,11 @@ ${getField('warnings_and_cautions')}
                     r: {
                         angleLines: { color: '#4b5563' },
                         grid: { color: '#4b5563' },
-                        pointLabels: {
-                            font: { size: 10 },
-                            color: '#d1d5db'
-                        },
-                        ticks: {
-                            beginAtZero: true,
-                            max: 6, // Max score of any category
-                            stepSize: 1,
-                            color: '#9ca3af',
-                            backdropColor: 'transparent'
-                        }
+                        pointLabels: { font: { size: 10 }, color: '#d1d5db' },
+                        ticks: { beginAtZero: true, max: 6, stepSize: 1, color: '#9ca3af', backdropColor: 'transparent' }
                     }
                 },
-                plugins: {
-                    legend: { display: false }
-                }
+                plugins: { legend: { display: false } }
             }
         });
 
@@ -803,36 +793,15 @@ ${getField('warnings_and_cautions')}
         const historyCtx = document.getElementById('history-chart').getContext('2d');
         historyChartInstance = new Chart(historyCtx, {
             type: 'line',
-            data: {
-                labels: [],
-                datasets: [{
-                    label: 'Total ATAS Score',
-                    data: [],
-                    borderColor: '#3b82f6',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                    fill: true,
-                    tension: 0.1,
-                    borderWidth: 2
-                }]
-            },
+            data: { labels: [], datasets: [{ label: 'Total ATAS Score', data: [], borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.1)', fill: true, tension: 0.1, borderWidth: 2 }] },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 30, // Max ATAS score
-                        grid: { color: '#4b5563' },
-                        ticks: { color: '#9ca3af' }
-                    },
-                    x: {
-                        grid: { display: false },
-                        ticks: { color: '#9ca3af' }
-                    }
+                    y: { beginAtZero: true, max: 30, grid: { color: '#4b5563' }, ticks: { color: '#9ca3af' } },
+                    x: { grid: { display: false }, ticks: { color: '#9ca3af' } }
                 },
-                plugins: {
-                    legend: { display: false }
-                }
+                plugins: { legend: { display: false } }
             }
         });
     }
@@ -850,6 +819,9 @@ ${getField('warnings_and_cautions')}
         initCharts();
         updateUI();
         handleAddToHistory(); // Add the initial state to history
+
+        // ИЗМЕНЕНИЕ: Блокируем кнопку ИИ-анализа при загрузке
+        aiSummaryBtn.disabled = true;
     });
 
 </script>
