@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>T-CARE - Advanced Pain Risk Assessment</title>
+    <title>T-CaRe - Advanced Pain Risk Assessment</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js for graphs -->
@@ -197,7 +197,7 @@
             <svg class="w-10 h-10 text-blue-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM10.25 15.1893C10.2443 15.1831 10.2386 15.177 10.233 15.1708L10.2301 15.1673C9.83981 14.686 9.5 14.153 9.5 13.5C9.5 12.1193 10.6193 11 12 11C13.3807 11 14.5 12.1193 14.5 13.5C14.5 14.153 14.1602 14.686 13.7699 15.1673L13.767 15.1708C13.7614 15.177 13.7557 15.1831 13.75 15.1893V15.5C13.75 16.3284 13.0784 17 12.25 17H11.75C10.9216 17 10.25 16.3284 10.25 15.5V15.1893ZM12 7C12.5523 7 13 7.44772 13 8C13 8.55228 12.5523 9 12 9C11.4477 9 11 8.55228 11 8C11 7.44772 11.4477 7 12 7ZM15 13.5C15 11.8431 13.6569 10.5 12 10.5C10.3431 10.5 9 11.8431 9 13.5C9 14.316 9.42361 15.0447 10.0911 15.5H13.9089C14.5764 15.0447 15 14.316 15 13.5Z" fill="currentColor"/>
             </svg>
-            <h1 class="text-3xl font-bold text-white">ThoracicAI</h1>
+            <h1 class="text-3xl font-bold text-white">T-CaRe</h1>
         </div>
 
         <!-- Patient Profile -->

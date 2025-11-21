@@ -652,27 +652,27 @@
                         <label>Pain Level:</label>
                         <div class="face-picker">
                             <!-- Images are placeholders. Replace 'src' with your actual image paths --><div class="face-option-wrapper">
-                                <img class="face-option" src="https://placehold.co/50x50/006400/FFF?text=0" alt="No Pain" data-color="#006400" data-level="0">
+                                <img class="face-option" src="img/face_0.jpg" alt="No Pain" data-color="#006400" data-level="0">
                                 <span>No Pain</span>
                             </div>
                             <div class="face-option-wrapper">
-                                <img class="face-option" src="https://placehold.co/50x50/ADFF2F/000?text=2" alt="Very Mild Pain" data-color="#ADFF2F" data-level="2">
+                                <img class="face-option" src="img/face_1.jpg" alt="Very Mild Pain" data-color="#ADFF2F" data-level="2">
                                 <span>Very Mild</span>
                             </div>
                             <div class="face-option-wrapper">
-                                <img class="face-option" src="https://placehold.co/50x50/FFFF00/000?text=4" alt="Mild Pain" data-color="#FFFF00" data-level="4">
+                                <img class="face-option" src="img/face_2.jpg" alt="Mild Pain" data-color="#FFFF00" data-level="4">
                                 <span>Mild</span>
                             </div>
                             <div class="face-option-wrapper">
-                                <img class="face-option" src="https://placehold.co/50x50/FFA500/000?text=6" alt="Moderate Pain" data-color="#FFA500" data-level="6">
+                                <img class="face-option" src="img/face_3.jpg" alt="Moderate Pain" data-color="#FFA500" data-level="6">
                                 <span>Moderate</span>
                             </div>
                             <div class="face-option-wrapper">
-                                <img class="face-option" src="https://placehold.co/50x50/8B4513/FFF?text=8" alt="Severe Pain" data-color="#8B4513" data-level="8">
+                                <img class="face-option" src="img/face_4.jpg" alt="Severe Pain" data-color="#8B4513" data-level="8">
                                 <span>Severe</span>
                             </div>
                             <div class="face-option-wrapper">
-                                <img class="face-option" src="https://placehold.co/50x50/FF0000/FFF?text=10" alt="Worst Pain" data-color="#FF0000" data-level="10">
+                                <img class="face-option" src="img/face_5.jpg" alt="Worst Pain" data-color="#FF0000" data-level="10">
                                 <span>Worst</span>
                             </div>
                         </div>
