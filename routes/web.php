@@ -96,6 +96,10 @@ Route::middleware('auth')->group(function () {
         return view('atas');
     })->name('atas');
 
+    Route::get('/kids', function () {
+        return view('kids');
+        })->name('kids');
+
 });
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
