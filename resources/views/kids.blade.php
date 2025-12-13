@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>R-PAT Kids — Dark Mode (Vanilla JS)</title>
+    <title>R-PAT Kids</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -35,14 +35,14 @@
             color: #f8fafc;
         }
 
-        /* Анимации */
+        /* Animations */
         .fade-in { animation: fadeIn 0.4s ease-in-out; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Эффекты для кнопок-лиц */
+        /* Face Button Hover Effects */
         .face-btn { transition: all 0.2s; }
         .face-btn:hover { transform: translateY(-3px); }
         .face-btn.active {
@@ -52,7 +52,7 @@
             box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
         }
 
-        /* Стили для карты тела */
+        /* Body Map Styles */
         .body-part {
             fill: #334155; /* slate-700 */
             stroke: #475569; /* slate-600 */
@@ -67,7 +67,7 @@
             filter: drop-shadow(0 0 8px rgba(244, 63, 94, 0.6));
         }
 
-        /* Кастомный ползунок (Slider) */
+        /* Custom Slider */
         input[type=range] {
             -webkit-appearance: none;
             background: transparent;
@@ -90,7 +90,7 @@
             border-radius: 2px;
         }
 
-        /* Скрытие табов */
+        /* Tabs Logic */
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
@@ -101,7 +101,7 @@
             transform: translateX(5px);
         }
 
-        /* Круговой прогресс */
+        /* Circular Progress */
         .progress-ring__circle {
             transition: stroke-dashoffset 0.5s ease-in-out;
             transform: rotate(-90deg);
@@ -132,7 +132,7 @@
         </div>
 
         <div id="header-risk-badge" class="hidden md:flex items-center gap-3 px-4 py-1.5 rounded-full border bg-emerald-500/10 border-emerald-500/20">
-            <div class="text-xs font-bold text-slate-300 uppercase">Индекс риска</div>
+            <div class="text-xs font-bold text-slate-300 uppercase">Risk Index</div>
             <div id="header-risk-val" class="text-lg font-black text-emerald-400">0%</div>
         </div>
     </div>
@@ -147,23 +147,23 @@
                 <i data-lucide="baby"></i> FLACC
             </button>
             <button onclick="switchTab(1)" class="nav-btn w-full flex items-center gap-3 px-4 py-4 rounded-xl transition-all duration-300 font-bold text-sm text-slate-400 hover:bg-slate-800 hover:text-white" id="nav-1">
-                <i data-lucide="smile"></i> Оценка
+                <i data-lucide="smile"></i> Evaluation
             </button>
             <button onclick="switchTab(2)" class="nav-btn w-full flex items-center gap-3 px-4 py-4 rounded-xl transition-all duration-300 font-bold text-sm text-slate-400 hover:bg-slate-800 hover:text-white" id="nav-2">
-                <i data-lucide="moon"></i> Психо
+                <i data-lucide="moon"></i> Psycho
             </button>
             <button onclick="switchTab(3)" class="nav-btn w-full flex items-center gap-3 px-4 py-4 rounded-xl transition-all duration-300 font-bold text-sm text-slate-400 hover:bg-slate-800 hover:text-white" id="nav-3">
-                <i data-lucide="brain"></i> Когнитив
+                <i data-lucide="brain"></i> Cognitive
             </button>
             <button onclick="switchTab(4)" class="nav-btn w-full flex items-center gap-3 px-4 py-4 rounded-xl transition-all duration-300 font-bold text-sm text-slate-400 hover:bg-slate-800 hover:text-white" id="nav-4">
-                <i data-lucide="eye"></i> Заметки
+                <i data-lucide="eye"></i> Notes
             </button>
 
             <!-- Sidebar Status Widget -->
             <div class="mt-8 pt-8 border-t border-slate-800">
                 <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-5 border border-slate-700 text-center relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500"></div>
-                    <h4 class="text-slate-400 text-xs uppercase font-bold mb-4">Текущий статус</h4>
+                    <h4 class="text-slate-400 text-xs uppercase font-bold mb-4">Current Status</h4>
                     <div class="flex justify-center mb-2">
                         <!-- SVG Circle Mini -->
                         <svg class="w-24 h-24" viewBox="0 0 100 100">
@@ -172,7 +172,7 @@
                             <text id="mini-val" x="50" y="55" text-anchor="middle" fill="white" font-size="20" font-weight="bold">0</text>
                         </svg>
                     </div>
-                    <div id="mini-label" class="text-sm font-bold text-emerald-400 mt-2 py-1 px-3 bg-slate-950/30 rounded-full inline-block">Низкий</div>
+                    <div id="mini-label" class="text-sm font-bold text-emerald-400 mt-2 py-1 px-3 bg-slate-950/30 rounded-full inline-block">Low</div>
                 </div>
             </div>
         </div>
@@ -186,7 +186,7 @@
             <div class="bg-slate-800 rounded-2xl border border-slate-700 p-6 mb-6">
                 <div class="flex items-center gap-3 mb-5 pb-3 border-b border-slate-700">
                     <div class="p-2 bg-blue-500/10 text-blue-400 rounded-lg"><i data-lucide="baby"></i></div>
-                    <h3 class="text-xl font-bold text-slate-100">Модуль 1: Выражение боли</h3>
+                    <h3 class="text-xl font-bold text-slate-100">Module 1: Pain Expression (FLACC)</h3>
                     <div class="ml-auto text-2xl font-mono font-bold text-blue-400"><span id="flacc-total-display">0</span><span class="text-slate-600 text-sm">/10</span></div>
                 </div>
 
@@ -201,12 +201,12 @@
             <div class="bg-slate-800 rounded-2xl border border-slate-700 p-6 mb-6">
                 <div class="flex items-center gap-3 mb-5 pb-3 border-b border-slate-700">
                     <div class="p-2 bg-blue-500/10 text-blue-400 rounded-lg"><i data-lucide="smile"></i></div>
-                    <h3 class="text-xl font-bold text-slate-100">Модуль 2: Самооценка</h3>
+                    <h3 class="text-xl font-bold text-slate-100">Module 2: Self-Report</h3>
                 </div>
 
                 <div class="mb-8">
                     <div class="flex justify-between mb-4">
-                        <h4 class="font-bold text-slate-300">Уровень боли</h4>
+                        <h4 class="font-bold text-slate-300">Pain Level</h4>
                         <span id="pain-level-display" class="text-amber-400 font-bold">0/10</span>
                     </div>
                     <div id="faces-container" class="grid grid-cols-3 sm:grid-cols-6 gap-3">
@@ -216,7 +216,7 @@
 
                 <div class="grid md:grid-cols-2 gap-8 border-t border-slate-700 pt-8">
                     <div>
-                        <h4 class="font-bold text-slate-300 mb-4">Локализация (Нажмите на тело)</h4>
+                        <h4 class="font-bold text-slate-300 mb-4">Localization (Tap on Body)</h4>
                         <div class="flex flex-col items-center">
                             <div class="relative">
                                 <svg viewBox="0 0 260 320" class="w-64 h-80 drop-shadow-2xl">
@@ -234,12 +234,12 @@
                                 </svg>
                             </div>
                             <div id="selected-parts-list" class="flex flex-wrap gap-2 mt-6 justify-center min-h-[40px] text-xs text-slate-500 italic">
-                                Ничего не выбрано
+                                Nothing selected
                             </div>
                         </div>
                     </div>
                     <div>
-                        <h4 class="font-bold text-slate-300 mb-4">Характер боли</h4>
+                        <h4 class="font-bold text-slate-300 mb-4">Pain Character</h4>
                         <div id="pain-types-container" class="flex flex-wrap gap-2">
                             <!-- JS Generated -->
                         </div>
@@ -253,39 +253,39 @@
             <div class="bg-slate-800 rounded-2xl border border-slate-700 p-6 mb-6">
                 <div class="flex items-center gap-3 mb-5 pb-3 border-b border-slate-700">
                     <div class="p-2 bg-blue-500/10 text-blue-400 rounded-lg"><i data-lucide="moon"></i></div>
-                    <h3 class="text-xl font-bold text-slate-100">Модуль 3: Психофизиология</h3>
+                    <h3 class="text-xl font-bold text-slate-100">Module 3: Psychophysiological</h3>
                 </div>
                 <div class="grid md:grid-cols-2 gap-8">
                     <div>
                         <!-- Sleep Slider -->
                         <div class="mb-8 relative">
                             <div class="flex justify-between items-end mb-3">
-                                <label class="text-sm font-semibold text-slate-300">Качество сна</label>
+                                <label class="text-sm font-semibold text-slate-300">Sleep Quality</label>
                                 <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-slate-700 border border-slate-600 text-blue-400 font-bold shadow-inner" id="sleep-val">2</div>
                             </div>
                             <input type="range" min="0" max="10" value="2" class="w-full" oninput="updateSlider('sleep', this.value)">
                             <div class="flex justify-between mt-2 text-xs text-slate-500 font-medium">
-                                <span>Отлично</span><span>Бессонница</span>
+                                <span>Excellent</span><span>Insomnia</span>
                             </div>
                         </div>
                         <!-- Stress Slider -->
                         <div class="mb-8 relative">
                             <div class="flex justify-between items-end mb-3">
-                                <label class="text-sm font-semibold text-slate-300">Тревожность</label>
+                                <label class="text-sm font-semibold text-slate-300">Anxiety</label>
                                 <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-slate-700 border border-slate-600 text-blue-400 font-bold shadow-inner" id="stress-val">2</div>
                             </div>
                             <input type="range" min="0" max="10" value="2" class="w-full" oninput="updateSlider('stress', this.value)">
                             <div class="flex justify-between mt-2 text-xs text-slate-500 font-medium">
-                                <span>Спокоен</span><span>Паника</span>
+                                <span>Calm</span><span>Panic</span>
                             </div>
                         </div>
                     </div>
                     <div class="bg-amber-500/5 border border-amber-500/20 p-5 rounded-xl flex gap-4 items-start">
                         <div class="text-amber-500 mt-1"><i data-lucide="alert-circle"></i></div>
                         <div>
-                            <h4 class="text-amber-400 font-bold text-sm mb-1">Физические маркеры</h4>
+                            <h4 class="text-amber-400 font-bold text-sm mb-1">Physical Markers</h4>
                             <p class="text-slate-400 text-sm leading-relaxed">
-                                Проверьте частоту пульса и потливость ладоней. Высокий уровень стресса может искажать восприятие боли.
+                                Check pulse rate and sweaty palms. High stress levels may distort pain perception.
                             </p>
                         </div>
                     </div>
@@ -298,27 +298,27 @@
             <div class="bg-slate-800 rounded-2xl border border-slate-700 p-6 mb-6">
                 <div class="flex items-center gap-3 mb-5 pb-3 border-b border-slate-700">
                     <div class="p-2 bg-blue-500/10 text-blue-400 rounded-lg"><i data-lucide="brain"></i></div>
-                    <h3 class="text-xl font-bold text-slate-100">Модуль 4: Когнитивная оценка</h3>
+                    <h3 class="text-xl font-bold text-slate-100">Module 4: Cognitive Appraisal</h3>
                 </div>
                 <!-- Coping Slider -->
                 <div class="mb-8 relative">
                     <div class="flex justify-between items-end mb-3">
-                        <label class="text-sm font-semibold text-slate-300">Катастрофизация (Восприятие)</label>
+                        <label class="text-sm font-semibold text-slate-300">Catastrophizing (Perception)</label>
                         <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-slate-700 border border-slate-600 text-blue-400 font-bold shadow-inner" id="coping-val">3</div>
                     </div>
                     <input type="range" min="0" max="10" value="3" class="w-full" oninput="updateSlider('coping', this.value)">
                     <div class="flex justify-between mt-2 text-xs text-slate-500 font-medium">
-                        <span>Я справлюсь</span><span>Безнадежность</span>
+                        <span>I can cope</span><span>Hopelessness</span>
                     </div>
                 </div>
                 <div class="space-y-3 mt-6">
                     <label class="flex items-center gap-4 p-4 bg-slate-900/50 border border-slate-700 rounded-xl cursor-pointer hover:bg-slate-800 transition-colors">
                         <input type="checkbox" class="w-5 h-5 accent-blue-500 bg-slate-700 border-slate-600 rounded">
-                        <span class="text-slate-300 text-sm font-medium">Чувство несправедливости ("За что мне это?")</span>
+                        <span class="text-slate-300 text-sm font-medium">Sense of injustice ("Why me?")</span>
                     </label>
                     <label class="flex items-center gap-4 p-4 bg-slate-900/50 border border-slate-700 rounded-xl cursor-pointer hover:bg-slate-800 transition-colors">
                         <input type="checkbox" class="w-5 h-5 accent-blue-500 bg-slate-700 border-slate-600 rounded">
-                        <span class="text-slate-300 text-sm font-medium">Недоверие к врачам</span>
+                        <span class="text-slate-300 text-sm font-medium">Distrust of doctors</span>
                     </label>
                 </div>
             </div>
@@ -329,9 +329,9 @@
             <div class="bg-slate-800 rounded-2xl border border-slate-700 p-6 mb-6">
                 <div class="flex items-center gap-3 mb-5 pb-3 border-b border-slate-700">
                     <div class="p-2 bg-blue-500/10 text-blue-400 rounded-lg"><i data-lucide="eye"></i></div>
-                    <h3 class="text-xl font-bold text-slate-100">Модуль 5: Наблюдение</h3>
+                    <h3 class="text-xl font-bold text-slate-100">Module 5: Observation</h3>
                 </div>
-                <textarea class="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 text-slate-200 placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" rows="6" placeholder="Введите клинические заметки..."></textarea>
+                <textarea class="w-full bg-slate-900 border border-slate-700 rounded-xl p-4 text-slate-200 placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" rows="6" placeholder="Enter clinical notes..."></textarea>
             </div>
         </div>
 
@@ -340,11 +340,11 @@
             <div class="bg-slate-900 rounded-[22px] p-6 md:p-8">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 pb-6 border-b border-slate-800">
                     <div>
-                        <h2 class="text-3xl font-black text-white mb-1">Сводный отчет</h2>
+                        <h2 class="text-3xl font-black text-white mb-1">Summary Report</h2>
                         <p class="text-slate-400 text-sm">R-PAT Kids Analytical Dashboard</p>
                     </div>
                     <div id="main-risk-badge" class="mt-4 md:mt-0 px-6 py-2 rounded-full border bg-emerald-500/10 border-emerald-500/20 text-emerald-400 font-bold uppercase tracking-wider">
-                        Низкий риск
+                        Low Risk
                     </div>
                 </div>
 
@@ -361,11 +361,11 @@
                         </svg>
                         <div class="absolute flex flex-col items-center">
                             <span id="main-val" class="text-3xl font-bold text-white">0</span>
-                            <span class="text-[10px] text-slate-400 uppercase">из 100</span>
+                            <span class="text-[10px] text-slate-400 uppercase">of 100</span>
                         </div>
 
                         <div class="mt-4 text-center">
-                            <div class="text-slate-500 text-xs font-bold uppercase">Общий индекс боли</div>
+                            <div class="text-slate-500 text-xs font-bold uppercase">Total Pain Index</div>
                             <div class="text-white font-mono text-sm opacity-50" id="current-date">--.--.----</div>
                         </div>
                     </div>
@@ -375,7 +375,7 @@
                         <!-- FLACC Bar -->
                         <div class="mb-3">
                             <div class="flex justify-between text-xs mb-1">
-                                <span class="text-slate-400">Объективно (FLACC)</span>
+                                <span class="text-slate-400">Objective (FLACC)</span>
                                 <span id="bar-flacc-val" class="text-slate-200 font-mono">0/10</span>
                             </div>
                             <div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden">
@@ -385,7 +385,7 @@
                         <!-- Self Bar -->
                         <div class="mb-3">
                             <div class="flex justify-between text-xs mb-1">
-                                <span class="text-slate-400">Самооценка (Scale)</span>
+                                <span class="text-slate-400">Self-Report (Scale)</span>
                                 <span id="bar-pain-val" class="text-slate-200 font-mono">0/10</span>
                             </div>
                             <div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden">
@@ -395,7 +395,7 @@
                         <!-- Psycho Bar -->
                         <div class="mb-3">
                             <div class="flex justify-between text-xs mb-1">
-                                <span class="text-slate-400">Психо (Stress/Sleep)</span>
+                                <span class="text-slate-400">Psycho (Stress/Sleep)</span>
                                 <span id="bar-psy-val" class="text-slate-200 font-mono">2/10</span>
                             </div>
                             <div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden">
@@ -405,7 +405,7 @@
                         <!-- Cog Bar -->
                         <div class="mb-3">
                             <div class="flex justify-between text-xs mb-1">
-                                <span class="text-slate-400">Когнитив (Coping)</span>
+                                <span class="text-slate-400">Cognitive (Coping)</span>
                                 <span id="bar-cog-val" class="text-slate-200 font-mono">3/10</span>
                             </div>
                             <div class="h-2 w-full bg-slate-700 rounded-full overflow-hidden">
@@ -415,17 +415,17 @@
 
                         <div class="col-span-1 sm:col-span-2 mt-4 p-4 bg-slate-800 rounded-xl border-l-4 border-l-blue-500">
                             <h5 class="text-blue-400 font-bold text-sm mb-1 flex items-center gap-2">
-                                <i data-lucide="activity" class="w-4 h-4"></i> Рекомендация ИИ
+                                <i data-lucide="activity" class="w-4 h-4"></i> AI Recommendation
                             </h5>
                             <p id="ai-advice" class="text-slate-300 text-sm leading-relaxed">
-                                Продолжать текущую терапию. Повторная оценка через 12 часов.
+                                Continue current therapy. Re-assess in 12 hours.
                             </p>
                         </div>
                     </div>
                 </div>
 
                 <button onclick="window.print()" class="w-full mt-6 py-4 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl transition-colors border border-slate-700 no-print">
-                    Экспорт в PDF
+                    Export to PDF
                 </button>
             </div>
         </div>
@@ -468,28 +468,28 @@
 
     // CONSTANTS
     const FLACC_DATA = [
-        { id: 'face', name: 'Лицо', options: ['Нет особого выражения', 'Иногда гримаса', 'Частое дрожание/сжатые челюсти'] },
-        { id: 'legs', name: 'Ноги', options: ['Нормальные/расслабленные', 'Беспокойные', 'Поджатые/брыкающиеся'] },
-        { id: 'activity', name: 'Активность', options: ['Лежит спокойно', 'Извивается', 'Выгибается дугой'] },
-        { id: 'cry', name: 'Плач', options: ['Не плачет', 'Стонет/хнычет', 'Постоянный плач/крик'] },
-        { id: 'consolability', name: 'Утешаемость', options: ['Расслаблен', 'Успокаивается', 'Трудно успокоить'] }
+        { id: 'face', name: 'Face', options: ['No particular expression or smile', 'Occasional grimace or frown', 'Frequent to constant quivering chin, clenched jaw'] },
+        { id: 'legs', name: 'Legs', options: ['Normal position or relaxed', 'Uneasy, restless, tense', 'Kicking, or legs drawn up'] },
+        { id: 'activity', name: 'Activity', options: ['Lying quietly, normal position', 'Squirming, shifting back and forth', 'Arched, rigid or jerking'] },
+        { id: 'cry', name: 'Cry', options: ['No cry', 'Moans or whimpers', 'Crying steadily, screams or sobs'] },
+        { id: 'consolability', name: 'Consolability', options: ['Content, relaxed', 'Reassured by touching, talking', 'Difficult to console or comfort'] }
     ];
 
     const FACES_DATA = [
-        { val: 0, emoji: "😃", label: "Нет" },
-        { val: 2, emoji: "🙂", label: "Чуть" },
-        { val: 4, emoji: "😐", label: "Мало" },
-        { val: 6, emoji: "🙁", label: "Сильно" },
-        { val: 8, emoji: "😢", label: "Очень" },
-        { val: 10, emoji: "😭", label: "Макс" },
+        { val: 0, emoji: "😃", label: "None" },
+        { val: 2, emoji: "🙂", label: "Little" },
+        { val: 4, emoji: "😐", label: "Some" },
+        { val: 6, emoji: "🙁", label: "Strong" },
+        { val: 8, emoji: "😢", label: "Very" },
+        { val: 10, emoji: "😭", label: "Max" },
     ];
 
-    const PAIN_TYPES = ['Колющая', 'Жгучая', 'Тупая', 'Давящая', 'Пульсирующая', 'Внезапная'];
+    const PAIN_TYPES = ['Stabbing', 'Burning', 'Dull', 'Pressing', 'Throbbing', 'Sudden'];
 
     const BODY_LABELS = {
-        'head': 'Голова', 'chest': 'Грудь', 'stomach': 'Живот',
-        'l_arm': 'Левая рука', 'r_arm': 'Правая рука',
-        'l_leg': 'Левая нога', 'r_leg': 'Правая нога'
+        'head': 'Head', 'chest': 'Chest', 'stomach': 'Stomach',
+        'l_arm': 'Left Arm', 'r_arm': 'Right Arm',
+        'l_leg': 'Left Leg', 'r_leg': 'Right Leg'
     };
 
     // INIT
@@ -549,7 +549,7 @@
                 const btn = document.createElement('button');
                 btn.className = `text-left text-sm p-3 rounded-lg border transition-all ${state.flacc[cat.id] === idx ? 'bg-blue-600 border-blue-500 text-white' : 'bg-slate-800 text-slate-400 border-slate-700 hover:border-slate-500'}`;
                 btn.onclick = () => setFlacc(cat.id, idx);
-                btn.innerHTML = `<div class="font-bold mb-1 opacity-70 text-xs">БАЛЛ: ${idx}</div>${opt}`;
+                btn.innerHTML = `<div class="font-bold mb-1 opacity-70 text-xs">SCORE: ${idx}</div>${opt}`;
                 grid.appendChild(btn);
             });
 
@@ -598,7 +598,7 @@
     function updateBodyLabel() {
         const listEl = document.getElementById('selected-parts-list');
         if(state.selectedBodyParts.length === 0) {
-            listEl.innerHTML = 'Ничего не выбрано';
+            listEl.innerHTML = 'Nothing selected';
             return;
         }
         listEl.innerHTML = '';
@@ -644,25 +644,25 @@
         const index = Math.min(100, Math.round((sum / 50) * 100));
 
         // Determine Risk Level & Colors
-        let levelLabel = 'Низкий';
+        let levelLabel = 'Low';
         let mainColor = '#10b981'; // emerald
         let bgClass = 'bg-emerald-500/10 border-emerald-500/20';
         let textClass = 'text-emerald-400';
-        let advice = 'Продолжать текущую терапию. Повторная оценка через 12 часов.';
+        let advice = 'Continue current therapy. Re-assess in 12 hours.';
 
         if (index > 30) {
-            levelLabel = 'Средний';
+            levelLabel = 'Medium';
             mainColor = '#f59e0b'; // amber
             bgClass = 'bg-amber-500/10 border-amber-500/20';
             textClass = 'text-amber-400';
-            advice = 'Мониторинг каждые 4 часа. Примените методы отвлечения (игры, дыхание).';
+            advice = 'Monitor every 4 hours. Apply distraction methods (games, breathing).';
         }
         if (index > 60) {
-            levelLabel = 'Высокий';
+            levelLabel = 'High';
             mainColor = '#f43f5e'; // rose
             bgClass = 'bg-rose-500/10 border-rose-500/20';
             textClass = 'text-rose-400';
-            advice = 'Рекомендуется немедленная консультация специалиста по боли. Рассмотрите мультимодальную аналгезию.';
+            advice = 'Immediate consultation with pain specialist recommended. Consider multimodal analgesia.';
         }
 
         // Update Header Badge
@@ -686,7 +686,7 @@
         // Update Main Dashboard Badge & Chart
         const mBadge = document.getElementById('main-risk-badge');
         mBadge.className = `mt-4 md:mt-0 px-6 py-2 rounded-full border ${bgClass} ${textClass} font-bold uppercase tracking-wider`;
-        mBadge.innerText = levelLabel + ' риск';
+        mBadge.innerText = levelLabel + ' Risk';
 
         const mainCircumference = 2 * Math.PI * 54; // r=54
         const mainOffset = mainCircumference - (index / 100) * mainCircumference;
