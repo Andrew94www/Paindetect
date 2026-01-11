@@ -95,12 +95,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/atas', function () {
         return view('atas');
     })->name('atas');
+Route::get('/cabinet', function () {
+    return view('cabinet');
+})->name('cabinet');
+Route::get('/sepsis', function () {
+    return view('sepsis');
+})->name('sepsis');
 
     Route::get('/kids', function () {
         return view('kids');
         })->name('kids');
 
 });
+Route::get('/sepsis', function () {
+    return view('sepsis');
+})->name('sepsis');
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
