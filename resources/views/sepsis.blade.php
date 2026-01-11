@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sepsis-3 AI Прогнозатор</title>
+    <title>Sepsis-3</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js -->
@@ -263,7 +263,7 @@
                 <div class="absolute top-0 right-0 p-4 opacity-10">
                     <i class="fa-solid fa-brain text-6xl text-white"></i>
                 </div>
-                <h4 class="text-slate-400 text-xs font-bold uppercase tracking-wider">Ймовірність Летальності (AI)</h4>
+                <h4 class="text-slate-400 text-xs font-bold uppercase tracking-wider">Ймовірність Летальності</h4>
 
                 <div class="flex items-end gap-4 mt-2">
                     <span id="mortality_display" class="text-5xl font-bold text-white">--%</span>
