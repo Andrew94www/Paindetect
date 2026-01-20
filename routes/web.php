@@ -3,6 +3,7 @@
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\ManController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ReitingsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChronicPainController;
@@ -125,6 +126,23 @@ Route::post('/logout', [RegisterController::class, 'logout'])->name('logout');
 Route::get('/home', function () {
     return 'Welcome to the home page! You are logged in as: ' . Auth::user()->name;
 })->middleware('auth');
+
+// 1. Стартовая страница (открытая)
+Route::get('/startPage', [ReitingsController::class, 'index'])->name('startPage');
+
+// Эти роуты нужны, чтобы пользователь мог увидеть форму и отправить код
+Route::prefix('department/{code}')->group(function () {
+    Route::get('/unlock', [ReitingsController::class, 'showUnlockForm'])->name('departments.unlock');
+    Route::post('/unlock', [ReitingsController::class, 'verifyCode'])->name('departments.verify');
+});
+
+// 3. Защищенный роут кафедры
+// Мы оборачиваем его в middleware 'dept.access', который вы создали ранее
+Route::middleware(['dept.access'])->group(function () {
+    Route::get('/department/{code}', [ReitingsController::class, 'show'])->name('departments.show');
+    Route::get('/department/list/{code}', [ReitingsController::class, 'list'])->name('departments.list');
+});
+Route::post('/department/create', [ReitingsController::class, 'create'])->name('departments.create');
 
 Route::resource('users', UserController::class)->middleware('auth');;
 
