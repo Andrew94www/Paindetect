@@ -104,5 +104,14 @@ class ReitingsController extends Controller
         return view('reiting.list',['reitingsList'=>$reitingsList]);
     }
 
+    public function indexAdmin(){
+        return view('reiting.index_admin');
+    }
+
+    public function listForAdmin($code){
+        $reitingsList = DB::table('ratings')->where('code', $code)->get();
+        return view('reiting.list_admin',['reitingsList'=>$reitingsList,'code'=>$code]);
+    }
+
 }
 

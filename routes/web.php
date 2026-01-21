@@ -4,6 +4,7 @@ use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\ManController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ReitingsController;
+use App\Http\Controllers\TeachersController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChronicPainController;
@@ -129,6 +130,19 @@ Route::get('/home', function () {
 
 // 1. Стартовая страница (открытая)
 Route::get('/startPage', [ReitingsController::class, 'index'])->name('startPage');
+
+Route::post('/create/teacher', [TeachersController::class, 'create'])->name('teacher.create');
+
+Route::post('/edit/teachers/{id}', [TeachersController::class, 'edit'])->name('teacher.edit');
+
+Route::post('/deletion/teachers/{id}', [TeachersController::class, 'deletion'])->name('teacher.deletion');
+
+Route::get('/adminDepartment', [ReitingsController::class, 'indexAdmin'])->name('adminDepartment');
+
+
+Route::prefix('admin/department')->group(function () {
+    Route::get('/{code}', [ReitingsController::class, 'listForAdmin'])->name('departments.listForAdmin');
+});
 
 // Эти роуты нужны, чтобы пользователь мог увидеть форму и отправить код
 Route::prefix('department/{code}')->group(function () {
