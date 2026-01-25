@@ -93,6 +93,10 @@
         </div>
         <!-- Action Buttons Group -->
         <div class="flex flex-wrap items-center gap-3">
+            <!-- Restored "Show List" Button -->
+            <a href="{{ route('departments.list', ['code' => $code]) }}" class="bg-dark-surface border border-dark-border hover:bg-gray-800 text-dark-textLight px-5 py-2.5 rounded-lg font-medium transition-all transform hover:scale-105 active:scale-95 flex items-center shadow-sm">
+                <i class="fa-solid fa-list-ul mr-2 text-dark-primary"></i> Показати список
+            </a>
             <button onclick="window.location.reload()" class="bg-dark-surface border border-dark-border hover:bg-gray-800 text-dark-textLight px-5 py-2.5 rounded-lg font-medium transition-all transform hover:scale-105 active:scale-95 flex items-center shadow-sm">
                 <i class="fa-solid fa-rotate-right mr-2 text-gray-400"></i> Скинути
             </button>
