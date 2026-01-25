@@ -207,7 +207,7 @@
 <script>
     // Data Source
     const departments = [
-        // Theoretical
+        // --- Theoretical / General ---
         { name: "Кафедра анатомії людини", category: "theoretical", link: "/department/anatomy" },
         { name: "Кафедра біологічної фізики, медичної апаратури та інформатики", category: "theoretical", link: "/department/biophysics" },
         { name: "Кафедра біохімії та загальної хімії", category: "theoretical", link: "/department/biochemistry" },
@@ -217,38 +217,67 @@
         { name: "Кафедра нормальної фізіології", category: "theoretical", link: "/department/physiology" },
         { name: "Кафедра патологічної анатомії", category: "theoretical", link: "/department/path-anatomy" },
         { name: "Кафедра патологічної фізіології", category: "theoretical", link: "/department/path-physiology" },
+        { name: "Кафедра оперативної хірургії та клінічної анатомії", category: "theoretical", link: "/department/op-surgery" },
+        { name: "Кафедра загальної гігієни та екології", category: "theoretical", link: "/department/general-hygiene" },
+        { name: "Кафедра епідеміології", category: "theoretical", link: "/department/epidemiology" },
         { name: "Кафедра іноземних мов", category: "theoretical", link: "/department/languages" },
+        { name: "Кафедра латинської мови", category: "theoretical", link: "/department/latin" },
         { name: "Кафедра суспільних наук", category: "theoretical", link: "/department/social-sciences" },
+        { name: "Кафедра філософії та суспільних наук", category: "theoretical", link: "/department/philosophy" },
+        { name: "Кафедра українознавства", category: "theoretical", link: "/department/ukrainian-studies" },
+        { name: "Кафедра педагогіки та психології", category: "theoretical", link: "/department/pedagogy-psych" },
+        { name: "Кафедра фізвиховання", category: "theoretical", link: "/department/phys-ed" },
+        { name: "Кафедра судової медицини та права", category: "theoretical", link: "/department/forensic-med" },
+        { name: "Кафедра менеджменту", category: "theoretical", link: "/department/management" },
+        { name: "Медичне право", category: "theoretical", link: "/department/med-law" },
 
-        // Clinical
+        // --- Clinical ---
         { name: "Кафедра акушерства і гінекології №1", category: "clinical", link: "/department/obstetrics-1" },
         { name: "Кафедра акушерства і гінекології №2", category: "clinical", link: "/department/obstetrics-2" },
         { name: "Кафедра внутрішньої медицини №1", category: "clinical", link: "/department/int-medicine-1" },
         { name: "Кафедра внутрішньої медицини №2", category: "clinical", link: "/department/int-medicine-2" },
+        { name: "Кафедра внутрішньої медицини №3", category: "clinical", link: "/department/int-medicine-3" },
+        { name: "Кафедра внутрішньої медицини МФ №2", category: "clinical", link: "/department/int-medicine-mf2" },
         { name: "Кафедра внутрішньої та сімейної медицини", category: "clinical", link: "/department/family-medicine" },
+        { name: "Кафедра пропедевтики внутрішньої медицини", category: "clinical", link: "/department/propaedeutics" },
         { name: "Кафедра ендокринології", category: "clinical", link: "/department/endocrinology" },
         { name: "Кафедра інфекційних хвороб", category: "clinical", link: "/department/infectious-diseases" },
-        { name: "Кафедра клінічної фармації", category: "clinical", link: "/department/clin-pharmacy" },
         { name: "Кафедра медицини катастроф та військової медицини", category: "clinical", link: "/department/military-med" },
-        { name: "Кафедра нервових хвороб", category: "clinical", link: "/department/neurology" },
-        { name: "Кафедра променевої діагностики та онкології", category: "clinical", link: "/department/oncology" },
+        { name: "Кафедра нервових хвороб з курсом нейрохірургії", category: "clinical", link: "/department/neurology-neurosurg" },
+        { name: "Кафедра променевої діагностики, променевої терапії та онкології", category: "clinical", link: "/department/oncology-radiology" },
         { name: "Кафедра педіатрії №1", category: "clinical", link: "/department/pediatrics-1" },
         { name: "Кафедра педіатрії №2", category: "clinical", link: "/department/pediatrics-2" },
-        { name: "Кафедра пропедевтики внутрішньої медицини", category: "clinical", link: "/department/propaedeutics" },
-        { name: "Кафедра психіатрії та наркології", category: "clinical", link: "/department/psychiatry" },
+        { name: "Кафедра пропедевтики дитячих захворювань", category: "clinical", link: "/department/prop-pediatrics" },
+        { name: "Кафедра дитячих інфекційних хвороб", category: "clinical", link: "/department/ped-infectious" },
+        { name: "Кафедра дитячої хірургії", category: "clinical", link: "/department/ped-surgery" },
+        { name: "Кафедра психіатрії, наркології та психотерапії", category: "clinical", link: "/department/psychiatry" },
+        { name: "Кафедра медичної психології та психіатрії", category: "clinical", link: "/department/med-psychology" },
         { name: "Кафедра травматології та ортопедії", category: "clinical", link: "/department/traumatology" },
+        { name: "Кафедра фізичної та реабілітаційної медицини", category: "clinical", link: "/department/rehab-medicine" },
+        { name: "Кафедра загальної хірургії", category: "clinical", link: "/department/general-surgery" },
         { name: "Кафедра хірургії №1", category: "clinical", link: "/department/surgery-1" },
         { name: "Кафедра хірургії №2", category: "clinical", link: "/department/surgery-2" },
+        { name: "Кафедра хірургії МФ №2", category: "clinical", link: "/department/surgery-mf2" },
+        { name: "Кафедра ендоскопічної та серцево-судинної хірургії", category: "clinical", link: "/department/cv-surgery" },
+        { name: "Кафедра анестезіології, інтенсивної терапії та МНС", category: "clinical", link: "/department/anesthesiology" },
+        { name: "Курс урології", category: "clinical", link: "/department/urology" },
+        { name: "Кафедра оториноларингології", category: "clinical", link: "/department/ent" },
+        { name: "Кафедра очних хвороб", category: "clinical", link: "/department/ophthalmology" },
+        { name: "Кафедра фтизіатрії", category: "clinical", link: "/department/phthisiology" },
+        { name: "Кафедра шкірно-венеричних хвороб", category: "clinical", link: "/department/dermatology" },
+        { name: "Кафедра соціальної медицини", category: "clinical", link: "/department/social-medicine" },
 
-        // Dental
+        // --- Dental ---
         { name: "Кафедра ортопедичної стоматології", category: "dental", link: "/department/ortho-dentistry" },
         { name: "Кафедра стоматології дитячого віку", category: "dental", link: "/department/ped-dentistry" },
         { name: "Кафедра терапевтичної стоматології", category: "dental", link: "/department/ther-dentistry" },
         { name: "Кафедра хірургічної стоматології", category: "dental", link: "/department/surg-dentistry" },
 
-        // Pharma
+        // --- Pharma ---
         { name: "Кафедра фармації", category: "pharma", link: "/department/pharmacy" },
-        { name: "Кафедра фармацевтичної хімії", category: "pharma", link: "/department/pharm-chemistry" }
+        { name: "Кафедра фармацевтичної хімії", category: "pharma", link: "/department/pharm-chemistry" },
+        { name: "Кафедра клінічної фармації", category: "pharma", link: "/department/clin-pharmacy" },
+        { name: "Кафедра фармакології", category: "pharma", link: "/department/pharmacology" }
     ];
 
     const grid = document.getElementById('departmentsGrid');
