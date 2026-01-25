@@ -130,7 +130,6 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-400 mb-1">Навчальний рік</label>
                         <select name="personal[year]" class="w-full bg-dark-bg border border-dark-border rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-dark-primary outline-none">
-                            <option>2023-2024</option>
                             <option>2024-2025</option>
                             <option>2025-2026</option>
                             <option>2026-2027</option>
