@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Повна Рейтингова Система Оцінки НПП</title>
+    <!-- Dummy CSRF token for frontend demo -->
+    <meta name="csrf-token" content="demo-token">
+    <title>Рейтинг науково-педагогічних працівників</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -35,10 +36,21 @@
         ::-webkit-scrollbar-thumb:hover { background: #373a40; }
         .animate-fade-in { animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        /* Sticky header for tables */
-        .sticky-header { position: sticky; top: 0; z-index: 10; background-color: #25262b; }
 
         /* Tooltip styles */
+        .tooltip-container { position: relative; }
+        .tooltip-text {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 8px;
+            z-index: 50;
+            white-space: nowrap;
+        }
         .tooltip-container:hover .tooltip-text { opacity: 1; visibility: visible; }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -46,27 +58,25 @@
 <body class="bg-dark-bg text-dark-text min-h-screen font-sans antialiased flex flex-col relative">
 
 <!-- Toast Notification Container -->
-<div id="toast-container" class="fixed top-24 right-5 z-[60] flex flex-col gap-3 pointer-events-none">
-    <!-- Toasts will be injected here by JS -->
-</div>
+<div id="toast-container" class="fixed top-24 right-5 z-[60] flex flex-col gap-3 pointer-events-none"></div>
 
 <!-- Navbar -->
 <nav class="bg-dark-surface border-b border-dark-border sticky top-0 z-50 shadow-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex items-center">
-                <i class="fa-solid fa-chart-line text-dark-primary text-2xl mr-3"></i>
+                <i class="fa-solid fa-chart-pie text-dark-primary text-2xl mr-3"></i>
                 <div>
-                    <span class="font-bold text-xl text-dark-textLight block leading-none">ВНМУ Рейтинг</span>
+                    <span class="font-bold text-xl text-dark-textLight block leading-none">Рейтинг НПП</span>
                     <span class="text-xs text-gray-500">Система оцінки ефективності</span>
                 </div>
             </div>
             <div class="flex items-center space-x-4">
                 <div class="text-right hidden sm:block">
-                    <div class="text-sm text-dark-textLight font-medium">Адміністратор</div>
-                    <div class="text-xs text-gray-500">admin@vnmu.edu.ua</div>
+                    <div class="text-sm text-dark-textLight font-medium">Викладач</div>
+                    <div class="text-xs text-gray-500">profile@vnmu.edu.ua</div>
                 </div>
-                <div class="h-9 w-9 rounded-lg bg-dark-primary flex items-center justify-center text-white font-bold shadow-lg shadow-blue-900/20">A</div>
+                <div class="h-9 w-9 rounded-lg bg-dark-primary flex items-center justify-center text-white font-bold shadow-lg shadow-blue-900/20">V</div>
             </div>
         </div>
     </div>
@@ -78,28 +88,27 @@
     <!-- Header & Controls -->
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div>
-            <h1 class="text-3xl font-bold text-dark-textLight">Розрахунок рейтингу</h1>
+            <h1 class="text-3xl font-bold text-dark-textLight">Рейтинг науково-педагогічних працівників</h1>
             <p class="text-gray-400 mt-1">Заповніть форму згідно з Положенням про рейтингову систему.</p>
         </div>
         <!-- Action Buttons Group -->
         <div class="flex flex-wrap items-center gap-3">
-            <a href="{{ route('departments.list', ['code' => $code]) }}" class="bg-dark-surface border border-dark-border hover:bg-gray-800 text-dark-textLight px-5 py-2.5 rounded-lg font-medium transition-all transform hover:scale-105 active:scale-95 flex items-center shadow-sm">
-                <i class="fa-solid fa-list-ul mr-2 text-dark-primary"></i> Показати список
-            </a>
+            <button onclick="window.location.reload()" class="bg-dark-surface border border-dark-border hover:bg-gray-800 text-dark-textLight px-5 py-2.5 rounded-lg font-medium transition-all transform hover:scale-105 active:scale-95 flex items-center shadow-sm">
+                <i class="fa-solid fa-rotate-right mr-2 text-gray-400"></i> Скинути
+            </button>
             <button onclick="toggleForm()" class="bg-dark-primary hover:bg-dark-primaryHover text-white px-5 py-2.5 rounded-lg shadow-lg shadow-blue-900/20 font-medium transition-all transform hover:scale-105 active:scale-95 flex items-center">
-                <i class="fa-solid fa-plus mr-2"></i> Новий розрахунок
+                <i class="fa-solid fa-file-pen mr-2"></i> Відкрити анкету
             </button>
         </div>
-
     </div>
 
     <!-- Empty State (Visible by default) -->
     <div id="emptyState" class="text-center py-24 bg-dark-surface rounded-xl border border-dark-border border-dashed">
         <div class="bg-dark-bg w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 border border-dark-border">
-            <i class="fa-solid fa-file-invoice text-3xl text-gray-600"></i>
+            <i class="fa-solid fa-clipboard-list text-3xl text-gray-600"></i>
         </div>
-        <h3 class="text-lg font-medium text-dark-textLight">Форма прихована</h3>
-        <p class="text-gray-500 mt-1">Натисніть кнопку вище, щоб відкрити анкету.</p>
+        <h3 class="text-lg font-medium text-dark-textLight">Анкета готова до роботи</h3>
+        <p class="text-gray-500 mt-1">Натисніть кнопку "Відкрити анкету", щоб розпочати введення даних.</p>
     </div>
 
     <!-- Dynamic Form Container (Hidden by default) -->
@@ -114,7 +123,7 @@
                 <div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
                         <label class="block text-sm font-medium text-gray-400 mb-1">ПІБ Викладача</label>
-                        <input type="text" name="personal[name]" class="w-full bg-dark-bg border border-dark-border rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-dark-primary focus:border-transparent outline-none transition-all" required autocomplete="off">
+                        <input type="text" name="personal[name]" class="w-full bg-dark-bg border border-dark-border rounded-lg px-4 py-2.5 text-white focus:ring-2 focus:ring-dark-primary focus:border-transparent outline-none transition-all" required autocomplete="off" placeholder="Іванов Іван Іванович">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-400 mb-1">Посада</label>
@@ -134,9 +143,6 @@
                             <option>2025-2026</option>
                             <option>2026-2027</option>
                         </select>
-                    </div>
-                    <div class="hidden">
-                        <input name="code" type="hidden" value="{{$code}}">
                     </div>
                 </div>
             </div>
@@ -248,7 +254,16 @@
                 { id: '2_20', text: 'Атестація лабораторії (макс 10)', points: 1, type: 'manual' },
                 { id: '2_21', text: 'Студент-переможець наук. робіт (Міжн/Всеукр/Унів)', type: 'manual', note: 'Введіть суму балів (15/10/5)' },
                 { id: '2_22', text: 'Екзаменатор студ. робіт (держ. рівень)', points: 5, type: 'simple' },
+
+                // ADDED ITEMS (MISSING IN ORIGINAL)
+                { id: '2_23', text: 'Підготовка студента-призера/учасника олімпіади', type: 'manual', note: 'Всеукр./Міжнар. (10-20 балів)' },
+
                 { id: '2_24', text: 'Суддя спорт. змагань (макс 20)', points: 1, type: 'manual', note: 'Не більше 20 балів сумарно' },
+
+                // ADDED ITEMS (MISSING IN ORIGINAL)
+                { id: '2_25', text: 'Тренер збірної команди університету', points: 15, type: 'simple', note: 'За виконання обов\'язків' },
+                { id: '2_26', text: 'Особиста участь у спорт. змаганнях (збірна)', points: 10, type: 'simple', note: 'Спартакіади тощо' },
+
                 { id: '2_27', text: 'Міжнародний патент', points: 30, type: 'shared' },
                 { id: '2_28', text: 'Впровадження у виробництво', points: 15, type: 'shared' },
                 { id: '2_29_1', text: 'Патент UA (промисловий)', points: 20, type: 'shared' },
@@ -261,8 +276,16 @@
                 { id: '2_34', text: 'Протермінування звання (-10/рік)', points: -10, type: 'simple', note: 'Штрафні бали' },
                 { id: '2_35', text: 'Опонування докторської', points: 15, type: 'simple' },
                 { id: '2_36', text: 'Опонування PhD', points: 10, type: 'simple' },
+
+                // ADDED ITEM (MISSING IN ORIGINAL)
+                { id: '2_37', text: 'Рецензування підручників/монографій', points: 5, type: 'simple' },
+
                 { id: '2_38_1', text: 'Спецрада ВНМУ (Голова/Секретар)', points: 20, type: 'simple' },
                 { id: '2_38_2', text: 'Спецрада ВНМУ (Член)', points: 10, type: 'simple' },
+
+                // ADDED ITEM (MISSING IN ORIGINAL)
+                { id: '2_39', text: 'Участь у разових спецрадах (PhD)', points: 5, type: 'simple' },
+
                 { id: '2_40', text: 'Відгук на автореферат', points: 5, type: 'simple' },
             ]
         },
@@ -280,8 +303,16 @@
                 { id: '3_6_2', text: 'Оргкомітет/Журі (Всеукраїнські)', points: 10, type: 'simple' },
                 { id: '3_6_3', text: 'Оргкомітет/Журі (Обласні)', points: 5, type: 'simple' },
                 { id: '3_6_4', text: 'Оргкомітет/Журі (Факультетські)', points: 3, type: 'simple' },
+
+                // ADDED ITEM (MISSING IN ORIGINAL)
+                { id: '3_7', text: 'Профорієнтаційна робота', points: 5, type: 'simple', note: 'Виїзди в школи, коледжі' },
+
                 { id: '3_8_1', text: 'Редколегія журналу Університету (Голова/Заст)', points: 20, type: 'simple' },
                 { id: '3_8_2', text: 'Редколегія журналу Університету (Член)', points: 5, type: 'simple' },
+
+                // ADDED ITEM (LIKELY MISSING)
+                { id: '3_9', text: 'Організація культурно-мистецьких заходів', points: 5, type: 'simple' },
+
                 { id: '3_10_1', text: 'Редколегія Scopus/WoS (Голова/Заст)', points: 25, type: 'simple' },
                 { id: '3_10_2', text: 'Редколегія Scopus/WoS (Член)', points: 20, type: 'simple' },
                 { id: '3_11_1', text: 'Сертифікат англійської (B2+)', points: 15, type: 'fixed' },
@@ -353,7 +384,7 @@
             body.id = `body-${section.id}`;
             body.className = "hidden"; // Start collapsed
 
-            // ADDED: Column Headers Row for Clarity
+            // Column Headers Row for Clarity
             const colHeader = document.createElement('div');
             colHeader.className = "grid grid-cols-12 gap-2 sm:gap-4 px-4 py-3 bg-gray-900/50 border-b border-dark-border/50 text-xs uppercase font-bold text-gray-500 tracking-wider";
             colHeader.innerHTML = `
@@ -377,16 +408,19 @@
                 let inputsHtml = '';
                 let noteHtml = item.note ? `<div class="text-[10px] text-gray-500 mt-1"><i class="fa-solid fa-circle-info mr-1"></i>${item.note}</div>` : '';
 
-                // Explicit Placeholders as requested
+                // Logic for inputs based on type
                 if (item.type === 'shared') {
                     inputsHtml = `
                             <div class="col-span-3 sm:col-span-2 relative tooltip-container">
                                 <span class="text-[10px] text-gray-500 absolute -top-2 left-2 bg-dark-surface px-1">Робіт</span>
                                 <input type="number" min="0" value="0" class="inp-count w-full bg-dark-bg border border-dark-border rounded px-2 py-1.5 text-white text-center focus:border-dark-primary outline-none" oninput="calculateRow(this)">
                             </div>
-                            <div class="col-span-3 sm:col-span-2 relative">
+                            <div class="col-span-3 sm:col-span-2 relative tooltip-container">
                                 <span class="text-[10px] text-gray-500 absolute -top-2 left-2 bg-dark-surface px-1">Авторів</span>
                                 <input type="number" min="1" value="1" class="inp-authors w-full bg-dark-bg border border-dark-border rounded px-2 py-1.5 text-white text-center focus:border-dark-primary outline-none" oninput="calculateRow(this)">
+                                <div class="tooltip-text px-2 py-1 text-xs text-white bg-black/90 border border-gray-700 rounded shadow-lg">
+                                    Кількість авторів (мін. 1)
+                                </div>
                             </div>
                         `;
                 } else if (item.type === 'shared_pool') {
@@ -395,11 +429,14 @@
                                 <span class="block text-[9px] uppercase">Фонд балів</span>
                                 <span class="text-dark-primary font-bold">${item.points}</span>
                             </div>
-                            <div class="col-span-3 sm:col-span-2 relative">
+                            <div class="col-span-3 sm:col-span-2 relative tooltip-container">
                                 <span class="text-[10px] text-gray-500 absolute -top-2 left-2 bg-dark-surface px-1">Учасників</span>
                                 <div class="flex items-center gap-2">
                                     <input type="checkbox" class="pool-enable accent-dark-primary w-4 h-4" onchange="calculateRow(this)" title="Активувати">
                                     <input type="number" min="1" value="1" class="inp-authors w-full bg-dark-bg border border-dark-border rounded px-2 py-1.5 text-white text-center focus:border-dark-primary outline-none disabled:opacity-30 disabled:cursor-not-allowed" disabled oninput="calculateRow(this)">
+                                </div>
+                                <div class="tooltip-text px-2 py-1 text-xs text-white bg-black/90 border border-gray-700 rounded shadow-lg">
+                                    Кількість учасників (мін. 1)
                                 </div>
                             </div>
                         `;
@@ -441,6 +478,7 @@
 
                 row.innerHTML = `
                         <div class="col-span-6 sm:col-span-6 text-sm text-gray-300 pr-2">
+                            <span class="text-xs font-mono text-gray-500 mr-1">${item.id.replace('_', '.')}</span>
                             ${item.text}
                             ${noteHtml}
                             <input type="hidden" name="items[${item.id}][label]" value="${item.text}">
@@ -492,6 +530,16 @@
     }
 
     function calculateRow(element) {
+        // Enforce min value for authors inputs
+        if (element.classList.contains('inp-authors')) {
+            const val = parseFloat(element.value);
+            // If user enters 0, reset to 1 immediately
+            if (!isNaN(val) && val < 1) {
+                element.value = 1;
+                // Optional: visual feedback or toast could go here
+            }
+        }
+
         const row = element.closest('.grid');
         const type = row.dataset.type;
         const points = parseFloat(row.dataset.points);
@@ -604,27 +652,23 @@
     }
 
     // ------------------------------------------------------------------
-    // JSON SUBMISSION HANDLER
+    // SUBMISSION HANDLER (DEMO)
     // ------------------------------------------------------------------
     document.getElementById('ratingForm').addEventListener('submit', function(e) {
-        e.preventDefault(); // Stop standard form submission
+        e.preventDefault();
         const btn = document.getElementById('submitBtn');
         const originalBtnContent = btn.innerHTML;
 
-        // Show loading state
         btn.disabled = true;
         btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Обробка...';
 
-        // Gather Data
         const formData = new FormData(this);
         const data = {
             personal: {},
             items: [],
-            totalScore: parseFloat(document.getElementById('grandTotal').textContent),
-            code: formData.get('code')
+            totalScore: parseFloat(document.getElementById('grandTotal').textContent)
         };
 
-        // Personal Info
         for (let [key, value] of formData.entries()) {
             if (key.startsWith('personal[')) {
                 const field = key.match(/\[(.*?)\]/)[1];
@@ -632,7 +676,6 @@
             }
         }
 
-        // Items (Only those with non-zero score)
         document.querySelectorAll('.grid[data-id]').forEach(row => {
             const id = row.dataset.id;
             const score = parseFloat(row.querySelector('.final-score-input').value) || 0;
@@ -642,7 +685,6 @@
                 const type = row.dataset.type;
                 let itemData = { id, label, score, type };
 
-                // Add details based on type
                 if (row.querySelector('.inp-count')) itemData.count = row.querySelector('.inp-count').value;
                 if (row.querySelector('.inp-authors')) itemData.authors = row.querySelector('.inp-authors').value;
                 if (row.querySelector('.inp-manual')) itemData.manualValue = row.querySelector('.inp-manual').value;
@@ -654,49 +696,27 @@
 
         console.log("JSON для відправки:", data);
 
-        // Simulate Fetch Request
-        fetch('/department/create', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify(data)
-        })
-            .then(response => {
-                // Since this is a static demo, we simulate success even if 404
-                console.log("Request sent");
-                return new Promise(resolve => setTimeout(resolve, 800)); // Fake delay
-            })
-            .then(() => {
-                // Success UI on Button
-                btn.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Успішно!';
-                btn.classList.remove('bg-dark-success', 'hover:bg-green-600');
-                btn.classList.add('bg-blue-600', 'hover:bg-blue-700');
+        // Simulate API call
+        setTimeout(() => {
+            btn.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Успішно!';
+            btn.classList.remove('bg-dark-success', 'hover:bg-green-600');
+            btn.classList.add('bg-blue-600', 'hover:bg-blue-700');
+            showToast('Звіт успішно збережено!', 'success');
 
-                // Show Beautiful Toast
-                showToast('Звіт успішно збережено та відправлено!', 'success');
-
-                // Wait 2 seconds, then reset and hide
-                setTimeout(() => {
-                    btn.disabled = false;
-                    btn.innerHTML = originalBtnContent;
-                    btn.classList.add('bg-dark-success', 'hover:bg-green-600');
-                    btn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
-
-                    // Reset and hide form, show empty state
-                    document.getElementById('ratingForm').reset();
-                    calculateAll();
-                    toggleForm(); // Will hide form and show empty state
-                }, 2000);
-            })
-            .catch(error => {
-                console.error('Error:', error);
+            setTimeout(() => {
                 btn.disabled = false;
                 btn.innerHTML = originalBtnContent;
-                showToast('Виникла помилка при збереженні даних.', 'error');
-            });
+                btn.classList.add('bg-dark-success', 'hover:bg-green-600');
+                btn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+
+                // ADDED: Reset and hide form
+                document.getElementById('ratingForm').reset();
+                calculateAll();
+                toggleForm(); // Hides form, shows empty state
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            }, 2000);
+        }, 1000);
     });
 
     document.addEventListener('DOMContentLoaded', () => {
