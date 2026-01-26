@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Dummy CSRF token for frontend demo -->
-    <meta name="csrf-token" content="demo-token">
+    <!-- Restored Blade CSRF token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Рейтинг науково-педагогічних працівників</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -93,7 +93,7 @@
         </div>
         <!-- Action Buttons Group -->
         <div class="flex flex-wrap items-center gap-3">
-            <!-- Restored "Show List" Button -->
+            <!-- Link from original code -->
             <a href="{{ route('departments.list', ['code' => $code]) }}" class="bg-dark-surface border border-dark-border hover:bg-gray-800 text-dark-textLight px-5 py-2.5 rounded-lg font-medium transition-all transform hover:scale-105 active:scale-95 flex items-center shadow-sm">
                 <i class="fa-solid fa-list-ul mr-2 text-dark-primary"></i> Показати список
             </a>
@@ -147,6 +147,10 @@
                             <option>2025-2026</option>
                             <option>2026-2027</option>
                         </select>
+                    </div>
+                    <!-- Restored Hidden Input from original code -->
+                    <div class="hidden">
+                        <input name="code" type="hidden" value="{{$code}}">
                     </div>
                 </div>
             </div>
@@ -670,7 +674,8 @@
         const data = {
             personal: {},
             items: [],
-            totalScore: parseFloat(document.getElementById('grandTotal').textContent)
+            totalScore: parseFloat(document.getElementById('grandTotal').textContent),
+            code: formData.get('code') // Restored code field
         };
 
         for (let [key, value] of formData.entries()) {
@@ -700,27 +705,50 @@
 
         console.log("JSON для відправки:", data);
 
-        // Simulate API call
-        setTimeout(() => {
-            btn.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Успішно!';
-            btn.classList.remove('bg-dark-success', 'hover:bg-green-600');
-            btn.classList.add('bg-blue-600', 'hover:bg-blue-700');
-            showToast('Звіт успішно збережено!', 'success');
+        // Actual Fetch Request Restored
+        fetch('/department/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                // Check if response is ok
+                if (response.ok) {
+                    return response.text(); // or response.json() if you expect JSON
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(() => {
+                // Success UI
+                btn.innerHTML = '<i class="fa-solid fa-check mr-2"></i> Успішно!';
+                btn.classList.remove('bg-dark-success', 'hover:bg-green-600');
+                btn.classList.add('bg-blue-600', 'hover:bg-blue-700');
+                showToast('Звіт успішно збережено!', 'success');
 
-            setTimeout(() => {
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = originalBtnContent;
+                    btn.classList.add('bg-dark-success', 'hover:bg-green-600');
+                    btn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+
+                    // Reset and hide form
+                    document.getElementById('ratingForm').reset();
+                    calculateAll();
+                    toggleForm(); // Hides form, shows empty state
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                }, 2000);
+            })
+            .catch(error => {
+                console.error('Error:', error);
                 btn.disabled = false;
                 btn.innerHTML = originalBtnContent;
-                btn.classList.add('bg-dark-success', 'hover:bg-green-600');
-                btn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
-
-                // ADDED: Reset and hide form
-                document.getElementById('ratingForm').reset();
-                calculateAll();
-                toggleForm(); // Hides form, shows empty state
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            }, 2000);
-        }, 1000);
+                showToast('Виникла помилка при збереженні даних.', 'error');
+            });
     });
 
     document.addEventListener('DOMContentLoaded', () => {
