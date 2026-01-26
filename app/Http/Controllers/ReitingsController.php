@@ -101,7 +101,8 @@ class ReitingsController extends Controller
 
     public function list($code){
         $reitingsList = DB::table('ratings')->where('code', $code)->get();
-        return view('reiting.list',['reitingsList'=>$reitingsList]);
+        $department =DB::table('departments')->where('code', $code)->first();
+        return view('reiting.list',['reitingsList'=>$reitingsList,'department'=>$department->name]);
     }
 
     public function indexAdmin(){

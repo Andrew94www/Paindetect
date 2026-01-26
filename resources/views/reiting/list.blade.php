@@ -36,10 +36,7 @@
     <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
             <h1 class="text-3xl font-bold text-white tracking-tight">Рейтинг викладачів</h1>
-            <p class="text-slate-400 mt-1">Кафедра анатомії людини</p>
-        </div>
-        <div class="flex items-center gap-3 bg-slate-800/50 p-1 rounded-lg border border-slate-700">
-            <span class="px-4 py-2 text-sm font-medium text-blue-400">Всього: <span id="total-count">0</span></span>
+            <p class="text-slate-400 mt-1">{{$department}}</p>
         </div>
     </div>
 
