@@ -210,7 +210,7 @@
         // --- Theoretical / General ---
         { name: "Кафедра анатомії людини", category: "theoretical", link: "/admin/department/anatomy" },
         { name: "Кафедра біологічної фізики, медичної апаратури та інформатики", category: "theoretical", link: "/admin/department/biophysics" },
-        { name: "Кафедра біохімії та загальної хімії", category: "theoretical", link: "/admin/department/biochemistry" },
+        { name: "Кафедра біохімії та загальної хімії ім.професора О.О.Пентюка", category: "theoretical", link: "/admin/department/biochemistry" },
         { name: "Кафедра гістології", category: "theoretical", link: "/admin/department/histology" },
         { name: "Кафедра медичної біології", category: "theoretical", link: "/admin/department/med-biology" },
         { name: "Кафедра мікробіології", category: "theoretical", link: "/admin/department/microbiology" },
@@ -226,7 +226,7 @@
         { name: "Кафедра філософії та суспільних наук", category: "theoretical", link: "/admin/department/philosophy" },
         { name: "Кафедра українознавства", category: "theoretical", link: "/admin/department/ukrainian-studies" },
         { name: "Кафедра педагогіки та психології", category: "theoretical", link: "/admin/department/pedagogy-psych" },
-        { name: "Кафедра фізвиховання", category: "theoretical", link: "/admin/department/phys-ed" },
+        { name: "Кафедра спортивної медицини, фізичного виховання та реабілітації", category: "theoretical", link: "/admin/department/phys-ed" },
         { name: "Кафедра судової медицини та права", category: "theoretical", link: "/admin/department/forensic-med" },
         { name: "Кафедра менеджменту", category: "theoretical", link: "/admin/department/management" },
         { name: "Медичне право", category: "theoretical", link: "/admin/department/med-law" },
@@ -248,10 +248,11 @@
         { name: "Кафедра променевої діагностики, променевої терапії та онкології", category: "clinical", link: "/admin/department/oncology-radiology" },
         { name: "Кафедра педіатрії №1", category: "clinical", link: "/admin/department/pediatrics-1" },
         { name: "Кафедра педіатрії №2", category: "clinical", link: "/admin/department/pediatrics-2" },
-        { name: "Кафедра пропедевтики дитячих захворювань", category: "clinical", link: "/admin/department/prop-pediatrics" },
-        { name: "Кафедра дитячих інфекційних хвороб", category: "clinical", link: "/admin/department/ped-infectious" },
+        { name: "Кафедра пропедевтики дитячих захворювань та догляду за хворими дітьми", category: "clinical", link: "/admin/department/prop-pediatrics" },
+        { name: "Кафедра дитячих інфекційних хвороб з курсом епідеміології", category: "clinical", link: "/admin/department/ped-infectious" },
         { name: "Кафедра дитячої хірургії", category: "clinical", link: "/admin/department/ped-surgery" },
         { name: "Кафедра психіатрії, наркології та психотерапії", category: "clinical", link: "/admin/department/psychiatry" },
+        { name: "Кафедра психіатрії, наркології, загальної та медичної психології ФПО", category: "clinical", link: "/admin/department/fpo" },
         { name: "Кафедра медичної психології та психіатрії", category: "clinical", link: "/admin/department/med-psychology" },
         { name: "Кафедра травматології та ортопедії", category: "clinical", link: "/admin/department/traumatology" },
         { name: "Кафедра фізичної та реабілітаційної медицини", category: "clinical", link: "/admin/department/rehab-medicine" },
@@ -266,7 +267,7 @@
         { name: "Кафедра очних хвороб", category: "clinical", link: "/admin/department/ophthalmology" },
         { name: "Кафедра фтизіатрії", category: "clinical", link: "/admin/department/phthisiology" },
         { name: "Кафедра шкірно-венеричних хвороб", category: "clinical", link: "/admin/department/dermatology" },
-        { name: "Кафедра соціальної медицини", category: "clinical", link: "/admin/department/social-medicine" },
+        { name: "Кафедра кафедра соціальної медицини та організації охорони здоров’я", category: "clinical", link: "/admin/department/social-medicine" },
 
         // --- Dental ---
         { name: "Кафедра ортопедичної стоматології", category: "dental", link: "/admin/department/ortho-dentistry" },
@@ -277,7 +278,7 @@
         // --- Pharma ---
         { name: "Кафедра фармації", category: "pharma", link: "/admin/department/pharmacy" },
         { name: "Кафедра фармацевтичної хімії", category: "pharma", link: "/admin/department/pharm-chemistry" },
-        { name: "Кафедра клінічної фармації", category: "pharma", link: "/admin/department/clin-pharmacy" },
+        { name: "Кафедра клінічної фармації та клінічної фармакології", category: "pharma", link: "/admin/department/clin-pharmacy" },
         { name: "Кафедра фармакології", category: "pharma", link: "/admin/department/pharmacology" }
     ];
 
