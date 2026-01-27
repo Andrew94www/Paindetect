@@ -238,7 +238,7 @@
                 {
                     id: '2_11', text: 'Індекс Гірша (Google Scholar)', type: 'select',
                     options: [
-                        {label: '0-5', val: 0}, {label: '1-5 (помилка в док?)', val: 5}, {label: '6-8', val: 8},
+                        {label: '0-5', val: 0}, {label: '1-5', val: 5}, {label: '6-8', val: 8},
                         {label: '9-11', val: 12}, {label: '12-15', val: 15}, {label: '16-20', val: 18},
                         {label: '21-30', val: 20}, {label: '>30', val: 25}
                     ]
