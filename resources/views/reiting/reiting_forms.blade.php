@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Restored Blade CSRF token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Рейтинг науково-педагогічних працівників</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -57,10 +56,8 @@
 </head>
 <body class="bg-dark-bg text-dark-text min-h-screen font-sans antialiased flex flex-col relative">
 
-<!-- Toast Notification Container -->
 <div id="toast-container" class="fixed top-24 right-5 z-[60] flex flex-col gap-3 pointer-events-none"></div>
 
-<!-- Navbar -->
 <nav class="bg-dark-surface border-b border-dark-border sticky top-0 z-50 shadow-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -82,18 +79,14 @@
     </div>
 </nav>
 
-<!-- Main Content -->
 <main class="flex-grow max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 w-full">
 
-    <!-- Header & Controls -->
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div>
             <h1 class="text-3xl font-bold text-dark-textLight">Рейтинг науково-педагогічних працівників</h1>
             <p class="text-gray-400 mt-1">Заповніть форму згідно з Положенням про рейтингову систему.</p>
         </div>
-        <!-- Action Buttons Group -->
         <div class="flex flex-wrap items-center gap-3">
-            <!-- Link from original code -->
             <a href="{{ route('departments.list', ['code' => $code]) }}" class="bg-dark-surface border border-dark-border hover:bg-gray-800 text-dark-textLight px-5 py-2.5 rounded-lg font-medium transition-all transform hover:scale-105 active:scale-95 flex items-center shadow-sm">
                 <i class="fa-solid fa-list-ul mr-2 text-dark-primary"></i> Показати список
             </a>
@@ -106,7 +99,6 @@
         </div>
     </div>
 
-    <!-- Empty State (Visible by default) -->
     <div id="emptyState" class="text-center py-24 bg-dark-surface rounded-xl border border-dark-border border-dashed">
         <div class="bg-dark-bg w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 border border-dark-border">
             <i class="fa-solid fa-clipboard-list text-3xl text-gray-600"></i>
@@ -115,11 +107,9 @@
         <p class="text-gray-500 mt-1">Натисніть кнопку "Відкрити анкету", щоб розпочати введення даних.</p>
     </div>
 
-    <!-- Dynamic Form Container (Hidden by default) -->
     <div id="ratingFormContainer" class="animate-fade-in hidden">
         <form id="ratingForm" class="space-y-6">
 
-            <!-- 0. Personal Info -->
             <div class="bg-dark-surface rounded-xl shadow-sm border border-dark-border overflow-hidden">
                 <div class="px-6 py-4 border-b border-dark-border bg-gray-800/30">
                     <h3 class="text-lg font-medium text-dark-textLight"><i class="fa-regular fa-id-card mr-2 text-dark-primary"></i>Особисті дані</h3>
@@ -148,17 +138,14 @@
                             <option>2026-2027</option>
                         </select>
                     </div>
-                    <!-- Restored Hidden Input from original code -->
                     <div class="hidden">
                         <input name="code" type="hidden" value="{{$code}}">
                     </div>
                 </div>
             </div>
 
-            <!-- Sections Container (Populated by JS) -->
             <div id="sections-wrapper" class="space-y-6"></div>
 
-            <!-- Sticky Footer -->
             <div class="sticky bottom-4 z-40">
                 <div class="bg-dark-surface/90 backdrop-blur-md border border-dark-border rounded-xl shadow-2xl p-4 flex flex-col sm:flex-row justify-between items-center gap-4 mx-auto max-w-7xl">
                     <div class="flex items-center gap-4">
@@ -182,7 +169,6 @@
     </div>
 </main>
 
-<!-- JavaScript Configuration & Logic -->
 <script>
     // Data Configuration
     const ratingData = [
@@ -252,8 +238,12 @@
                 { id: '2_14_1', text: 'Рецензування (Impact Factor)', points: 5, type: 'simple' },
                 { id: '2_14_2', text: 'Рецензування (Фахові UA)', points: 3, type: 'simple' },
                 { id: '2_15', text: 'Участь у міжнар. проєктах/дослідженнях', points: 10, type: 'simple' },
-                { id: '2_16', text: 'Держбюджетна НДР (на групу)', points: 60, type: 'shared_pool', note: 'Ділиться на учасників' },
-                { id: '2_17', text: 'Ініціативна НДР (на групу)', points: 20, type: 'shared_pool' },
+
+                // --- MODIFIED ITEMS START ---
+                { id: '2_16', text: 'Держбюджетна НДР (на групу)', points: 60, type: 'shared_pool', note: 'Кількість НДР * 60 / Учасників' },
+                { id: '2_17', text: 'Ініціативна НДР (на групу)', points: 20, type: 'shared_pool', note: 'Кількість НДР * 20 / Учасників' },
+                // --- MODIFIED ITEMS END ---
+
                 { id: '2_18', text: 'Поданий проєкт (МОН, НФДУ)', points: 5, type: 'simple' },
                 { id: '2_19_1', text: 'Грант на науковий проект', points: 50, type: 'simple' },
                 { id: '2_19_2', text: 'Грант на стажування', points: 50, type: 'simple' },
@@ -262,16 +252,10 @@
                 { id: '2_20', text: 'Атестація лабораторії (макс 10)', points: 1, type: 'manual' },
                 { id: '2_21', text: 'Студент-переможець наук. робіт (Міжн/Всеукр/Унів)', type: 'manual', note: 'Введіть суму балів (15/10/5)' },
                 { id: '2_22', text: 'Екзаменатор студ. робіт (держ. рівень)', points: 5, type: 'simple' },
-
-                // ADDED ITEMS (MISSING IN ORIGINAL)
                 { id: '2_23', text: 'Підготовка студента-призера/учасника олімпіади', type: 'manual', note: 'Всеукр./Міжнар. (10-20 балів)' },
-
                 { id: '2_24', text: 'Суддя спорт. змагань (макс 20)', points: 1, type: 'manual', note: 'Не більше 20 балів сумарно' },
-
-                // ADDED ITEMS (MISSING IN ORIGINAL)
                 { id: '2_25', text: 'Тренер збірної команди університету', points: 15, type: 'simple', note: 'За виконання обов\'язків' },
                 { id: '2_26', text: 'Особиста участь у спорт. змаганнях (збірна)', points: 10, type: 'simple', note: 'Спартакіади тощо' },
-
                 { id: '2_27', text: 'Міжнародний патент', points: 30, type: 'shared' },
                 { id: '2_28', text: 'Впровадження у виробництво', points: 15, type: 'shared' },
                 { id: '2_29_1', text: 'Патент UA (промисловий)', points: 20, type: 'shared' },
@@ -284,16 +268,10 @@
                 { id: '2_34', text: 'Протермінування звання (-10/рік)', points: -10, type: 'simple', note: 'Штрафні бали' },
                 { id: '2_35', text: 'Опонування докторської', points: 15, type: 'simple' },
                 { id: '2_36', text: 'Опонування PhD', points: 10, type: 'simple' },
-
-                // ADDED ITEM (MISSING IN ORIGINAL)
                 { id: '2_37', text: 'Рецензування підручників/монографій', points: 5, type: 'simple' },
-
                 { id: '2_38_1', text: 'Спецрада ВНМУ (Голова/Секретар)', points: 20, type: 'simple' },
                 { id: '2_38_2', text: 'Спецрада ВНМУ (Член)', points: 10, type: 'simple' },
-
-                // ADDED ITEM (MISSING IN ORIGINAL)
                 { id: '2_39', text: 'Участь у разових спецрадах (PhD)', points: 5, type: 'simple' },
-
                 { id: '2_40', text: 'Відгук на автореферат', points: 5, type: 'simple' },
             ]
         },
@@ -311,16 +289,10 @@
                 { id: '3_6_2', text: 'Оргкомітет/Журі (Всеукраїнські)', points: 10, type: 'simple' },
                 { id: '3_6_3', text: 'Оргкомітет/Журі (Обласні)', points: 5, type: 'simple' },
                 { id: '3_6_4', text: 'Оргкомітет/Журі (Факультетські)', points: 3, type: 'simple' },
-
-                // ADDED ITEM (MISSING IN ORIGINAL)
                 { id: '3_7', text: 'Профорієнтаційна робота', points: 5, type: 'simple', note: 'Виїзди в школи, коледжі' },
-
                 { id: '3_8_1', text: 'Редколегія журналу Університету (Голова/Заст)', points: 20, type: 'simple' },
                 { id: '3_8_2', text: 'Редколегія журналу Університету (Член)', points: 5, type: 'simple' },
-
-                // ADDED ITEM (LIKELY MISSING)
                 { id: '3_9', text: 'Організація культурно-мистецьких заходів', points: 5, type: 'simple' },
-
                 { id: '3_10_1', text: 'Редколегія Scopus/WoS (Голова/Заст)', points: 25, type: 'simple' },
                 { id: '3_10_2', text: 'Редколегія Scopus/WoS (Член)', points: 20, type: 'simple' },
                 { id: '3_11_1', text: 'Сертифікат англійської (B2+)', points: 15, type: 'fixed' },
@@ -432,22 +404,22 @@
                             </div>
                         `;
                 } else if (item.type === 'shared_pool') {
+                    // --- CHANGED LOGIC START ---
                     inputsHtml = `
-                            <div class="col-span-3 sm:col-span-2 flex flex-col items-center justify-center text-xs text-gray-400 border border-dashed border-gray-700 rounded bg-gray-900/50 h-full">
-                                <span class="block text-[9px] uppercase">Фонд балів</span>
-                                <span class="text-dark-primary font-bold">${item.points}</span>
+                            <div class="col-span-3 sm:col-span-2 relative tooltip-container">
+                                <span class="text-[10px] text-gray-500 absolute -top-2 left-2 bg-dark-surface px-1">К-сть НДР</span>
+                                <input type="number" min="0" value="0" class="inp-count w-full bg-dark-bg border border-dark-border rounded px-2 py-1.5 text-white text-center focus:border-dark-primary outline-none" oninput="calculateRow(this)">
+                                <div class="text-[9px] text-gray-500 text-center mt-1">База: ${item.points}</div>
                             </div>
                             <div class="col-span-3 sm:col-span-2 relative tooltip-container">
                                 <span class="text-[10px] text-gray-500 absolute -top-2 left-2 bg-dark-surface px-1">Учасників</span>
-                                <div class="flex items-center gap-2">
-                                    <input type="checkbox" class="pool-enable accent-dark-primary w-4 h-4" onchange="calculateRow(this)" title="Активувати">
-                                    <input type="number" min="1" value="1" class="inp-authors w-full bg-dark-bg border border-dark-border rounded px-2 py-1.5 text-white text-center focus:border-dark-primary outline-none disabled:opacity-30 disabled:cursor-not-allowed" disabled oninput="calculateRow(this)">
-                                </div>
+                                <input type="number" min="1" value="1" class="inp-authors w-full bg-dark-bg border border-dark-border rounded px-2 py-1.5 text-white text-center focus:border-dark-primary outline-none" oninput="calculateRow(this)">
                                 <div class="tooltip-text px-2 py-1 text-xs text-white bg-black/90 border border-gray-700 rounded shadow-lg">
                                     Кількість учасників (мін. 1)
                                 </div>
                             </div>
                         `;
+                    // --- CHANGED LOGIC END ---
                 } else if (item.type === 'simple') {
                     inputsHtml = `
                             <div class="col-span-6 sm:col-span-4 relative">
@@ -544,7 +516,6 @@
             // If user enters 0, reset to 1 immediately
             if (!isNaN(val) && val < 1) {
                 element.value = 1;
-                // Optional: visual feedback or toast could go here
             }
         }
 
@@ -561,16 +532,17 @@
             const authors = parseFloat(row.querySelector('.inp-authors').value) || 1;
             score = (count * points) / authors;
         } else if (type === 'shared_pool') {
-            const enable = row.querySelector('.pool-enable').checked;
-            const authInput = row.querySelector('.inp-authors');
-            authInput.disabled = !enable;
+            // --- CHANGED LOGIC START ---
+            // Formula = (Points * Count) / Authors
+            const count = parseFloat(row.querySelector('.inp-count').value) || 0;
+            const authors = parseFloat(row.querySelector('.inp-authors').value) || 1;
 
-            if (!enable) {
-                score = 0;
+            if (count > 0) {
+                score = (points * count) / authors;
             } else {
-                const authors = parseFloat(authInput.value) || 1;
-                score = points / authors;
+                score = 0;
             }
+            // --- CHANGED LOGIC END ---
         } else if (type === 'simple') {
             const count = parseFloat(row.querySelector('.inp-count').value) || 0;
             score = count * points;
@@ -660,7 +632,7 @@
     }
 
     // ------------------------------------------------------------------
-    // SUBMISSION HANDLER (DEMO)
+    // SUBMISSION HANDLER
     // ------------------------------------------------------------------
     document.getElementById('ratingForm').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -705,7 +677,7 @@
 
         console.log("JSON для відправки:", data);
 
-        // Actual Fetch Request Restored
+        // Actual Fetch Request
         fetch('/department/create', {
             method: 'POST',
             headers: {
@@ -718,7 +690,7 @@
             .then(response => {
                 // Check if response is ok
                 if (response.ok) {
-                    return response.text(); // or response.json() if you expect JSON
+                    return response.text();
                 }
                 throw new Error('Network response was not ok.');
             })
