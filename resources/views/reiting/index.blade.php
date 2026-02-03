@@ -246,6 +246,7 @@
         { name: "Кафедра нервових хвороб з курсом нейрохірургії", category: "clinical", link: "/department/neurology-neurosurg" },
         { name: "Кафедра невролгії та нейрохірургії факультету післяделомної освіти", category: "clinical", link: "/department/neurology-after" },
         { name: "Кафедра променевої діагностики, променевої терапії та онкології Курс радіології", category: "clinical", link: "/department/oncology-radiology" },
+        { name: "Курс радіології", category: "clinical", link: "/department/curs-radiology" },
         { name: "Кафедра педіатрії №1", category: "clinical", link: "/department/pediatrics-1" },
         { name: "Кафедра педіатрії №2", category: "clinical", link: "/department/pediatrics-2" },
         { name: "Кафедра пропедевтики дитячих захворювань та догляду за хворими дітьми", category: "clinical", link: "/department/prop-pediatrics" },
