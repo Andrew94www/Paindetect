@@ -197,9 +197,8 @@
 <footer class="border-t border-slate-700/50 py-12 mt-12 bg-slate-800/50">
     <div class="max-w-7xl mx-auto px-4 text-center">
         <p class="text-slate-400 text-sm flex items-center justify-center gap-2">
-            <span>© 2024 ВНМУ ім. М.І. Пирогова</span>
+            <span>© 2026 ВНМУ ім. М.І. Пирогова</span>
             <span class="w-1 h-1 rounded-full bg-slate-600"></span>
-            <span class="text-slate-500">Неофіційний навігатор</span>
         </p>
     </div>
 </footer>
