@@ -113,6 +113,14 @@ class ReitingsController extends Controller
         $reitingsList = DB::table('ratings')->where('code', $code)->get();
         return view('reiting.list_admin',['reitingsList'=>$reitingsList,'code'=>$code]);
     }
+    public function showData($id)
+    {
+        $teacher = Rating::findOrFail($id); // Знаходимо викладача або повертаємо 404
+
+        // Повертаємо view з деталями
+        return view('reiting.show', compact('teacher'));
+    }
+
 
 }
 

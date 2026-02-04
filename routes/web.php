@@ -150,6 +150,8 @@ Route::prefix('department/{code}')->group(function () {
     Route::post('/unlock', [ReitingsController::class, 'verifyCode'])->name('departments.verify');
 });
 
+Route::get('/view/teachers/{id}', [ReitingsController::class, 'showData'])->name('teachers.show');
+
 // 3. Защищенный роут кафедры
 // Мы оборачиваем его в middleware 'dept.access', который вы создали ранее
 Route::middleware(['dept.access'])->group(function () {
