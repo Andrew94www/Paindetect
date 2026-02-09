@@ -209,7 +209,8 @@
         // --- Theoretical / General ---
         { name: "Кафедра анатомії людини", category: "theoretical", link: "/department/anatomy" },
         { name: "Кафедра біологічної фізики, медичної апаратури та інформатики", category: "theoretical", link: "/department/biophysics" },
-        { name: "Кафедра біохімії та загальної хімії ім.професора О.О.Пентюка", category: "theoretical", link: "/department/biochemistry" },
+        { name: "Кафедра медичної та біологічної хімії", category: "theoretical", link: "/department/biochemistry" },
+        { name: "Кафедра біохімії ім.професора О.О.Пентюка", category: "theoretical", link: "/department/pentuk" },
         { name: "Кафедра гістології", category: "theoretical", link: "/department/histology" },
         { name: "Кафедра медичної біології", category: "theoretical", link: "/department/med-biology" },
         { name: "Кафедра мікробіології", category: "theoretical", link: "/department/microbiology" },
@@ -243,7 +244,7 @@
         { name: "Кафедра інфекційних хвороб з курсом епідеміології", category: "clinical", link: "/department/infectious-diseases" },
         { name: "Кафедра медицини катастроф та військової медицини", category: "clinical", link: "/department/military-med" },
         { name: "Кафедра нервових хвороб з курсом нейрохірургії", category: "clinical", link: "/department/neurology-neurosurg" },
-        { name: "Кафедра невролгії та нейрохірургії факультету післяделомної освіти", category: "clinical", link: "/department/neurology-after" },
+        { name: "Кафедра невролгії та нейрохірургії ФПО", category: "clinical", link: "/department/neurology-after" },
         { name: "Кафедра променевої діагностики, променевої терапії та онкології Курс радіології", category: "clinical", link: "/department/oncology-radiology" },
         { name: "Курс радіології", category: "clinical", link: "/department/curs-radiology" },
         { name: "Кафедра педіатрії №1", category: "clinical", link: "/department/pediatrics-1" },
@@ -271,6 +272,7 @@
 
         // --- Dental ---
         { name: "Кафедра ортопедичної стоматології", category: "dental", link: "/department/ortho-dentistry" },
+        { name: "Курс основ стоматології", category: "dental", link: "/department/bas-dentistry" },
         { name: "Кафедра стоматології дитячого віку", category: "dental", link: "/department/ped-dentistry" },
         { name: "Кафедра терапевтичної стоматології", category: "dental", link: "/department/ther-dentistry" },
         { name: "Кафедра хірургічної стоматології", category: "dental", link: "/department/surg-dentistry" },
