@@ -625,6 +625,7 @@
             <div class="link-group" style="margin-top: 15px;">
                 <!-- These are now styled as disabled links, as requested --><a href="{{ route('getCamera') }}" class="btn btn-link">Camera</a>
                 <a href="{{ route('vision') }}" class="btn btn-link">Vision</a>
+                <a href="{{ route('msk') }}" class="btn btn-link">MSK</a>
                 <a href="#" class="btn btn-link">EKG</a>
                 <a href="{{ route('interaction') }}" class="btn btn-link">Interaction</a>
                 <a href="{{ route('tcare') }}" class="btn btn-link">TCare</a>
