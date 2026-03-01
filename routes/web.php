@@ -157,7 +157,7 @@ Route::prefix('registry')->group(function () {
     Route::get('/entrance', [RegistryController::class, 'entrance'])->name('registry.entrance');
     Route::get('/getFormData', [RegistryController::class, 'getFormData'])->name('registry.getFormData');
     Route::get('/statistics/{id}', [RegistryController::class, 'getStatistics'])->name('registry.statistics');
-    Route::get('/list/{id}', [RegistryController::class, 'list'])->name('registry.list');
+    Route::get('/list/{id?}', [RegistryController::class, 'list'])->name('registry.list');
     Route::post('/createUser', [RegistryController::class, 'createUser'])->name('registry.createUser');
     Route::post('/entranceUser', [RegistryController::class, 'entranceUser'])->name('registry.entranceUser');
     Route::post('/createData', [RegistryController::class, 'createData'])->name('registry.createData');

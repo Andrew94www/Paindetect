@@ -37,9 +37,15 @@ class RegistryController extends Controller
 
     public function getStatistics($id)
     {
-        $hospital = Hospital::find($id);
+        $hospital = Hospital::findOrFail($id); // Используйте findOrFail, чтобы не упасть на пустом госпитале
         $records = $hospital->records;
-        return view('registry.stastic',['records'=>$records,'id'=>$id]);
+
+        if ($records->isEmpty()) {
+            // Логика, если записей НЕТ
+            return view('registry.not_stat');
+        }
+
+        return view('registry.stastic', compact('records', 'id'));
 
     }
 
@@ -99,7 +105,7 @@ class RegistryController extends Controller
         // чтобы ID сохранился в сессии и был доступен после редиректа.
         Auth::guard('hospital')->login($hospital);
 
-        return redirect()->route('registry.list');
+        return view('registry.sacces');
 
 //        return redirect()->route('registry.getFormData');
     }
