@@ -3,6 +3,7 @@
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\ManController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RegistryController;
 use App\Http\Controllers\ReitingsController;
 use App\Http\Controllers\TeachersController;
 use App\Http\Controllers\UserController;
@@ -148,6 +149,18 @@ Route::prefix('admin/department')->group(function () {
 Route::prefix('department/{code}')->group(function () {
     Route::get('/unlock', [ReitingsController::class, 'showUnlockForm'])->name('departments.unlock');
     Route::post('/unlock', [ReitingsController::class, 'verifyCode'])->name('departments.verify');
+});
+
+Route::prefix('registry')->group(function () {
+    Route::get('/index', [RegistryController::class, 'index'])->name('registration.index');
+    Route::get('/registration', [RegistryController::class, 'registrationForm'])->name('registration.form');
+    Route::get('/entrance', [RegistryController::class, 'entrance'])->name('registry.entrance');
+    Route::get('/getFormData', [RegistryController::class, 'getFormData'])->name('registry.getFormData');
+    Route::get('/statistics/{id}', [RegistryController::class, 'getStatistics'])->name('registry.statistics');
+    Route::get('/list/{id}', [RegistryController::class, 'list'])->name('registry.list');
+    Route::post('/createUser', [RegistryController::class, 'createUser'])->name('registry.createUser');
+    Route::post('/entranceUser', [RegistryController::class, 'entranceUser'])->name('registry.entranceUser');
+    Route::post('/createData', [RegistryController::class, 'createData'])->name('registry.createData');
 });
 
 Route::get('/view/teachers/{id}', [ReitingsController::class, 'showData'])->name('teachers.show');
