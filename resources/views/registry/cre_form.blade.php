@@ -497,7 +497,7 @@
                     window.location.href = `/registry/list/${payload.hospital_id}`;
 
                     // Варіант 2 (Альтернативний): Використання іменованого маршруту Blade
-                    // window.location.href = "{{ route('registry.list', ['id' => Auth::guard('hospital')->id()]) }}";
+
                 }, 1500);
 
             } else {
