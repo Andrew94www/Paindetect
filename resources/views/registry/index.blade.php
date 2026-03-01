@@ -52,8 +52,9 @@
 <!-- Навігація -->
 <header class="relative z-10 w-full px-6 py-4 sm:px-10 flex justify-between items-center glass-card border-b-0 shadow-sm">
     <div class="flex items-center gap-3 cursor-pointer">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-teal-400 flex items-center justify-center shadow-lg text-white">
-            <i data-lucide="activity" class="w-6 h-6"></i>
+        <div class="font-black text-xl md:text-2xl tracking-tighter flex items-baseline">
+            <span class="text-slate-100">SUPER</span>
+            <span class="text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-teal-300">HUMANS</span>
         </div>
         <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-teal-300">
                 Реєстр Травм
@@ -153,7 +154,7 @@
                     <span>Пн</span><span>Вв</span><span>Ср</span><span>Чт</span><span>Пт</span>
                 </div>
             </div>
-            
+
 
         </div>
     </div>
