@@ -11,8 +11,8 @@ class PatientRecord extends Model
 
     protected $fillable = [
         'hospital_id',
-        'name',  // Додайте це
-        'age',        // Додайте це
+        'patient_data',
+        'prosthetics_data',
         'history_id',  // Додайте це
         'icd_codes',
         'predictors',
@@ -23,9 +23,11 @@ class PatientRecord extends Model
      * Автоматическое приведение типов (Casting)
      */
     protected $casts = [
+        'patient_data'=>'array',
         'icd_codes' => 'array',
         'predictors' => 'array',
         'scores' => 'array',
+        'prosthetics_data' => 'array',
         'hospital_id' => 'string',
     ];
 

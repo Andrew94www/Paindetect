@@ -116,6 +116,7 @@ class RegistryController extends Controller
         $validated = $request->validate([
             'patient_data' => 'required|array',
             'icd_codes' => 'required|array',
+            'prosthetics_data'=> 'required|array',
             'predictors' => 'required|array',
             'scores' => 'required|array',
             // Мы не валидируем hospital_id из запроса,
@@ -127,10 +128,10 @@ class RegistryController extends Controller
         $hospital = Auth::guard('hospital')->user();
 
         $record = $hospital->records()->create([
-            'name'=>$validated['patient_data']['full_name'],
-            'age'=>$validated['patient_data']['age'],
+            'patient_data'=>$validated['patient_data'],
             'history_id'=>$validated['patient_data']['history_id'],
             'icd_codes'  => $validated['icd_codes'],
+            'prosthetics_data'=> $validated['prosthetics_data'],
             'predictors' => $validated['predictors'],
             'scores'     => $validated['scores'],
         ]);

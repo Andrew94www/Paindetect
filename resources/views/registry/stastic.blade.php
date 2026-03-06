@@ -24,7 +24,6 @@
 
             <div>
                 <!-- Кнопка назад -->
-{{--                <a href="{{ route('registry.index') }}"--}}
                 <a href="{{ route('registry.list',  ['id' => Auth::guard('hospital')->id()]) }}"
                    class="inline-flex justify-center items-center px-4 py-2.5 bg-gray-700 hover:bg-gray-600 text-white text-sm font-semibold rounded-lg border border-gray-600 shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -36,47 +35,55 @@
         </div>
 
         <!-- Ключові показники (KPIs) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
             <!-- KPI 1 -->
-            <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 shadow-lg relative overflow-hidden">
+            <div class="bg-gray-800 rounded-xl p-5 border border-gray-700 shadow-lg relative overflow-hidden">
                 <div class="absolute right-0 top-0 mt-4 mr-4 text-indigo-500/20">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                 </div>
-                <h3 class="text-sm font-medium text-gray-400">Всього пацієнтів</h3>
-                <p class="text-3xl font-bold text-white mt-2" id="kpi-total">0</p>
+                <h3 class="text-xs font-medium text-gray-400 uppercase tracking-wider">Всього пацієнтів</h3>
+                <p class="text-2xl font-bold text-white mt-1" id="kpi-total">0</p>
             </div>
 
             <!-- KPI 2 -->
-            <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 shadow-lg relative overflow-hidden">
-                <div class="absolute right-0 top-0 mt-4 mr-4 text-red-500/20">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            <div class="bg-gray-800 rounded-xl p-5 border border-gray-700 shadow-lg relative overflow-hidden">
+                <div class="absolute right-0 top-0 mt-4 mr-4 text-green-500/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                 </div>
-                <h3 class="text-sm font-medium text-gray-400">Високий ризик болю (≥7)</h3>
-                <p class="text-3xl font-bold text-red-400 mt-2" id="kpi-pain">0</p>
+                <h3 class="text-xs font-medium text-gray-400 uppercase tracking-wider">Середній вік</h3>
+                <p class="text-2xl font-bold text-green-400 mt-1" id="kpi-age">0</p>
             </div>
 
             <!-- KPI 3 -->
-            <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 shadow-lg relative overflow-hidden">
-                <div class="absolute right-0 top-0 mt-4 mr-4 text-yellow-500/20">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <div class="bg-gray-800 rounded-xl p-5 border border-gray-700 shadow-lg relative overflow-hidden">
+                <div class="absolute right-0 top-0 mt-4 mr-4 text-red-500/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                 </div>
-                <h3 class="text-sm font-medium text-gray-400">Високий ризик реабілітації (≥7)</h3>
-                <p class="text-3xl font-bold text-yellow-400 mt-2" id="kpi-rehab">0</p>
+                <h3 class="text-xs font-medium text-gray-400 uppercase tracking-wider">Високий ризик болю</h3>
+                <p class="text-2xl font-bold text-red-400 mt-1" id="kpi-pain">0</p>
             </div>
 
             <!-- KPI 4 -->
-            <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 shadow-lg relative overflow-hidden">
-                <div class="absolute right-0 top-0 mt-4 mr-4 text-green-500/20">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+            <div class="bg-gray-800 rounded-xl p-5 border border-gray-700 shadow-lg relative overflow-hidden">
+                <div class="absolute right-0 top-0 mt-4 mr-4 text-yellow-500/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 </div>
-                <h3 class="text-sm font-medium text-gray-400">Середній вік</h3>
-                <p class="text-3xl font-bold text-green-400 mt-2" id="kpi-age">0 <span class="text-lg font-medium text-gray-500">років</span></p>
+                <h3 class="text-xs font-medium text-gray-400 uppercase tracking-wider">Ризик реабілітації</h3>
+                <p class="text-2xl font-bold text-yellow-400 mt-1" id="kpi-rehab">0</p>
+            </div>
+
+            <!-- KPI 5 (Новий) -->
+            <div class="bg-gray-800 rounded-xl p-5 border border-gray-700 shadow-lg relative overflow-hidden">
+                <div class="absolute right-0 top-0 mt-4 mr-4 text-purple-500/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+                </div>
+                <h3 class="text-xs font-medium text-gray-400 uppercase tracking-wider">Ризик протезування</h3>
+                <p class="text-2xl font-bold text-purple-400 mt-1" id="kpi-pros">0</p>
             </div>
         </div>
 
-        <!-- Графіки -->
+        <!-- Графіки Ряд 1 -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-
             <!-- Розподіл Ризиків -->
             <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 shadow-lg">
                 <h3 class="text-lg font-semibold text-white mb-4">Розподіл пацієнтів за рівнем ризику</h3>
@@ -92,9 +99,36 @@
                     <canvas id="traumasChart"></canvas>
                 </div>
             </div>
-
         </div>
 
+        <!-- Графіки Ряд 2 (Нові) -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <!-- Демографія та статус -->
+            <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 shadow-lg flex flex-col md:flex-row gap-4">
+                <div class="flex-1">
+                    <h3 class="text-md font-semibold text-white mb-4 text-center">Статус пацієнтів</h3>
+                    <div class="h-56 flex justify-center">
+                        <canvas id="statusChart"></canvas>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-md font-semibold text-white mb-4 text-center">Механізм травми</h3>
+                    <div class="h-56 flex justify-center">
+                        <canvas id="mechanismsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ампутації та протезування -->
+            <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 shadow-lg">
+                <h3 class="text-lg font-semibold text-white mb-4">Рівні ампутацій</h3>
+                <div class="h-64">
+                    <canvas id="amputationsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Графіки Ряд 3 -->
         <div class="grid grid-cols-1 gap-6">
             <!-- Клінічні предиктори -->
             <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 shadow-lg">
@@ -119,15 +153,16 @@
     const rawRecords = @json($records);
 
     document.addEventListener('DOMContentLoaded', function() {
-        // Запобіжник: якщо даних немає, ініціалізуємо порожній масив
         if (!rawRecords || rawRecords.length === 0) {
             console.log('Немає даних для відображення статистики.');
             return;
         }
 
-        // Безпечний парсинг JSON-полів, якщо вони приходять як строки
+        // Безпечний парсинг всіх JSON-полів
         const records = rawRecords.map(r => ({
             ...r,
+            pat: typeof r.patient_data === 'string' ? JSON.parse(r.patient_data || '{}') : (r.patient_data || {}),
+            pros: typeof r.prosthetics_data === 'string' ? JSON.parse(r.prosthetics_data || '{}') : (r.prosthetics_data || {}),
             icd: typeof r.icd_codes === 'string' ? JSON.parse(r.icd_codes || '{}') : (r.icd_codes || {}),
             pred: typeof r.predictors === 'string' ? JSON.parse(r.predictors || '{}') : (r.predictors || {}),
             scr: typeof r.scores === 'string' ? JSON.parse(r.scores || '{}') : (r.scores || {})
@@ -136,31 +171,30 @@
         // --- 1. ПІДРАХУНОК KPI ---
         const total = records.length;
 
-        // Вік
-        const validAges = records.map(r => parseInt(r.age)).filter(a => !isNaN(a));
+        // Вік (Тепер беремо з pat.age)
+        const validAges = records.map(r => parseInt(r.pat.age)).filter(a => !isNaN(a));
         const avgAge = validAges.length ? (validAges.reduce((a, b) => a + b, 0) / validAges.length).toFixed(1) : 'Н/Д';
 
-        // Ризики (Високий >= 7)
+        // Ризики
         let highPainCount = 0;
         let highRehabCount = 0;
+        let highProsCount = 0;
 
         records.forEach(r => {
             if ((r.scr.painScore || 0) >= 7) highPainCount++;
             if ((r.scr.rehabScore || 0) >= 7) highRehabCount++;
+            if ((r.scr.prostheticScore || 0) >= 4) highProsCount++; // Ризик протезування: 4+ це високий
         });
 
         // Оновлення DOM
         document.getElementById('kpi-total').textContent = total;
         document.getElementById('kpi-pain').textContent = highPainCount;
         document.getElementById('kpi-rehab').textContent = highRehabCount;
-        document.getElementById('kpi-age').innerHTML = avgAge + (avgAge !== 'Н/Д' ? ' <span class="text-lg font-medium text-gray-500">років</span>' : '');
+        document.getElementById('kpi-pros').textContent = highProsCount;
+        document.getElementById('kpi-age').innerHTML = avgAge + (avgAge !== 'Н/Д' ? ' <span class="text-sm font-medium text-gray-500">років</span>' : '');
 
         // --- 2. ГРАФІК: РОЗПОДІЛ РИЗИКІВ ---
-        // Категорії: Низький (0-3), Середній (4-6), Високий (7-10)
-        const riskData = {
-            pain: [0, 0, 0],
-            rehab: [0, 0, 0]
-        };
+        const riskData = { pain: [0, 0, 0], rehab: [0, 0, 0], pros: [0, 0, 0] };
 
         records.forEach(r => {
             let p = parseInt(r.scr.painScore) || 0;
@@ -168,32 +202,23 @@
 
             let re = parseInt(r.scr.rehabScore) || 0;
             if (re <= 3) riskData.rehab[0]++; else if (re <= 6) riskData.rehab[1]++; else riskData.rehab[2]++;
+
+            let pr = parseInt(r.scr.prostheticScore) || 0;
+            // Шкала протезування: 0-1 (Низький), 2-3 (Середній), 4+ (Високий)
+            if (pr <= 1) riskData.pros[0]++; else if (pr <= 3) riskData.pros[1]++; else riskData.pros[2]++;
         });
 
         new Chart(document.getElementById('risksChart'), {
             type: 'bar',
             data: {
-                labels: ['Низький (0-3)', 'Середній (4-6)', 'Високий (7-10)'],
+                labels: ['Низький', 'Середній', 'Високий'],
                 datasets: [
-                    {
-                        label: 'Біль (CPRS)',
-                        data: riskData.pain,
-                        backgroundColor: 'rgba(239, 68, 68, 0.7)', // Red
-                        borderRadius: 4
-                    },
-                    {
-                        label: 'Реабілітація',
-                        data: riskData.rehab,
-                        backgroundColor: 'rgba(234, 179, 8, 0.7)', // Yellow
-                        borderRadius: 4
-                    }
+                    { label: 'Біль (CPRS)', data: riskData.pain, backgroundColor: 'rgba(239, 68, 68, 0.7)', borderRadius: 4 },
+                    { label: 'Реабілітація', data: riskData.rehab, backgroundColor: 'rgba(234, 179, 8, 0.7)', borderRadius: 4 },
+                    { label: 'Протезування', data: riskData.pros, backgroundColor: 'rgba(168, 85, 247, 0.7)', borderRadius: 4 }
                 ]
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { position: 'top' } }
-            }
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } } }
         });
 
         // --- 3. ГРАФІК: ОСНОВНІ ТРАВМИ ---
@@ -209,48 +234,111 @@
                 labels: Object.keys(traumasMap),
                 datasets: [{
                     data: Object.values(traumasMap),
-                    backgroundColor: [
-                        'rgba(99, 102, 241, 0.8)', // Indigo
-                        'rgba(16, 185, 129, 0.8)', // Emerald
-                        'rgba(245, 158, 11, 0.8)', // Amber
-                        'rgba(236, 72, 153, 0.8)', // Pink
-                        'rgba(107, 114, 128, 0.8)' // Gray
-                    ],
+                    backgroundColor: ['rgba(99, 102, 241, 0.8)', 'rgba(16, 185, 129, 0.8)', 'rgba(245, 158, 11, 0.8)', 'rgba(236, 72, 153, 0.8)', 'rgba(107, 114, 128, 0.8)'],
                     borderWidth: 0
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' } } }
+        });
+
+        // --- 4. НОВИЙ ГРАФІК: СТАТУС ПАЦІЄНТІВ ---
+        const statusMap = { 'military': 0, 'civilian': 0, 'other': 0 };
+        records.forEach(r => {
+            let s = r.pat.status || 'other';
+            if (statusMap[s] !== undefined) statusMap[s]++; else statusMap['other']++;
+        });
+
+        new Chart(document.getElementById('statusChart'), {
+            type: 'pie',
+            data: {
+                labels: ['Військові', 'Цивільні', 'Не вказано'],
+                datasets: [{
+                    data: [statusMap.military, statusMap.civilian, statusMap.other],
+                    backgroundColor: ['rgba(16, 185, 129, 0.8)', 'rgba(56, 189, 248, 0.8)', 'rgba(107, 114, 128, 0.8)'],
+                    borderWidth: 0
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+        });
+
+        // --- 5. НОВИЙ ГРАФІК: МЕХАНІЗМ ТРАВМИ ---
+        const mechMap = { 'blast': 0, 'drone': 0, 'gunshot': 0, 'other': 0 };
+        const mechLabels = { 'blast': 'Вибух', 'drone': 'Дрон/Скид', 'gunshot': 'Вогнепальне', 'other': 'Інше/Не вказано' };
+        records.forEach(r => {
+            let m = r.pat.injury_mechanism || 'other';
+            if (mechMap[m] !== undefined) mechMap[m]++; else mechMap['other']++;
+        });
+
+        new Chart(document.getElementById('mechanismsChart'), {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(mechMap).map(k => mechLabels[k]),
+                datasets: [{
+                    data: Object.values(mechMap),
+                    backgroundColor: ['rgba(249, 115, 22, 0.8)', 'rgba(139, 92, 246, 0.8)', 'rgba(239, 68, 68, 0.8)', 'rgba(107, 114, 128, 0.8)'],
+                    borderWidth: 0
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+        });
+
+        // --- 6. НОВИЙ ГРАФІК: АМПУТАЦІЇ ---
+        const ampMap = { 'transfemoral': 0, 'transtibial': 0, 'upper': 0, 'not_specified': 0 };
+        const ampLabels = { 'transfemoral': 'Трансфеморальна', 'transtibial': 'Транстибіальна', 'upper': 'Верхня кінцівка', 'not_specified': 'Не вказано рівень' };
+        let totalAmputations = 0;
+
+        records.forEach(r => {
+            // Перевіряємо чи є ампутація загалом
+            const isAmp = r.pred.amputation === true || r.pred.amputation === 'true' || r.pred.amputation == 1;
+            if (isAmp) {
+                totalAmputations++;
+                let lvl = r.pros.amputation_level || 'not_specified';
+                if (ampMap[lvl] !== undefined) ampMap[lvl]++; else ampMap['not_specified']++;
+            }
+        });
+
+        new Chart(document.getElementById('amputationsChart'), {
+            type: 'bar',
+            data: {
+                labels: Object.keys(ampMap).map(k => ampLabels[k]),
+                datasets: [{
+                    label: 'Кількість ампутацій',
+                    data: Object.values(ampMap),
+                    backgroundColor: ['rgba(217, 70, 239, 0.7)', 'rgba(168, 85, 247, 0.7)', 'rgba(99, 102, 241, 0.7)', 'rgba(75, 85, 99, 0.7)'],
+                    borderRadius: 4
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: { position: 'right' }
-                }
+                    legend: { display: false },
+                    title: { display: true, text: `Всього пацієнтів з ампутаціями: ${totalAmputations}`, color: '#d1d5db' }
+                },
+                scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
             }
         });
 
-        // --- 4. ГРАФІК: КЛІНІЧНІ ПРЕДИКТОРИ ---
+        // --- 7. ГРАФІК: КЛІНІЧНІ ПРЕДИКТОРИ ---
         let infectionCount = 0;
-        let amputationCount = 0;
         let tourniquetCount = 0;
+        let phantomPainCount = 0;
+        let revisionCount = 0;
 
         records.forEach(r => {
-            // Врахування як boolean true/false, так і стрічкових 'true'/'false' та '1'/'0'
-            const hasInfection = r.pred.infection === true || r.pred.infection === 'true' || r.pred.infection == 1;
-            const hasAmputation = r.pred.amputation === true || r.pred.amputation === 'true' || r.pred.amputation == 1;
-            const hasTourniquet = r.pred.tourniquet === true || r.pred.tourniquet === 'true' || r.pred.tourniquet == 1;
-
-            if (hasInfection) infectionCount++;
-            if (hasAmputation) amputationCount++;
-            if (hasTourniquet) tourniquetCount++;
+            if (r.pred.infection === true || r.pred.infection === 'true' || r.pred.infection == 1) infectionCount++;
+            if (r.pred.tourniquet === true || r.pred.tourniquet === 'true' || r.pred.tourniquet == 1) tourniquetCount++;
+            if (r.pros.phantom_pain === true || r.pros.phantom_pain === 'true' || r.pros.phantom_pain == 1) phantomPainCount++;
+            if (r.pros.revisions === true || r.pros.revisions === 'true' || r.pros.revisions == 1) revisionCount++;
         });
 
         new Chart(document.getElementById('predictorsChart'), {
             type: 'bar',
             data: {
-                labels: ['Наявність інфекції', 'Ампутація', 'Використання турнікету'],
+                labels: ['Використання турнікету', 'Наявність інфекції', 'Фантомний біль', 'Повторні ревізії кукси'],
                 datasets: [{
                     label: 'Кількість пацієнтів',
-                    data: [infectionCount, amputationCount, tourniquetCount],
+                    data: [tourniquetCount, infectionCount, phantomPainCount, revisionCount],
                     backgroundColor: 'rgba(56, 189, 248, 0.7)', // Sky blue
                     borderRadius: 4
                 }]
@@ -260,12 +348,7 @@
                 maintainAspectRatio: false,
                 indexAxis: 'y', // Робимо графік горизонтальним
                 plugins: { legend: { display: false } },
-                scales: {
-                    x: {
-                        beginAtZero: true,
-                        ticks: { stepSize: 1 }
-                    }
-                }
+                scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } }
             }
         });
     });

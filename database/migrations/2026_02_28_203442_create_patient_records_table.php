@@ -20,8 +20,8 @@ class CreatePatientRecordsTable extends Migration
             // constrained() автоматически поймет, что таблица называется 'hospitals'
             // cascadeOnDelete() удалит записи пациента, если госпиталь будет удален
             $table->foreignId('hospital_id')->constrained('hospitals')->cascadeOnDelete();
-            $table->string('name')->nullable();
-            $table->string('age')->nullable();
+            $table->json('patient_data')->nullable();
+            $table->json('prosthetics_data')->nullable();
             $table->string('history_id')->nullable();
             $table->json('icd_codes')->nullable();
             $table->json('predictors')->nullable();
