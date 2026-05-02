@@ -161,6 +161,7 @@ Route::prefix('registry')->group(function () {
     Route::post('/createUser', [RegistryController::class, 'createUser'])->name('registry.createUser');
     Route::post('/entranceUser', [RegistryController::class, 'entranceUser'])->name('registry.entranceUser');
     Route::post('/createData', [RegistryController::class, 'createData'])->name('registry.createData');
+    Route::get('/show/{id}', [RegistryController::class, 'show'])->name('registration.show');
 });
 
 Route::get('/view/teachers/{id}', [ReitingsController::class, 'showData'])->name('teachers.show');

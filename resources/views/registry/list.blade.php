@@ -240,8 +240,7 @@
 
     // Логіка кнопок-заглушок
     function viewPatient(id, name) {
-        // Щоб перенаправити на роут: window.location.href = `/registry/${id}`;
-        showNotification(`Перегляд інформації про пацієнта: ${name}`);
+         window.location.href = `/registry/show/${id}`;
     }
 
     function editPatient(id, name) {

@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hospital;
+use App\Models\PatientRecord;
 use App\Models\Rating;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -143,6 +144,12 @@ class RegistryController extends Controller
             'record_id' => $record->id
         ], 201);
 
+    }
+
+    public function show($id)
+    {
+        $patient = PatientRecord::findOrFail($id);
+        return view('registry.show', compact('patient'));
     }
 
     }
