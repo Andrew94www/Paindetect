@@ -521,7 +521,7 @@
         try {
             // Зверніть увагу: тут ми стукаємо на роут оновлення і метод зазвичай 'PUT'
             const response = await fetch(`/registry/update/{{ $patient->id }}`, {
-                method: 'PUT', // або 'POST', залежно від того, як налаштовано у web.php
+                method: 'POST', // або 'POST', залежно від того, як налаштовано у web.php
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
