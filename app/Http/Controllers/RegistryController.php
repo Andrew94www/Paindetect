@@ -152,5 +152,29 @@ class RegistryController extends Controller
         return view('registry.show', compact('patient'));
     }
 
+    // Метод для відображення форми редагування
+    public function edit($id)
+    {
+        $patient = PatientRecord::findOrFail($id);
+        return view('registry.edit', compact('patient'));
+    }
+
+    // Приклад методу для збереження змін (може відрізнятися залежно від ваших роутів)
+    public function update(Request $request, $id)
+    {
+        $patient = PatientRecord::findOrFail($id);
+
+        // Оновлюємо дані...
+        $patient->update([
+            'patient_data' => $request->patient_data,
+            'icd_codes' => $request->icd_codes,
+            'predictors' => $request->predictors,
+            'prosthetics_data' => $request->prosthetics_data,
+            'scores' => $request->scores,
+        ]);
+
+        return response()->json(['message' => 'Дані успішно оновлено!'], 200);
+    }
+
     }
 

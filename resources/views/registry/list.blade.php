@@ -244,8 +244,7 @@
     }
 
     function editPatient(id, name) {
-        // Щоб перенаправити на роут: window.location.href = `/registry/${id}/edit`;
-        showNotification(`Редагування пацієнта: ${name}`);
+        window.location.href = `/registry/edit/${id}`;
     }
 
     // Функція для показу красивих сповіщень внизу екрану
