@@ -16,7 +16,9 @@ class PatientRecord extends Model
         'history_id',  // Додайте це
         'icd_codes',
         'predictors',
-        'scores'
+        'scores',
+        'infection_factors',
+        'surgical_factors'
     ];
 
     /**
@@ -28,7 +30,9 @@ class PatientRecord extends Model
         'predictors' => 'array',
         'scores' => 'array',
         'prosthetics_data' => 'array',
-        'hospital_id' => 'string',
+        'infection_factors'=> 'array',
+        'surgical_factors'=> 'array',
+        'hospital_id' => 'string'
     ];
 
     public function hospital()

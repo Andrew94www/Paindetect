@@ -273,6 +273,79 @@
                     </div>
                 </div>
             </section>
+
+            <!-- 6. Фактори інфекції -->
+            <section class="bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-700">
+                <h2 class="text-xl font-semibold mb-4 flex items-center gap-2 text-slate-100">
+                    <i class="fa-solid fa-virus text-emerald-500"></i>
+                    6. Фактори інфекції
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="flex items-center justify-between bg-slate-700/40 p-3 rounded-xl">
+                        <span class="text-slate-300">Відкрита рана</span>
+                        <div>{!! $checkIcon($patient->infection_factors['openWound'] ?? false) !!}</div>
+                    </div>
+                    <div class="flex items-center justify-between bg-slate-700/40 p-3 rounded-xl">
+                        <span class="text-slate-300">Забруднення рани</span>
+                        <div>{!! $checkIcon($patient->infection_factors['woundContamination'] ?? false) !!}</div>
+                    </div>
+                    <div class="flex items-center justify-between bg-slate-700/40 p-3 rounded-xl">
+                        <span class="text-slate-300">Відкритий перелом</span>
+                        <div>{!! $checkIcon($patient->infection_factors['openFracture'] ?? false) !!}</div>
+                    </div>
+                    <div class="flex items-center justify-between bg-slate-700/40 p-3 rounded-xl">
+                        <span class="text-slate-300">NPWT</span>
+                        <div>{!! $checkIcon($patient->infection_factors['npwt'] ?? false) !!}</div>
+                    </div>
+                    <div class="flex items-center justify-between bg-slate-700/40 p-3 rounded-xl">
+                        <span class="text-slate-300">Позитивний посів</span>
+                        <div>{!! $checkIcon($patient->infection_factors['positiveCulture'] ?? false) !!}</div>
+                    </div>
+                    <div class="flex items-center justify-between bg-slate-700/40 p-3 rounded-xl">
+                        <span class="text-slate-300">MDRO (Резистентність)</span>
+                        <div>{!! $checkIcon($patient->infection_factors['mdro'] ?? false) !!}</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. Хірургічна складність -->
+            <section class="bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-700">
+                <h2 class="text-xl font-semibold mb-4 flex items-center gap-2 text-slate-100">
+                    <i class="fa-solid fa-scalpel text-amber-500"></i>
+                    7. Хірургічна складність
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="flex items-center justify-between bg-slate-700/40 p-3 rounded-xl">
+                        <span class="text-slate-300">Повторний дебридмент</span>
+                        <div>{!! $checkIcon($patient->surgical_factors['repeatedDebridement'] ?? false) !!}</div>
+                    </div>
+                    <div class="flex items-center justify-between bg-slate-700/40 p-3 rounded-xl">
+                        <span class="text-slate-300">Некроз тканин</span>
+                        <div>{!! $checkIcon($patient->surgical_factors['tissueNecrosis'] ?? false) !!}</div>
+                    </div>
+                    <div class="flex items-center justify-between bg-slate-700/40 p-3 rounded-xl">
+                        <span class="text-slate-300">Розходження рани</span>
+                        <div>{!! $checkIcon($patient->surgical_factors['woundDehiscence'] ?? false) !!}</div>
+                    </div>
+                    <div class="flex items-center justify-between bg-slate-700/40 p-3 rounded-xl">
+                        <span class="text-slate-300">Остеомієліт</span>
+                        <div>{!! $checkIcon($patient->surgical_factors['osteomyelitis'] ?? false) !!}</div>
+                    </div>
+                    <div class="flex items-center justify-between bg-slate-700/40 p-3 rounded-xl">
+                        <span class="text-slate-300">Судинне ушкодження</span>
+                        <div>{!! $checkIcon($patient->surgical_factors['vascularInjury'] ?? false) !!}</div>
+                    </div>
+                    <div class="flex items-center justify-between bg-slate-700/40 p-3 rounded-xl">
+                        <span class="text-slate-300">Flap/Реконструкція</span>
+                        <div>{!! $checkIcon($patient->surgical_factors['flapReconstruction'] ?? false) !!}</div>
+                    </div>
+                    <div class="flex items-center justify-between bg-slate-700/40 p-3 rounded-xl">
+                        <span class="text-slate-300">Повторна госпіталізація</span>
+                        <div>{!! $checkIcon($patient->surgical_factors['readmission'] ?? false) !!}</div>
+                    </div>
+                </div>
+            </section>
+
         </div>
 
         <!-- САЙДБАР З БАЛАМИ -->
@@ -300,6 +373,18 @@
                         if($prostScore >= 4) { $prLvl = 'Високий'; $prBg = 'bg-purple-900/30'; $prBorder = 'border-purple-700/50'; $prText = 'text-purple-400'; $prDesc = 'Потрібна мультидисциплінарна корекція.';}
                         elseif($prostScore >= 2) { $prLvl = 'Середній'; $prBg = 'bg-amber-900/30'; $prBorder = 'border-amber-700/50'; $prText = 'text-amber-400'; $prDesc = 'Потребує додаткового контролю.';}
                         else { $prLvl = 'Низький'; $prBg = 'bg-emerald-900/30'; $prBorder = 'border-emerald-700/50'; $prText = 'text-emerald-400'; $prDesc = 'Оптимальний прогноз протезування.';}
+
+                        // Логіка підрахунку кольорів для Інфекції
+                        $infScore = $patient->scores['infectionScore'] ?? 0;
+                        if($infScore >= 6) { $iLvl = 'Високий'; $iBg = 'bg-rose-900/30'; $iBorder = 'border-rose-700/50'; $iText = 'text-rose-400'; $iDesc = 'Високий ризик інфекції.';}
+                        elseif($infScore >= 3) { $iLvl = 'Середній'; $iBg = 'bg-amber-900/30'; $iBorder = 'border-amber-700/50'; $iText = 'text-amber-400'; $iDesc = 'Середній ризик.';}
+                        else { $iLvl = 'Низький'; $iBg = 'bg-emerald-900/30'; $iBorder = 'border-emerald-700/50'; $iText = 'text-emerald-400'; $iDesc = 'Мінімальний ризик.';}
+
+                        // Логіка підрахунку кольорів для Хірургічної складності
+                        $surgScore = $patient->scores['surgicalScore'] ?? 0;
+                        if($surgScore >= 6) { $sLvl = 'Висока'; $sBg = 'bg-rose-900/30'; $sBorder = 'border-rose-700/50'; $sText = 'text-rose-400'; $sDesc = 'Висока хірургічна складність.';}
+                        elseif($surgScore >= 3) { $sLvl = 'Середня'; $sBg = 'bg-amber-900/30'; $sBorder = 'border-amber-700/50'; $sText = 'text-amber-400'; $sDesc = 'Підвищена складність.';}
+                        else { $sLvl = 'Низька'; $sBg = 'bg-emerald-900/30'; $sBorder = 'border-emerald-700/50'; $sText = 'text-emerald-400'; $sDesc = 'Базова складність.';}
                     @endphp
 
                     <div class="mb-5">
@@ -341,6 +426,34 @@
                                 </div>
                             </div>
                             <p class="text-[11px] opacity-90 mt-1 font-medium leading-tight {{ $prText }}">{{ $prDesc }}</p>
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <h4 class="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-2">Ризик інфекції</h4>
+                        <div class="p-4 rounded-xl border-2 {{ $iBg }} {{ $iBorder }}">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="font-bold text-lg {{ $iText }}">{{ $iLvl }}</span>
+                                <div class="flex items-center gap-1 {{ $iText }}">
+                                    <span class="font-black text-2xl">{{ $infScore }}</span>
+                                    <span class="text-[10px] font-bold uppercase opacity-80">балів</span>
+                                </div>
+                            </div>
+                            <p class="text-[11px] opacity-90 mt-1 font-medium leading-tight {{ $iText }}">{{ $iDesc }}</p>
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <h4 class="text-xs font-semibold text-amber-400 uppercase tracking-wider mb-2">Хірургічна складність</h4>
+                        <div class="p-4 rounded-xl border-2 {{ $sBg }} {{ $sBorder }}">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="font-bold text-lg {{ $sText }}">{{ $sLvl }}</span>
+                                <div class="flex items-center gap-1 {{ $sText }}">
+                                    <span class="font-black text-2xl">{{ $surgScore }}</span>
+                                    <span class="text-[10px] font-bold uppercase opacity-80">балів</span>
+                                </div>
+                            </div>
+                            <p class="text-[11px] opacity-90 mt-1 font-medium leading-tight {{ $sText }}">{{ $sDesc }}</p>
                         </div>
                     </div>
 

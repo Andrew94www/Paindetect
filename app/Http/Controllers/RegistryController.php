@@ -120,6 +120,8 @@ class RegistryController extends Controller
             'prosthetics_data'=> 'required|array',
             'predictors' => 'required|array',
             'scores' => 'required|array',
+            'infection_factors' => 'required|array',
+            'surgical_factors' => 'required|array',
             // Мы не валидируем hospital_id из запроса,
             // так как возьмем его из сессии для безопасности.
         ]);
@@ -135,6 +137,8 @@ class RegistryController extends Controller
             'prosthetics_data'=> $validated['prosthetics_data'],
             'predictors' => $validated['predictors'],
             'scores'     => $validated['scores'],
+            'infection_factors'     => $validated['infection_factors'],
+            'surgical_factors'     => $validated['surgical_factors'],
         ]);
 
         // 3. Ответ для фронтенда

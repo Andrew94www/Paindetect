@@ -96,7 +96,6 @@
                 </div>
             </section>
 
-            <!-- Клінічні дані (Повернуто до початкового стану) -->
             <section class="bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-700">
                 <h2 class="text-xl font-semibold mb-4 flex items-center gap-2 text-slate-100">
                     <i class="fa-solid fa-list-check text-blue-500"></i>
@@ -196,7 +195,6 @@
                 </div>
             </section>
 
-            <!-- Предиктори ризику -->
             <section class="bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-700">
                 <h2 class="text-xl font-semibold mb-4 flex items-center gap-2 text-slate-100">
                     <i class="fa-solid fa-heart-pulse text-red-500"></i>
@@ -257,7 +255,7 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div>
                             <label class="block text-sm font-medium text-slate-300 mb-1">Тип травми</label>
                             <select id="traumaType" class="w-full p-2.5 bg-slate-700 border border-slate-600 rounded-lg text-slate-100 focus:ring-2 focus:ring-blue-500 outline-none">
@@ -276,7 +274,15 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-slate-300 mb-1">Гострий біль (NRS 0-10)</label>
+                            <label class="block text-sm font-medium text-slate-300 mb-1">ICU (Реанімація)</label>
+                            <select id="icuDays" class="w-full p-2.5 bg-slate-700 border border-slate-600 rounded-lg text-slate-100 outline-none">
+                                <option value="0">Не був</option>
+                                <option value="1-2">1-2 дні</option>
+                                <option value="3plus">≥ 3 днів</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-300 mb-1">Гострий біль (0-10)</label>
                             <input type="number" id="acutePain" min="0" max="10" value="0" class="w-full p-2.5 bg-slate-700 border border-slate-600 text-slate-100 rounded-lg outline-none focus:ring-2 focus:ring-blue-500">
                         </div>
                     </div>
@@ -284,7 +290,7 @@
                 </div>
             </section>
 
-            <!-- НОВИЙ БЛОК: ОЦІНКА ПРОТЕЗУВАННЯ -->
+            <!-- ОЦІНКА ПРОТЕЗУВАННЯ ТА ФУНКЦІЇ -->
             <section class="bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-700">
                 <h2 class="text-xl font-semibold mb-6 flex items-center gap-2 text-slate-100">
                     <i class="fa-solid fa-person-walking-with-cane text-purple-500"></i>
@@ -387,7 +393,7 @@
                         </div>
                     </div>
 
-                    <!-- 5. Функціональна оцінка -->
+                    <!-- 5. Функціональна оцінка (Відновлено) -->
                     <div class="bg-slate-700/30 p-4 rounded-xl border border-slate-600">
                         <h3 class="text-md font-medium text-slate-300 mb-3 border-b border-slate-600 pb-2">5. Функціональна оцінка</h3>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -418,6 +424,83 @@
 
                 </div>
             </section>
+
+            <!-- НОВИЙ БЛОК: ІНФЕКЦІЙНИЙ ТА ХІРУРГІЧНИЙ РИЗИК -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- 6. Ризик інфекції -->
+                <section class="bg-slate-800 p-6 rounded-2xl shadow-sm border border-emerald-700/50">
+                    <h2 class="text-lg font-semibold mb-4 flex items-center gap-2 text-emerald-400">
+                        <i class="fa-solid fa-viruses"></i>
+                        6. Фактори інфекції
+                    </h2>
+                    <div class="space-y-3">
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" id="openWound" class="custom-checkbox">
+                            <span class="text-sm text-slate-200">Відкрита рана</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" id="woundContamination" class="custom-checkbox">
+                            <span class="text-sm text-slate-200">Забруднення рани</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" id="openFracture" class="custom-checkbox">
+                            <span class="text-sm text-slate-200">Відкритий перелом</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" id="npwt" class="custom-checkbox">
+                            <span class="text-sm text-slate-200">NPWT (ВАК-терапія)</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" id="positiveCulture" class="custom-checkbox">
+                            <span class="text-sm text-slate-200">Позитивний посів</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" id="mdro" class="custom-checkbox">
+                            <span class="text-sm text-slate-200">MDRO (резистентна мікрофлора)</span>
+                        </label>
+                        <p class="text-[10px] text-slate-400 mt-2 italic">*Ампутація, турнікет &gt;60хв, ICU та ≥3 операції враховуються автоматично.</p>
+                    </div>
+                </section>
+
+                <!-- 7. Хірургічна складність -->
+                <section class="bg-slate-800 p-6 rounded-2xl shadow-sm border border-amber-700/50">
+                    <h2 class="text-lg font-semibold mb-4 flex items-center gap-2 text-amber-400">
+                        <i class="fa-solid fa-scalpel-line-dashed"></i>
+                        7. Хірургічна складність
+                    </h2>
+                    <div class="space-y-3">
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" id="repeatedDebridement" class="custom-checkbox">
+                            <span class="text-sm text-slate-200">Повторний дебридмент</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" id="tissueNecrosis" class="custom-checkbox">
+                            <span class="text-sm text-slate-200">Некроз тканин</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" id="woundDehiscence" class="custom-checkbox">
+                            <span class="text-sm text-slate-200">Розходження рани</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" id="osteomyelitis" class="custom-checkbox">
+                            <span class="text-sm text-slate-200">Остеомієліт</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" id="vascularInjury" class="custom-checkbox">
+                            <span class="text-sm text-slate-200">Судинне ушкодження</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" id="flapReconstruction" class="custom-checkbox">
+                            <span class="text-sm text-slate-200">Flap / Реконструкція</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" id="readmission" class="custom-checkbox">
+                            <span class="text-sm text-slate-200">Повторна госпіталізація</span>
+                        </label>
+                        <p class="text-[10px] text-slate-400 mt-2 italic">*К-сть операцій, ампутація та ревізія кукси враховуються автоматично.</p>
+                    </div>
+                </section>
+            </div>
         </div>
 
         <div class="lg:col-span-1">
@@ -426,6 +509,35 @@
                 <div class="bg-slate-800 p-6 rounded-2xl shadow-lg border border-slate-700">
                     <h3 class="text-lg font-bold text-slate-100 mb-4 border-b border-slate-700 pb-2">Результати Прогнозу</h3>
 
+                    <!-- Інфекція -->
+                    <div class="mb-5">
+                        <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Ризик інфекційних ускладнень</h4>
+                        <div id="infectionBox" class="p-4 rounded-xl border-2 transition-all bg-emerald-900/30 border-emerald-700/50">
+                            <div class="flex justify-between items-center mb-1">
+                                <span id="infectionText" class="font-bold text-lg text-emerald-400">Низький</span>
+                                <div class="flex items-center gap-1">
+                                    <span id="infectionScore" class="font-black text-2xl text-emerald-300">0</span>
+                                    <span class="text-[10px] font-bold uppercase text-emerald-500/80">/10</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Хірургія -->
+                    <div class="mb-5">
+                        <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Хірургічний ризик (складність)</h4>
+                        <div id="surgicalBox" class="p-4 rounded-xl border-2 transition-all bg-emerald-900/30 border-emerald-700/50">
+                            <div class="flex justify-between items-center mb-1">
+                                <span id="surgicalText" class="font-bold text-lg text-emerald-400">Низький</span>
+                                <div class="flex items-center gap-1">
+                                    <span id="surgicalScore" class="font-black text-2xl text-emerald-300">0</span>
+                                    <span class="text-[10px] font-bold uppercase text-emerald-500/80">/10</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Реабілітація -->
                     <div class="mb-5">
                         <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Ризик тривалої реабілітації</h4>
                         <div id="rehabBox" class="p-4 rounded-xl border-2 transition-all">
@@ -440,6 +552,7 @@
                         </div>
                     </div>
 
+                    <!-- Біль -->
                     <div class="mb-5">
                         <h4 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Ризик хронічного болю (CPRS)</h4>
                         <div id="painBox" class="p-4 rounded-xl border-2 transition-all">
@@ -454,9 +567,9 @@
                         </div>
                     </div>
 
-                    <!-- НОВИЙ ВИВІД БАЛІВ ПРОТЕЗУВАННЯ -->
+                    <!-- Протезування -->
                     <div class="mb-5">
-                        <h4 class="text-xs font-semibold text-purple-400 uppercase tracking-wider mb-2">6. Ризик ускладнень протезування</h4>
+                        <h4 class="text-xs font-semibold text-purple-400 uppercase tracking-wider mb-2">Ризик ускладнень протезування</h4>
                         <div id="prostheticBox" class="p-4 rounded-xl border-2 transition-all">
                             <div class="flex justify-between items-center mb-1">
                                 <span id="prostheticText" class="font-bold text-lg">Низький</span>
@@ -474,15 +587,6 @@
                     </button>
                 </div>
 
-                <div class="bg-blue-900/30 p-4 rounded-xl border border-blue-800/50 text-xs text-blue-300">
-                    <p class="font-bold mb-1"><i class="fa-solid fa-circle-info mr-1"></i> Оцінка протезування (0-5 балів):</p>
-                    <ul class="list-disc list-inside space-y-1 opacity-90 ml-1 mt-2">
-                        <li><strong>0–1:</strong> Низький ризик</li>
-                        <li><strong>2–3:</strong> Середній ризик</li>
-                        <li><strong>4+:</strong> Високий (мультидисциплінарна корекція)</li>
-                    </ul>
-                </div>
-
             </div>
         </div>
 
@@ -493,8 +597,10 @@
     let currentRehabScore = 0;
     let currentPainScore = 0;
     let currentProstheticScore = 0;
+    let currentInfectionScore = 0;
+    let currentSurgicalScore = 0;
 
-    // Безпечні функції для отримання значень (запобігають помилці "Cannot read properties of null")
+    // Безпечні функції для отримання значень
     const getVal = (id) => { const el = document.getElementById(id); return el ? el.value : ''; };
     const getChk = (id) => { const el = document.getElementById(id); return el ? el.checked : false; };
     const getInt = (id) => { const val = parseInt(getVal(id)); return isNaN(val) ? 0 : val; };
@@ -509,7 +615,7 @@
         const nerveBox = document.getElementById('nerveTypeBox');
         if (nerveBox) nerveBox.classList.toggle('active', getChk('nerveInjury'));
 
-        // Автоматичне встановлення галочки "Ампутація", якщо обрано відповідний код МКХ
+        // Автоматичне встановлення галочки "Ампутація" за кодом
         const icd = getVal('mainTraumaIcd');
         const ampCheck = document.getElementById('amputation');
         if (ampCheck && ['S48', 'S78', 'S88'].includes(icd)) {
@@ -521,7 +627,6 @@
     }
 
     function calculateScores() {
-        // --- 1. Старі підрахунки (CPRS та Реабілітація) ---
         const traumaType = getVal('traumaType');
         const amputation = getChk('amputation');
         const amputationLevel = getVal('amputationLevel');
@@ -534,22 +639,29 @@
         const icuDays = getVal('icuDays');
         const acutePain = getInt('acutePain');
 
+        // --- 1. Реабілітація ---
         let rehabScore = 0;
         if (traumaType === 'blast' || traumaType === 'crush') rehabScore += 2;
         if (traumaType === 'combo') rehabScore += 3;
-
         if (amputation) {
             rehabScore += 2;
             if (amputationLevel === 'distal') rehabScore += 1;
             if (amputationLevel === 'proximal') rehabScore += 2;
         }
-
         if (infection) rehabScore += 2;
         if (surgeries === '2') rehabScore += 1;
         if (surgeries === '3plus') rehabScore += 2;
         if (icuDays === '1-2') rehabScore += 1;
         if (icuDays === '3plus') rehabScore += 2;
 
+        currentRehabScore = rehabScore;
+        updateScoreUI('rehab', rehabScore, {
+            low: "Базова траєкторія відновлення.",
+            mod: "Стандарт + контроль ускладнень.",
+            high: "Мультидисциплінарна команда, психоскринінг."
+        }, { mod: 4, high: 8 });
+
+        // --- 2. Біль ---
         let painScore = 0;
         if (traumaType === 'blast') painScore += 2;
         if (tourniquet && tourniquetDuration === 'over120') painScore += 3;
@@ -558,44 +670,67 @@
         if (infection) painScore += 1;
         if (acutePain >= 7) painScore += 2;
 
-        currentRehabScore = rehabScore;
         currentPainScore = painScore;
-
-        updateScoreUI('rehab', rehabScore, {
-            low: "Базова траєкторія відновлення.",
-            mod: "Стандарт + контроль ускладнень.",
-            high: "Мультидисциплінарна команда, психоскринінг."
-        }, { mod: 4, high: 8 });
-
         updateScoreUI('pain', painScore, {
             low: "Стандартний контроль болю.",
             mod: "Підвищена увага до знеболення.",
             high: "Спеціалізований pain-pathway маршрут."
         }, { mod: 4, high: 8 });
 
-        // --- 2. Новий підрахунок: Ризик-індекс ускладнень протезування ---
+        // --- 3. Протезування ---
         let prostheticScore = 0;
-
         const stumpPain = getInt('stumpPain');
         const phantomPain = getChk('phantomPain');
         const healingIssues = getChk('healingIssues');
         const amputationSidedness = getVal('amputationSidedness');
         const mainTraumaIcd = getVal('mainTraumaIcd');
 
-        // 1 бал за кожен фактор
         if (stumpPain >= 6) prostheticScore += 1;
         if (phantomPain) prostheticScore += 1;
         if (healingIssues) prostheticScore += 1;
         if (amputationSidedness === 'bilateral') prostheticScore += 1;
-        if (mainTraumaIcd === 'S00-S09' || mainTraumaIcd.startsWith('S0')) prostheticScore += 1; // ЧМТ
+        if (mainTraumaIcd === 'S00-S09' || mainTraumaIcd.startsWith('S0')) prostheticScore += 1;
 
         currentProstheticScore = prostheticScore;
-
         updateScoreUI('prosthetic', prostheticScore, {
             low: "Оптимальний прогноз протезування.",
             mod: "Потребує додаткового контролю та корекції.",
             high: "Потрібна мультидисциплінарна корекція."
         }, { mod: 2, high: 4 }, true);
+
+        // --- 4. Інфекційний Ризик (0-10) ---
+        let infScore = 0;
+        const icuAdmission = (icuDays === '1-2' || icuDays === '3plus');
+
+        if (getChk('openWound')) infScore++;
+        if (getChk('woundContamination')) infScore++;
+        if (getChk('openFracture')) infScore++;
+        if (amputation) infScore++;
+        if (tourniquet && (tourniquetDuration === '60to120' || tourniquetDuration === 'over120')) infScore++;
+        if (icuAdmission) infScore++;
+        if (surgeries === '3plus') infScore++;
+        if (getChk('npwt')) infScore++;
+        if (getChk('positiveCulture')) infScore++;
+        if (getChk('mdro')) infScore++;
+
+        currentInfectionScore = infScore;
+        updateScoreUI_4Levels('infection', infScore);
+
+        // --- 5. Хірургічний Ризик (0-10) ---
+        let surgScore = 0;
+        if (surgeries === '3plus') surgScore++;
+        if (amputation) surgScore++;
+        if (getChk('repeatedDebridement')) surgScore++;
+        if (getChk('prostheticRevisions')) surgScore++;
+        if (getChk('tissueNecrosis')) surgScore++;
+        if (getChk('woundDehiscence')) surgScore++;
+        if (getChk('osteomyelitis')) surgScore++;
+        if (getChk('vascularInjury')) surgScore++;
+        if (getChk('flapReconstruction')) surgScore++;
+        if (getChk('readmission')) surgScore++;
+
+        currentSurgicalScore = surgScore;
+        updateScoreUI_4Levels('surgical', surgScore);
     }
 
     function updateScoreUI(type, score, descTexts, thresholds, isProsthetic = false) {
@@ -604,7 +739,7 @@
         const boxEl = document.getElementById(`${type}Box`);
         const descEl = document.getElementById(`${type}Desc`);
 
-        if (!scoreEl || !textEl || !boxEl || !descEl) return; // Захист від помилок, якщо блок відсутній
+        if (!scoreEl || !textEl || !boxEl || !descEl) return;
 
         scoreEl.innerText = score;
 
@@ -626,8 +761,6 @@
             desc = descTexts.mod;
         } else if (score >= thresholds.high) {
             level = 'Високий';
-
-            // Якщо це протезування (особливий колір для високого ризику)
             if (isProsthetic) {
                 bgClass = 'bg-purple-900/30';
                 borderClass = 'border-purple-700/50';
@@ -651,6 +784,38 @@
         boxEl.className = `p-4 rounded-xl border-2 transition-all ${bgClass} ${borderClass}`;
         descEl.innerText = desc;
         descEl.className = `text-[11px] opacity-90 mt-1 font-medium leading-tight ${textClass}`;
+    }
+
+    function updateScoreUI_4Levels(type, score) {
+        const scoreEl = document.getElementById(`${type}Score`);
+        const textEl = document.getElementById(`${type}Text`);
+        const boxEl = document.getElementById(`${type}Box`);
+        if (!scoreEl) return;
+
+        scoreEl.innerText = score;
+        let level = 'Низький';
+        let stylePrefix = 'emerald';
+
+        if (score >= 3 && score <= 5) {
+            level = 'Середній'; stylePrefix = 'amber';
+        } else if (score >= 6 && score <= 8) {
+            level = 'Високий'; stylePrefix = 'orange';
+        } else if (score >= 9) {
+            level = 'Дуже високий'; stylePrefix = 'rose';
+        }
+
+        textEl.innerText = level;
+
+        let bgClass, borderClass, textClass, numClass, lblClass;
+        if(stylePrefix === 'emerald') { bgClass = 'bg-emerald-900/30'; borderClass='border-emerald-700/50'; textClass='text-emerald-400'; numClass='text-emerald-300'; lblClass='text-emerald-500/80'; }
+        else if(stylePrefix === 'amber') { bgClass = 'bg-amber-900/30'; borderClass='border-amber-700/50'; textClass='text-amber-400'; numClass='text-amber-300'; lblClass='text-amber-500/80'; }
+        else if(stylePrefix === 'orange') { bgClass = 'bg-orange-900/30'; borderClass='border-orange-700/50'; textClass='text-orange-400'; numClass='text-orange-300'; lblClass='text-orange-500/80'; }
+        else { bgClass = 'bg-rose-900/30'; borderClass='border-rose-700/50'; textClass='text-rose-400'; numClass='text-rose-300'; lblClass='text-rose-500/80'; }
+
+        textEl.className = `font-bold text-lg ${textClass}`;
+        scoreEl.className = `font-black text-2xl ${numClass}`;
+        scoreEl.nextElementSibling.className = `text-[10px] font-bold uppercase ${lblClass}`;
+        boxEl.className = `p-4 rounded-xl border-2 transition-all ${bgClass} ${borderClass}`;
     }
 
     function showToast(message, type = 'info') {
@@ -732,10 +897,31 @@
                 }
             },
 
+            infection_factors: {
+                openWound: getChk('openWound'),
+                woundContamination: getChk('woundContamination'),
+                openFracture: getChk('openFracture'),
+                npwt: getChk('npwt'),
+                positiveCulture: getChk('positiveCulture'),
+                mdro: getChk('mdro')
+            },
+
+            surgical_factors: {
+                repeatedDebridement: getChk('repeatedDebridement'),
+                tissueNecrosis: getChk('tissueNecrosis'),
+                woundDehiscence: getChk('woundDehiscence'),
+                osteomyelitis: getChk('osteomyelitis'),
+                vascularInjury: getChk('vascularInjury'),
+                flapReconstruction: getChk('flapReconstruction'),
+                readmission: getChk('readmission')
+            },
+
             scores: {
                 rehabScore: currentRehabScore,
                 painScore: currentPainScore,
-                prostheticScore: currentProstheticScore
+                prostheticScore: currentProstheticScore,
+                infectionRiskScore: currentInfectionScore,
+                surgicalComplexityScore: currentSurgicalScore
             }
         };
 
@@ -758,9 +944,7 @@
             if (response.ok) {
                 showToast('Дані успішно збережено в реєстр!', 'success');
 
-                // Робимо редирект через 1.5 секунди
                 setTimeout(() => {
-                    // Варіант 1: Використовуємо id, який ми вже отримали в об'єкті payload
                     window.location.href = `/registry/list/${payload.hospital_id}`;
                 }, 1500);
 
@@ -779,7 +963,6 @@
         const inputs = document.querySelectorAll('input, select');
 
         inputs.forEach(input => {
-            // Для текстових полів нам не потрібно перераховувати бали
             if (input.type !== 'text' && input.id !== 'patientName' && input.id !== 'historyId') {
                 input.addEventListener('change', () => {
                     updateVisibility();
@@ -792,7 +975,10 @@
             }
         });
 
-        document.getElementById('saveBtn').addEventListener('click', submitData);
+        const saveBtn = document.getElementById('saveBtn');
+        if(saveBtn) {
+            saveBtn.addEventListener('click', submitData);
+        }
 
         updateVisibility();
         calculateScores();
@@ -800,4 +986,3 @@
 </script>
 </body>
 </html>
-

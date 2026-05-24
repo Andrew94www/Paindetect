@@ -24,7 +24,7 @@
 
             <div>
                 <!-- Кнопка назад -->
-                <a href="{{ route('registry.list',  ['id' => Auth::guard('hospital')->id()]) }}"
+                <a href="{{ route('registry.list',  ['id' => Auth::guard('hospital')->id() ?? 1]) }}"
                    class="inline-flex justify-center items-center px-4 py-2.5 bg-gray-700 hover:bg-gray-600 text-white text-sm font-semibold rounded-lg border border-gray-600 shadow-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -72,7 +72,7 @@
                 <p class="text-2xl font-bold text-yellow-400 mt-1" id="kpi-rehab">0</p>
             </div>
 
-            <!-- KPI 5 (Новий) -->
+            <!-- KPI 5 -->
             <div class="bg-gray-800 rounded-xl p-5 border border-gray-700 shadow-lg relative overflow-hidden">
                 <div class="absolute right-0 top-0 mt-4 mr-4 text-purple-500/20">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
@@ -101,7 +101,7 @@
             </div>
         </div>
 
-        <!-- Графіки Ряд 2 (Нові) -->
+        <!-- Графіки Ряд 2 -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
             <!-- Демографія та статус -->
             <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 shadow-lg flex flex-col md:flex-row gap-4">
@@ -129,7 +129,7 @@
         </div>
 
         <!-- Графіки Ряд 3 -->
-        <div class="grid grid-cols-1 gap-6">
+        <div class="grid grid-cols-1 gap-6 mb-6">
             <!-- Клінічні предиктори -->
             <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 shadow-lg">
                 <h3 class="text-lg font-semibold text-white mb-4">Частота клінічних предикторів</h3>
@@ -139,43 +139,121 @@
             </div>
         </div>
 
+        <!-- Графіки Ряд 4 -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Фактори інфекції -->
+            <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 shadow-lg">
+                <h3 class="text-lg font-semibold text-white mb-4">Фактори інфекції</h3>
+                <div class="h-80">
+                    <canvas id="infectionFactorsChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Хірургічна складність -->
+            <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 shadow-lg">
+                <h3 class="text-lg font-semibold text-white mb-4">Хірургічна складність</h3>
+                <div class="h-80">
+                    <canvas id="surgicalFactorsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
+<!-- Блок для безпечної передачі даних з Laravel у JS без помилок SyntaxError у прев'ю -->
+<script id="records-data" type="application/json">
+    @json($records ?? [])
+</script>
+
 <script>
-    // Налаштування теми для Chart.js (світлі шрифти для темного фону)
+    // Налаштування теми для Chart.js
     Chart.defaults.color = '#9ca3af';
     Chart.defaults.scale.grid.color = '#374151';
     Chart.defaults.plugins.legend.labels.color = '#d1d5db';
 
-    // --- ДАНІ З LARAVEL ---
-    // Отримуємо колекцію $records з бекенду (передану через compact('records'))
-    const rawRecords = @json($records);
-
     document.addEventListener('DOMContentLoaded', function() {
+        let rawRecords = [];
+
+        // --- БЕЗПЕЧНЕ ОТРИМАННЯ ДАНИХ ---
+        try {
+            const rawText = document.getElementById('records-data').textContent.trim();
+
+            // Якщо ми у середовищі локального прев'ю (Blade не відпрацював)
+            if (rawText === '@json($records ?? [])' || rawText === '@json($records)') {
+                console.log('Режим прев\'ю: Blade не оброблено, генеруються тестові дані.');
+                rawRecords = [
+                    {
+                        patient_data: { age: 34, status: "military", injury_mechanism: "blast" },
+                        icd_codes: { mainTrauma: "S88" },
+                        predictors: { amputation: true, infection: true, tourniquet: true },
+                        prosthetics_data: { amputation_level: "transtibial", phantom_pain: true, revisions: false },
+                        scores: { painScore: 8, rehabScore: 5, prostheticScore: 2 },
+                        infection_factors: { mdro: false, npwt: true, openWound: true, openFracture: true },
+                        surgical_factors: { osteomyelitis: false, tissueNecrosis: true, woundDehiscence: true }
+                    },
+                    {
+                        patient_data: { age: 28, status: "military", injury_mechanism: "drone" },
+                        icd_codes: { mainTrauma: "S02" },
+                        predictors: { amputation: false, infection: false, tourniquet: false },
+                        scores: { painScore: 4, rehabScore: 2, prostheticScore: 0 },
+                        infection_factors: { openWound: true },
+                        surgical_factors: null
+                    },
+                    {
+                        patient_data: { age: 45, status: "civilian", injury_mechanism: "blast" },
+                        icd_codes: { mainTrauma: "S48" },
+                        predictors: { amputation: true, infection: true, tourniquet: false },
+                        prosthetics_data: { amputation_level: "upper", phantom_pain: false, revisions: true },
+                        scores: { painScore: 6, rehabScore: 8, prostheticScore: 5 },
+                        infection_factors: { mdro: true, npwt: false, openWound: true, woundContamination: true },
+                        surgical_factors: { osteomyelitis: true, readmission: true, repeatedDebridement: true }
+                    }
+                ];
+            } else if (rawText) {
+                // Якщо Blade успішно згенерував JSON
+                rawRecords = JSON.parse(rawText);
+            }
+        } catch (e) {
+            console.error('Помилка парсингу даних з Laravel:', e);
+        }
+
         if (!rawRecords || rawRecords.length === 0) {
             console.log('Немає даних для відображення статистики.');
             return;
         }
 
         // Безпечний парсинг всіх JSON-полів
+        const safeParse = (data) => {
+            if (!data) return {};
+            if (typeof data === 'string') {
+                if (data === 'null') return {};
+                try {
+                    return JSON.parse(data) || {};
+                } catch (e) {
+                    return {};
+                }
+            }
+            return data;
+        };
+
         const records = rawRecords.map(r => ({
             ...r,
-            pat: typeof r.patient_data === 'string' ? JSON.parse(r.patient_data || '{}') : (r.patient_data || {}),
-            pros: typeof r.prosthetics_data === 'string' ? JSON.parse(r.prosthetics_data || '{}') : (r.prosthetics_data || {}),
-            icd: typeof r.icd_codes === 'string' ? JSON.parse(r.icd_codes || '{}') : (r.icd_codes || {}),
-            pred: typeof r.predictors === 'string' ? JSON.parse(r.predictors || '{}') : (r.predictors || {}),
-            scr: typeof r.scores === 'string' ? JSON.parse(r.scores || '{}') : (r.scores || {})
+            pat: safeParse(r.patient_data),
+            pros: safeParse(r.prosthetics_data),
+            icd: safeParse(r.icd_codes),
+            pred: safeParse(r.predictors),
+            scr: safeParse(r.scores),
+            inf: safeParse(r.infection_factors),
+            surg: safeParse(r.surgical_factors)
         }));
 
         // --- 1. ПІДРАХУНОК KPI ---
         const total = records.length;
 
-        // Вік (Тепер беремо з pat.age)
         const validAges = records.map(r => parseInt(r.pat.age)).filter(a => !isNaN(a));
         const avgAge = validAges.length ? (validAges.reduce((a, b) => a + b, 0) / validAges.length).toFixed(1) : 'Н/Д';
 
-        // Ризики
         let highPainCount = 0;
         let highRehabCount = 0;
         let highProsCount = 0;
@@ -183,10 +261,9 @@
         records.forEach(r => {
             if ((r.scr.painScore || 0) >= 7) highPainCount++;
             if ((r.scr.rehabScore || 0) >= 7) highRehabCount++;
-            if ((r.scr.prostheticScore || 0) >= 4) highProsCount++; // Ризик протезування: 4+ це високий
+            if ((r.scr.prostheticScore || 0) >= 4) highProsCount++;
         });
 
-        // Оновлення DOM
         document.getElementById('kpi-total').textContent = total;
         document.getElementById('kpi-pain').textContent = highPainCount;
         document.getElementById('kpi-rehab').textContent = highRehabCount;
@@ -204,7 +281,6 @@
             if (re <= 3) riskData.rehab[0]++; else if (re <= 6) riskData.rehab[1]++; else riskData.rehab[2]++;
 
             let pr = parseInt(r.scr.prostheticScore) || 0;
-            // Шкала протезування: 0-1 (Низький), 2-3 (Середній), 4+ (Високий)
             if (pr <= 1) riskData.pros[0]++; else if (pr <= 3) riskData.pros[1]++; else riskData.pros[2]++;
         });
 
@@ -241,7 +317,7 @@
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' } } }
         });
 
-        // --- 4. НОВИЙ ГРАФІК: СТАТУС ПАЦІЄНТІВ ---
+        // --- 4. ГРАФІК: СТАТУС ПАЦІЄНТІВ ---
         const statusMap = { 'military': 0, 'civilian': 0, 'other': 0 };
         records.forEach(r => {
             let s = r.pat.status || 'other';
@@ -261,7 +337,7 @@
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
         });
 
-        // --- 5. НОВИЙ ГРАФІК: МЕХАНІЗМ ТРАВМИ ---
+        // --- 5. ГРАФІК: МЕХАНІЗМ ТРАВМИ ---
         const mechMap = { 'blast': 0, 'drone': 0, 'gunshot': 0, 'other': 0 };
         const mechLabels = { 'blast': 'Вибух', 'drone': 'Дрон/Скид', 'gunshot': 'Вогнепальне', 'other': 'Інше/Не вказано' };
         records.forEach(r => {
@@ -282,13 +358,12 @@
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
         });
 
-        // --- 6. НОВИЙ ГРАФІК: АМПУТАЦІЇ ---
+        // --- 6. ГРАФІК: АМПУТАЦІЇ ---
         const ampMap = { 'transfemoral': 0, 'transtibial': 0, 'upper': 0, 'not_specified': 0 };
         const ampLabels = { 'transfemoral': 'Трансфеморальна', 'transtibial': 'Транстибіальна', 'upper': 'Верхня кінцівка', 'not_specified': 'Не вказано рівень' };
         let totalAmputations = 0;
 
         records.forEach(r => {
-            // Перевіряємо чи є ампутація загалом
             const isAmp = r.pred.amputation === true || r.pred.amputation === 'true' || r.pred.amputation == 1;
             if (isAmp) {
                 totalAmputations++;
@@ -339,14 +414,93 @@
                 datasets: [{
                     label: 'Кількість пацієнтів',
                     data: [tourniquetCount, infectionCount, phantomPainCount, revisionCount],
-                    backgroundColor: 'rgba(56, 189, 248, 0.7)', // Sky blue
+                    backgroundColor: 'rgba(56, 189, 248, 0.7)',
                     borderRadius: 4
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                indexAxis: 'y', // Робимо графік горизонтальним
+                indexAxis: 'y',
+                plugins: { legend: { display: false } },
+                scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } }
+            }
+        });
+
+        // --- 8. ГРАФІК: ФАКТОРИ ІНФЕКЦІЇ ---
+        const infLabelsMap = {
+            'openWound': 'Відкрита рана',
+            'woundContamination': 'Забруднення рани',
+            'openFracture': 'Відкритий перелом',
+            'npwt': 'NPWT',
+            'positiveCulture': 'Позитивний посів',
+            'mdro': 'MDRO'
+        };
+        const infData = Object.keys(infLabelsMap).map(k => 0);
+
+        records.forEach(r => {
+            if (r.inf && Object.keys(r.inf).length > 0) {
+                Object.keys(infLabelsMap).forEach((key, index) => {
+                    if (r.inf[key] === true || r.inf[key] === 'true' || r.inf[key] == 1) infData[index]++;
+                });
+            }
+        });
+
+        new Chart(document.getElementById('infectionFactorsChart'), {
+            type: 'bar',
+            data: {
+                labels: Object.values(infLabelsMap),
+                datasets: [{
+                    label: 'Кількість випадків',
+                    data: infData,
+                    backgroundColor: 'rgba(16, 185, 129, 0.7)', // Emerald 500
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                plugins: { legend: { display: false } },
+                scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } }
+            }
+        });
+
+        // --- 9. ГРАФІК: ХІРУРГІЧНА СКЛАДНІСТЬ ---
+        const surgLabelsMap = {
+            'repeatedDebridement': 'Повторний дебридмент',
+            'tissueNecrosis': 'Некроз тканин',
+            'woundDehiscence': 'Розходження рани',
+            'osteomyelitis': 'Остеомієліт',
+            'vascularInjury': 'Судинне ушкодження',
+            'flapReconstruction': 'Flap/Реконструкція',
+            'readmission': 'Повторна госпіталізація'
+        };
+        const surgData = Object.keys(surgLabelsMap).map(k => 0);
+
+        records.forEach(r => {
+            if (r.surg && Object.keys(r.surg).length > 0) {
+                Object.keys(surgLabelsMap).forEach((key, index) => {
+                    if (r.surg[key] === true || r.surg[key] === 'true' || r.surg[key] == 1) surgData[index]++;
+                });
+            }
+        });
+
+        new Chart(document.getElementById('surgicalFactorsChart'), {
+            type: 'bar',
+            data: {
+                labels: Object.values(surgLabelsMap),
+                datasets: [{
+                    label: 'Кількість випадків',
+                    data: surgData,
+                    backgroundColor: 'rgba(245, 158, 11, 0.7)', // Amber 500
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
                 plugins: { legend: { display: false } },
                 scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } }
             }

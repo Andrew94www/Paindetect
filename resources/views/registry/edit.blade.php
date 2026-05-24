@@ -374,6 +374,78 @@
                     </div>
                 </div>
             </section>
+
+            <!-- 6. Фактори інфекції -->
+            <section class="bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-700">
+                <h2 class="text-xl font-semibold mb-4 flex items-center gap-2 text-slate-100">
+                    <i class="fa-solid fa-virus text-emerald-500"></i>
+                    6. Фактори інфекції
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" id="infOpenWound" class="custom-checkbox" {{ !empty($patient->infection_factors['openWound']) ? 'checked' : '' }}>
+                        <span class="text-slate-200">Відкрита рана</span>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" id="infWoundContamination" class="custom-checkbox" {{ !empty($patient->infection_factors['woundContamination']) ? 'checked' : '' }}>
+                        <span class="text-slate-200">Забруднення рани</span>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" id="infOpenFracture" class="custom-checkbox" {{ !empty($patient->infection_factors['openFracture']) ? 'checked' : '' }}>
+                        <span class="text-slate-200">Відкритий перелом</span>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" id="infNpwt" class="custom-checkbox" {{ !empty($patient->infection_factors['npwt']) ? 'checked' : '' }}>
+                        <span class="text-slate-200">NPWT</span>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" id="infPositiveCulture" class="custom-checkbox" {{ !empty($patient->infection_factors['positiveCulture']) ? 'checked' : '' }}>
+                        <span class="text-slate-200">Позитивний посів</span>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" id="infMdro" class="custom-checkbox" {{ !empty($patient->infection_factors['mdro']) ? 'checked' : '' }}>
+                        <span class="text-slate-200">MDRO (Резистентність)</span>
+                    </label>
+                </div>
+            </section>
+
+            <!-- 7. Хірургічна складність -->
+            <section class="bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-700">
+                <h2 class="text-xl font-semibold mb-4 flex items-center gap-2 text-slate-100">
+                    <i class="fa-solid fa-scalpel text-amber-500"></i>
+                    7. Хірургічна складність
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" id="surgRepeatedDebridement" class="custom-checkbox" {{ !empty($patient->surgical_factors['repeatedDebridement']) ? 'checked' : '' }}>
+                        <span class="text-slate-200">Повторний дебридмент</span>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" id="surgTissueNecrosis" class="custom-checkbox" {{ !empty($patient->surgical_factors['tissueNecrosis']) ? 'checked' : '' }}>
+                        <span class="text-slate-200">Некроз тканин</span>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" id="surgWoundDehiscence" class="custom-checkbox" {{ !empty($patient->surgical_factors['woundDehiscence']) ? 'checked' : '' }}>
+                        <span class="text-slate-200">Розходження рани</span>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" id="surgOsteomyelitis" class="custom-checkbox" {{ !empty($patient->surgical_factors['osteomyelitis']) ? 'checked' : '' }}>
+                        <span class="text-slate-200">Остеомієліт</span>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" id="surgVascularInjury" class="custom-checkbox" {{ !empty($patient->surgical_factors['vascularInjury']) ? 'checked' : '' }}>
+                        <span class="text-slate-200">Судинне ушкодження</span>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" id="surgFlapReconstruction" class="custom-checkbox" {{ !empty($patient->surgical_factors['flapReconstruction']) ? 'checked' : '' }}>
+                        <span class="text-slate-200">Flap/Реконструкція</span>
+                    </label>
+                    <label class="flex items-center gap-3 cursor-pointer">
+                        <input type="checkbox" id="surgReadmission" class="custom-checkbox" {{ !empty($patient->surgical_factors['readmission']) ? 'checked' : '' }}>
+                        <span class="text-slate-200">Повторна госпіталізація</span>
+                    </label>
+                </div>
+            </section>
         </div>
 
         <div class="lg:col-span-1">
@@ -397,6 +469,16 @@
                         <div id="prostheticBox" class="p-4 rounded-xl border-2 transition-all"><div class="flex justify-between items-center mb-1"><span id="prostheticText" class="font-bold text-lg">Низький</span><div class="flex items-center gap-1"><span id="prostheticScore" class="font-black text-2xl">0</span><span class="text-[10px] font-bold uppercase">балів</span></div></div><p class="text-[11px] opacity-90 mt-1 font-medium leading-tight" id="prostheticDesc"></p></div>
                     </div>
 
+                    <div class="mb-5">
+                        <h4 class="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-2">Ризик інфекції</h4>
+                        <div id="infectionBox" class="p-4 rounded-xl border-2 transition-all"><div class="flex justify-between items-center mb-1"><span id="infectionText" class="font-bold text-lg">Низький</span><div class="flex items-center gap-1"><span id="infectionScore" class="font-black text-2xl">0</span><span class="text-[10px] font-bold uppercase">балів</span></div></div><p class="text-[11px] opacity-90 mt-1 font-medium leading-tight" id="infectionDesc"></p></div>
+                    </div>
+
+                    <div class="mb-5">
+                        <h4 class="text-xs font-semibold text-amber-400 uppercase tracking-wider mb-2">Хірургічна складність</h4>
+                        <div id="surgicalBox" class="p-4 rounded-xl border-2 transition-all"><div class="flex justify-between items-center mb-1"><span id="surgicalText" class="font-bold text-lg">Низький</span><div class="flex items-center gap-1"><span id="surgicalScore" class="font-black text-2xl">0</span><span class="text-[10px] font-bold uppercase">балів</span></div></div><p class="text-[11px] opacity-90 mt-1 font-medium leading-tight" id="surgicalDesc"></p></div>
+                    </div>
+
                     <button id="saveBtn" class="w-full mt-6 bg-amber-600 hover:bg-amber-500 text-white font-semibold py-3 px-4 rounded-xl shadow-md transition-all flex justify-center items-center gap-2">
                         <i class="fa-solid fa-floppy-disk"></i> Зберегти зміни
                     </button>
@@ -407,8 +489,7 @@
 </div>
 
 <script>
-    // Вся логіка обрахунків з вашого оригінального файлу
-    let currentRehabScore = 0, currentPainScore = 0, currentProstheticScore = 0;
+    let currentRehabScore = 0, currentPainScore = 0, currentProstheticScore = 0, currentInfectionScore = 0, currentSurgicalScore = 0;
 
     const getVal = (id) => { const el = document.getElementById(id); return el ? el.value : ''; };
     const getChk = (id) => { const el = document.getElementById(id); return el ? el.checked : false; };
@@ -432,6 +513,7 @@
         const surgeries = getVal('surgeries');
         const acutePain = getInt('acutePain');
 
+        // Реабілітація
         let rehabScore = 0;
         if (traumaType === 'blast' || traumaType === 'crush') rehabScore += 2;
         if (traumaType === 'combo') rehabScore += 3;
@@ -444,6 +526,7 @@
         if (surgeries === '2') rehabScore += 1;
         if (surgeries === '3plus') rehabScore += 2;
 
+        // Біль
         let painScore = 0;
         if (traumaType === 'blast') painScore += 2;
         if (tourniquet && tourniquetDuration === 'over120') painScore += 3;
@@ -452,6 +535,7 @@
         if (infection) painScore += 1;
         if (acutePain >= 7) painScore += 2;
 
+        // Протезування
         let prostheticScore = 0;
         if (getInt('stumpPain') >= 6) prostheticScore += 1;
         if (getChk('phantomPain')) prostheticScore += 1;
@@ -460,13 +544,43 @@
         const mainIcd = getVal('mainTraumaIcd');
         if (mainIcd === 'S00-S09' || mainIcd.startsWith('S0')) prostheticScore += 1;
 
+        // Інфекція
+        let infectionScore = 0;
+        if (getChk('infOpenWound')) infectionScore += 1;
+        if (getChk('infWoundContamination')) infectionScore += 1;
+        if (getChk('infOpenFracture')) infectionScore += 1;
+        if (amputation) infectionScore += 1;
+        if (tourniquet && (tourniquetDuration === '60to120' || tourniquetDuration === 'over120')) infectionScore += 1;
+        if (surgeries === '3plus') infectionScore += 1;
+        if (getChk('infNpwt')) infectionScore += 1;
+        if (getChk('infPositiveCulture')) infectionScore += 1;
+        if (getChk('infMdro')) infectionScore += 1;
+
+        // Хірургічна складність
+        let surgicalScore = 0;
+        if (surgeries === '3plus') surgicalScore += 1;
+        if (amputation) surgicalScore += 1;
+        if (getChk('surgRepeatedDebridement')) surgicalScore += 1;
+        if (getChk('prostheticRevisions')) surgicalScore += 1;
+        if (getChk('surgTissueNecrosis')) surgicalScore += 1;
+        if (getChk('surgWoundDehiscence')) surgicalScore += 1;
+        if (getChk('surgOsteomyelitis')) surgicalScore += 1;
+        if (getChk('surgVascularInjury') || getVal('vascularNerveIcd') !== '') surgicalScore += 1;
+        if (getChk('surgFlapReconstruction')) surgicalScore += 1;
+        if (getChk('surgReadmission')) surgicalScore += 1;
+
         currentRehabScore = rehabScore;
         currentPainScore = painScore;
         currentProstheticScore = prostheticScore;
+        currentInfectionScore = infectionScore;
+        currentSurgicalScore = surgicalScore;
 
         updateScoreUI('rehab', rehabScore, { low: "Базова", mod: "Стандарт", high: "Мультидисциплінарна" }, { mod: 4, high: 8 });
         updateScoreUI('pain', painScore, { low: "Стандарт", mod: "Увага", high: "Pain-pathway" }, { mod: 4, high: 8 });
         updateScoreUI('prosthetic', prostheticScore, { low: "Оптимальний", mod: "Контроль", high: "Корекція" }, { mod: 2, high: 4 }, true);
+
+        updateScoreUI('infection', infectionScore, { low: "Мінімальний ризик", mod: "Середній ризик", high: "Високий ризик" }, { mod: 3, high: 6 });
+        updateScoreUI('surgical', surgicalScore, { low: "Базова складність", mod: "Підвищена складність", high: "Висока складність" }, { mod: 3, high: 6 });
     }
 
     function updateScoreUI(type, score, descTexts, thresholds, isProsthetic = false) {
@@ -512,16 +626,32 @@
             icd_codes: { mainTrauma: getVal('mainTraumaIcd'), externalCause: getVal('externalCauseIcd'), vascularNerve: getVal('vascularNerveIcd'), burnBlast: getVal('burnBlastIcd'), painComplication: getVal('painComplicationIcd') },
             predictors: { traumaType: getVal('traumaType'), amputation: getChk('amputation'), amputationLevel: getChk('amputation') ? getVal('amputationLevel') : null, tourniquet: getChk('tourniquet'), tourniquetDuration: getChk('tourniquet') ? getVal('tourniquetDuration') : null, nerveInjury: getChk('nerveInjury'), nerveType: getChk('nerveInjury') ? getVal('nerveType') : null, infection: getChk('infection'), surgeries: getVal('surgeries'), acutePain: getInt('acutePain') },
             prosthetics_data: { amputation_level: getVal('prostheticAmpLevel'), sidedness: getVal('amputationSidedness'), surgery_date: getVal('prostheticSurgeryDate'), revisions: getChk('prostheticRevisions'), stump_pain: getInt('stumpPain'), phantom_pain: getChk('phantomPain'), scar_tenderness: getChk('scarTenderness'), neuroma_signs: getChk('neuromaSigns'), healing_issues: getChk('healingIssues'), primary_date: getVal('primaryProstheticsDate'), type: getVal('prosthesisType'), hours_per_day: getInt('prosthesisHours') || null, pain_during_use: getInt('prosthesisPain'), functional: { independent_walking: getChk('independentWalking'), distance_100m: getChk('distance100m'), return_to_work: getChk('returnToWork'), satisfaction: getInt('prosthesisSatisfaction') } },
-            scores: { rehabScore: currentRehabScore, painScore: currentPainScore, prostheticScore: currentProstheticScore }
+            infection_factors: {
+                mdro: getChk('infMdro'),
+                npwt: getChk('infNpwt'),
+                openWound: getChk('infOpenWound'),
+                openFracture: getChk('infOpenFracture'),
+                positiveCulture: getChk('infPositiveCulture'),
+                woundContamination: getChk('infWoundContamination')
+            },
+            surgical_factors: {
+                readmission: getChk('surgReadmission'),
+                osteomyelitis: getChk('surgOsteomyelitis'),
+                tissueNecrosis: getChk('surgTissueNecrosis'),
+                vascularInjury: getChk('surgVascularInjury'),
+                woundDehiscence: getChk('surgWoundDehiscence'),
+                flapReconstruction: getChk('surgFlapReconstruction'),
+                repeatedDebridement: getChk('surgRepeatedDebridement')
+            },
+            scores: { rehabScore: currentRehabScore, painScore: currentPainScore, prostheticScore: currentProstheticScore, infectionScore: currentInfectionScore, surgicalScore: currentSurgicalScore }
         };
 
         btn.disabled = true;
         btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Відправка...';
 
         try {
-            // Зверніть увагу: тут ми стукаємо на роут оновлення і метод зазвичай 'PUT'
             const response = await fetch(`/registry/update/{{ $patient->id }}`, {
-                method: 'POST', // або 'POST', залежно від того, як налаштовано у web.php
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
