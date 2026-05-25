@@ -175,6 +175,8 @@ class RegistryController extends Controller
             'predictors' => $request->predictors,
             'prosthetics_data' => $request->prosthetics_data,
             'scores' => $request->scores,
+            'infection_factors'     => $request->infection_factors,
+            'surgical_factors'     => $request->surgical_factors
         ]);
 
         return response()->json(['message' => 'Дані успішно оновлено!'], 200);
