@@ -100,24 +100,45 @@
             Надійна платформа для обліку, моніторингу та аналітики травматологічних випадків. Забезпечуємо високий рівень безпеки даних та зручний інтерфейс для медичних фахівців.
         </p>
 
-        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-            <!-- Кнопка Реєстрації -->
-            <!-- В Laravel: href="{{ route('registration.form') }}" -->
-            <a href="/registry/registration" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-500 hover:to-teal-400 text-white rounded-2xl font-semibold text-lg transition-all shadow-lg shadow-blue-900/20 hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 group">
-                Почати роботу
-                <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+        <!-- Блок з кнопками -->
+        <div class="flex flex-col gap-4 w-full lg:max-w-md mx-auto lg:mx-0">
+
+            <!-- Ряд з двома основними кнопками -->
+            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                <!-- Кнопка Реєстрації -->
+                <!-- В Laravel: href="{{ route('registration.form') }}" -->
+                <a href="/registry/registration" class="w-full sm:w-auto flex-1 px-8 py-4 bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-500 hover:to-teal-400 text-white rounded-2xl font-semibold text-lg transition-all shadow-lg shadow-blue-900/20 hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 group">
+                    Почати роботу
+                    <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+
+                <!-- Кнопка Входу -->
+                <!-- В Laravel: href="{{ route('registry.entrance') }}" -->
+                <a href="/registry/entrance" class="w-full sm:w-auto flex-1 px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 hover:border-slate-600 rounded-2xl font-semibold text-lg transition-all shadow-sm hover:shadow flex items-center justify-center gap-2">
+                    <i data-lucide="log-in" class="w-5 h-5"></i>
+                    Увійти
+                </a>
+            </div>
+
+            <!-- Нова велика кнопка для загальної статистики -->
+            <a href="/registry/general-statistics" class="group relative w-full flex items-center justify-center gap-3 px-8 py-5 bg-slate-800/40 backdrop-blur-md border border-slate-700 hover:border-teal-500/50 text-white rounded-2xl font-semibold text-lg transition-all duration-300 overflow-hidden shadow-lg hover:shadow-[0_0_20px_rgba(45,212,191,0.15)]">
+                <!-- Декоративний ефект свічення при наведенні -->
+                <div class="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-teal-500/10 to-blue-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <!-- Декоративна лінія знизу -->
+                <div class="absolute bottom-0 left-0 h-[2px] w-full bg-gradient-to-r from-transparent via-teal-400 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out"></div>
+
+                <div class="relative z-10 flex items-center gap-3">
+                    <div class="p-2 bg-teal-500/20 rounded-lg text-teal-400 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="pie-chart" class="w-6 h-6"></i>
+                    </div>
+                    <span>Переглянути загальну статистику</span>
+                </div>
             </a>
 
-            <!-- Кнопка Входу -->
-            <!-- В Laravel: href="{{ route('registry.entrance') }}" -->
-            <a href="/registry/entrance" class="w-full sm:w-auto px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 hover:border-slate-600 rounded-2xl font-semibold text-lg transition-all shadow-sm hover:shadow flex items-center justify-center gap-2">
-                <i data-lucide="log-in" class="w-5 h-5"></i>
-                Увійти в систему
-            </a>
         </div>
 
         <!-- Переваги під кнопками -->
-        <div class="mt-12 flex items-center justify-center lg:justify-start gap-8 text-sm font-medium text-slate-400">
+        <div class="mt-10 flex items-center justify-center lg:justify-start gap-8 text-sm font-medium text-slate-400">
             <div class="flex items-center gap-2">
                 <i data-lucide="shield-check" class="w-5 h-5 text-teal-400"></i>
                 Надійний захист
@@ -154,7 +175,6 @@
                     <span>Пн</span><span>Вв</span><span>Ср</span><span>Чт</span><span>Пт</span>
                 </div>
             </div>
-
 
         </div>
     </div>

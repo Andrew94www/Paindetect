@@ -111,6 +111,13 @@ class RegistryController extends Controller
 //        return redirect()->route('registry.getFormData');
     }
 
+    public function getGeneralStatistics(Request $request)
+    {
+        $hospitals = Hospital::with('records')->get();
+
+        return view('registry.general', compact('hospitals'));
+    }
+
     public function createData(Request $request )
     {
         // 1. Валидация входящих данных
