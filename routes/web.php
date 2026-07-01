@@ -151,21 +151,21 @@ Route::prefix('department/{code}')->group(function () {
     Route::post('/unlock', [ReitingsController::class, 'verifyCode'])->name('departments.verify');
 });
 
-Route::prefix('registry')->group(function () {
-    Route::get('/index', [RegistryController::class, 'index'])->name('registration.index');
-    Route::get('/registration', [RegistryController::class, 'registrationForm'])->name('registration.form');
-    Route::get('/entrance', [RegistryController::class, 'entrance'])->name('registry.entrance');
-    Route::get('/getFormData', [RegistryController::class, 'getFormData'])->name('registry.getFormData');
-    Route::get('/statistics/{id}', [RegistryController::class, 'getStatistics'])->name('registry.statistics');
-    Route::get('/general-statistics', [RegistryController::class, 'getGeneralStatistics'])->name('registry.general-statistics');
-    Route::get('/list/{id?}', [RegistryController::class, 'list'])->name('registry.list');
-    Route::post('/createUser', [RegistryController::class, 'createUser'])->name('registry.createUser');
-    Route::post('/entranceUser', [RegistryController::class, 'entranceUser'])->name('registry.entranceUser');
-    Route::post('/createData', [RegistryController::class, 'createData'])->name('registry.createData');
-    Route::post('/update/{id}', [RegistryController::class, 'update'])->name('registry.update');
-    Route::get('/show/{id}', [RegistryController::class, 'show'])->name('registration.show');
-    Route::get('/edit/{id}', [RegistryController::class, 'edit'])->name('registration.edit');
-});
+//Route::prefix('registry')->group(function () {
+//    Route::get('/index', [RegistryController::class, 'index'])->name('registration.index');
+//    Route::get('/registration', [RegistryController::class, 'registrationForm'])->name('registration.form');
+//    Route::get('/entrance', [RegistryController::class, 'entrance'])->name('registry.entrance');
+//    Route::get('/getFormData', [RegistryController::class, 'getFormData'])->name('registry.getFormData');
+//    Route::get('/statistics/{id}', [RegistryController::class, 'getStatistics'])->name('registry.statistics');
+//    Route::get('/general-statistics', [RegistryController::class, 'getGeneralStatistics'])->name('registry.general-statistics');
+//    Route::get('/list/{id?}', [RegistryController::class, 'list'])->name('registry.list');
+//    Route::post('/createUser', [RegistryController::class, 'createUser'])->name('registry.createUser');
+//    Route::post('/entranceUser', [RegistryController::class, 'entranceUser'])->name('registry.entranceUser');
+//    Route::post('/createData', [RegistryController::class, 'createData'])->name('registry.createData');
+//    Route::post('/update/{id}', [RegistryController::class, 'update'])->name('registry.update');
+//    Route::get('/show/{id}', [RegistryController::class, 'show'])->name('registration.show');
+//    Route::get('/edit/{id}', [RegistryController::class, 'edit'])->name('registration.edit');
+//});
 
 Route::get('/view/teachers/{id}', [ReitingsController::class, 'showData'])->name('teachers.show');
 
