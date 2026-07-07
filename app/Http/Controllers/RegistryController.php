@@ -189,5 +189,28 @@ class RegistryController extends Controller
         return response()->json(['message' => 'Дані успішно оновлено!'], 200);
     }
 
+     public function showPdf(){
+    
+    
+    $path = storage_path('app/public/pdfs/RapidPATProofOfExecution.pdf');
+
+    if (!file_exists($path)) {
+        // Если доходит сюда, значит PHP не видит файл по этому пути
+        return response("Файл не найден по пути: " . $path, 404);
+    }
+
+
+    // Проверяем, существует ли файл
+    if (!file_exists($path)) {
+        abort(407, 'PDF файл не найден');
+    }
+
+    // Возвращаем файл с нужными заголовками
+    return response()->file($path, [
+        'Content-Type' => 'application/pdf',
+        'Content-Disposition' => 'inline; filename="' . basename($path) . '"'
+    ]);
+}
+
     }
 
