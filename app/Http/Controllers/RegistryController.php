@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
 use App\Models\Hospital;
@@ -14,40 +13,36 @@ use Illuminate\Support\Facades\Hash;
 
 class RegistryController extends Controller
 {
-   public function index(){
-       return view('registry.index');
-   }
+    public function index()
+    {
+        return view('registry.index');
+    }
+
     public function registrationForm()
     {
         return view('registry.reg_form');
     }
-    /**
-     * Показать форму ввода кода доступа (Промежуточная страница)
-     */
-    public function entrance(Request $request )
+
+    public function entrance(Request $request)
     {
         return view('registry.ent_form');
-
     }
 
-    public function getFormData( )
+    public function getFormData()
     {
         return view('registry.cre_form');
-
     }
 
     public function getStatistics($id)
     {
-        $hospital = Hospital::findOrFail($id); // Используйте findOrFail, чтобы не упасть на пустом госпитале
+        $hospital = Hospital::findOrFail($id);
         $records = $hospital->records;
 
         if ($records->isEmpty()) {
-            // Логика, если записей НЕТ
             return view('registry.not_stat');
         }
 
         return view('registry.stastic', compact('records', 'id'));
-
     }
 
     public function list($id)
@@ -55,7 +50,6 @@ class RegistryController extends Controller
         $hospital = Hospital::find($id);
         $records = $hospital->records;
         return view('registry.list', compact('records'));
-
     }
 
     public function entranceUser(Request $request)
@@ -65,21 +59,11 @@ class RegistryController extends Controller
             'password' => 'required',
         ]);
 
-        // Пытаемся авторизовать пользователя через guard 'hospital'
         if (Auth::guard('hospital')->attempt($credentials, $request->remember)) {
-            // Регенерируем сессию для защиты от фиксации сессий
             $request->session()->regenerate();
-
             $hospital = Auth::guard('hospital')->user();
-
-            // 2. Получаем все его записи (коллекция моделей PatientRecord)
             $records = $hospital->records;
-
-
-//            return redirect()->route('registry.getFormData');
-
             return view('registry.list', compact('records'));
-
         }
 
         return back()->withErrors([
@@ -95,66 +79,53 @@ class RegistryController extends Controller
             'password' => 'required|min:3',
         ]);
 
-        // 1. Создаем запись в базе данных
         $hospital = Hospital::create([
             'hospital_name' => $validated['hospital_name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
         ]);
 
-        // 2. ВАЖНО: Автоматически логиним пользователя сразу после создания,
-        // чтобы ID сохранился в сессии и был доступен после редиректа.
         Auth::guard('hospital')->login($hospital);
 
         return view('registry.sacces');
-
-//        return redirect()->route('registry.getFormData');
     }
 
     public function getGeneralStatistics(Request $request)
     {
         $hospitals = Hospital::with('records')->get();
-
         return view('registry.general', compact('hospitals'));
     }
 
-    public function createData(Request $request )
+    public function createData(Request $request)
     {
-        // 1. Валидация входящих данных
         $validated = $request->validate([
             'patient_data' => 'required|array',
             'icd_codes' => 'required|array',
-            'prosthetics_data'=> 'required|array',
+            'prosthetics_data' => 'required|array',
             'predictors' => 'required|array',
             'scores' => 'required|array',
             'infection_factors' => 'required|array',
             'surgical_factors' => 'required|array',
-            // Мы не валидируем hospital_id из запроса,
-            // так как возьмем его из сессии для безопасности.
         ]);
 
-        // 2. Сохранение через связь текущего госпиталя
-        // Это автоматически заполнит поле hospital_id
         $hospital = Auth::guard('hospital')->user();
 
         $record = $hospital->records()->create([
-            'patient_data'=>$validated['patient_data'],
-            'history_id'=>$validated['patient_data']['history_id'],
-            'icd_codes'  => $validated['icd_codes'],
-            'prosthetics_data'=> $validated['prosthetics_data'],
+            'patient_data' => $validated['patient_data'],
+            'history_id' => $validated['patient_data']['history_id'],
+            'icd_codes' => $validated['icd_codes'],
+            'prosthetics_data' => $validated['prosthetics_data'],
             'predictors' => $validated['predictors'],
-            'scores'     => $validated['scores'],
-            'infection_factors'     => $validated['infection_factors'],
-            'surgical_factors'     => $validated['surgical_factors'],
+            'scores' => $validated['scores'],
+            'infection_factors' => $validated['infection_factors'],
+            'surgical_factors' => $validated['surgical_factors'],
         ]);
 
-        // 3. Ответ для фронтенда
         return response()->json([
             'success' => true,
             'message' => 'Запис успішно збережено',
             'record_id' => $record->id
         ], 201);
-
     }
 
     public function show($id)
@@ -163,27 +134,24 @@ class RegistryController extends Controller
         return view('registry.show', compact('patient'));
     }
 
-    // Метод для відображення форми редагування
     public function edit($id)
     {
         $patient = PatientRecord::findOrFail($id);
         return view('registry.edit', compact('patient'));
     }
 
-    // Приклад методу для збереження змін (може відрізнятися залежно від ваших роутів)
     public function update(Request $request, $id)
     {
         $patient = PatientRecord::findOrFail($id);
 
-        // Оновлюємо дані...
         $patient->update([
             'patient_data' => $request->patient_data,
             'icd_codes' => $request->icd_codes,
             'predictors' => $request->predictors,
             'prosthetics_data' => $request->prosthetics_data,
             'scores' => $request->scores,
-            'infection_factors'     => $request->infection_factors,
-            'surgical_factors'     => $request->surgical_factors
+            'infection_factors' => $request->infection_factors,
+            'surgical_factors' => $request->surgical_factors
         ]);
 
         return response()->json(['message' => 'Дані успішно оновлено!'], 200);
@@ -199,18 +167,15 @@ class RegistryController extends Controller
         return response("Файл не найден по пути: " . $path, 404);
     }
 
-
-    // Проверяем, существует ли файл
-    if (!file_exists($path)) {
-        abort(407, 'PDF файл не найден');
+        return response()->file($path, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="RapidPATProofOfExecution.pdf"'
+        ]);
     }
 
-    // Возвращаем файл с нужными заголовками
-    return response()->file($path, [
-        'Content-Type' => 'application/pdf',
-        'Content-Disposition' => 'inline; filename="' . basename($path) . '"'
-    ]);
+public function showImg()
+{
+    return view('registry.logo');
 }
 
-    }
-
+}

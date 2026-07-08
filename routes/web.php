@@ -114,7 +114,16 @@ Route::get('/sepsis', function () {
     return view('sepsis');
 })->name('sepsis');
 
+
+
+
 Route::get('/document/view', [RegistryController::class, 'showPdf'])->name('pdf.view');
+
+Route::get('/document/logo', [RegistryController::class, 'showImg'])->name('logo.view');
+
+Route::get('/document/video', [RegistryController::class, 'showVideo'])->name('logo.showVideo');
+
+
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
