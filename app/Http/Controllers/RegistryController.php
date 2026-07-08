@@ -178,4 +178,9 @@ public function showImg()
     return view('registry.logo');
 }
 
+public function showVideo()
+{
+    return view('registry.video');
+}
+
 }
